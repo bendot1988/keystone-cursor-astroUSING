@@ -7,26 +7,29 @@
 
 <section class="home-hero" aria-labelledby="hero-heading">
 	<div class="home-hero__inner">
-		<h1 id="hero-heading" class="home-hero__title type-h1-72-700 kr-motion-enter-fade-up-sm">
-			<span class="home-hero__title-line">We bring your</span>
-			<span class="home-hero__title-line">
-				<span class="home-hero__title-accent">renovation ideas</span>
-			</span>
-			<span class="home-hero__title-line">to life.</span>
-		</h1>
-		<p class="home-hero__sub type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
-			By understanding your renovation needs. We make it{'\u00A0'}happen.
-		</p>
-		<a class="home-hero__cta type-button-16-700 kr-motion-enter-fade-up-sm kr-motion-delay-2" href="/contact/#discuss">Discuss Your Project</a>
+		<div class="home-hero__copy">
+			<h1 id="hero-heading" class="home-hero__title type-h1-72-700 kr-motion-enter-fade-up-sm">
+				<span class="home-hero__title-line">We{'\u00A0'}bring{'\u00A0'}your</span>
+				<span class="home-hero__title-line home-hero__title-line--accent">renovation ideas</span>
+				<span class="home-hero__title-line">to life.</span>
+			</h1>
+			<p class="home-hero__sub type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
+				By understanding your renovation needs. We make it{'\u00A0'}happen.
+			</p>
+			<a class="home-hero__cta type-button-16-700 kr-motion-enter-fade-up-sm kr-motion-delay-2" href="/contact/#discuss">Discuss Your Project</a>
+		</div>
 	</div>
 </section>
 
 <style>
 	.home-hero {
 		position: relative;
-		min-height: min(88vh, 52rem);
+		/* Shorter band on small viewports; tall immersive hero from md up */
+		min-height: min(64vh, 30rem);
 		display: flex;
 		align-items: center;
+		padding-left: max(var(--section-pad-x), env(safe-area-inset-left, 0px));
+		padding-right: max(var(--section-pad-x), env(safe-area-inset-right, 0px));
 		background-color: var(--color-dark-gray);
 		/* Uniform dark wash + angled ramp so copy stays legible on bright glazing (right). */
 		background-image:
@@ -43,12 +46,58 @@
 		background-repeat: no-repeat;
 	}
 
+	@media (min-width: 48rem) {
+		.home-hero {
+			min-height: min(88vh, 52rem);
+			padding-left: var(--section-pad-x);
+			padding-right: var(--section-pad-x);
+		}
+	}
+
 	.home-hero__inner {
 		position: relative;
 		z-index: 1;
 		width: 100%;
+		max-width: var(--layout-max-72);
+		margin-inline: auto;
+		padding-block: var(--hero-inner-pad-y);
+		/* Allow flex child to shrink so long headlines wrap instead of clipping */
+		min-width: 0;
+	}
+
+	@media (max-width: 47.99rem) {
+		.home-hero__inner {
+			padding-block: clamp(1.25rem, 3.5vh, 2.25rem);
+		}
+	}
+
+	.home-hero__copy {
 		max-width: var(--layout-max-52);
-		padding: var(--hero-inner-pad-y) var(--hero-inner-pad-x);
+		min-width: 0;
+		container-type: inline-size;
+		container-name: hero-copy;
+	}
+
+	.home-hero__title.type-h1-72-700 {
+		/* vw fallback; when CQ units are supported, size tracks the copy column */
+		font-size: clamp(1.25rem, 5.2vw + 0.5rem, 4.5rem);
+		line-height: 1.12;
+		letter-spacing: 0.04em;
+		overflow-wrap: break-word;
+	}
+
+	@supports (font-size: 1cqi) {
+		.home-hero__title.type-h1-72-700 {
+			font-size: clamp(1.25rem, 7cqi + 0.45rem, 4.5rem);
+		}
+	}
+
+	@media (min-width: 75rem) {
+		.home-hero__title.type-h1-72-700 {
+			font-size: 4.5rem;
+			line-height: 90px;
+			letter-spacing: 3.6px;
+		}
 	}
 
 	.home-hero__title {
@@ -63,7 +112,7 @@
 		display: block;
 	}
 
-	.home-hero__title-accent {
+	.home-hero__title-line--accent {
 		color: var(--color-dark-khaki);
 		text-shadow:
 			0 1px 2px rgba(0, 0, 0, 0.5),
