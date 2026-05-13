@@ -157,10 +157,10 @@ const personalCards = [
 			<div class="how-we-help__grid">
 				{
 					personalCards.map(({ title, body, iconSrc }) => (
-						<article class="how-we-help__card how-we-help__card--personal">
-							<div class="how-we-help__card-icon how-we-help__card-icon--personal" aria-hidden="true">
+						<article class="how-we-help__card">
+							<div class="how-we-help__card-icon" aria-hidden="true">
 								<img
-									class="how-we-help__card-icon-img how-we-help__card-icon-img--personal"
+									class="how-we-help__card-icon-img"
 									src={iconSrc}
 									alt=""
 									width="22"
@@ -318,18 +318,6 @@ const personalCards = [
 		color: var(--color-dark-gray);
 	}
 
-	.how-we-help__card--personal {
-		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 9%, var(--color-white));
-		box-shadow:
-			0 1px 2px rgba(26, 27, 27, 0.04),
-			0 4px 14px rgba(26, 27, 27, 0.05);
-	}
-
-	.how-we-help__card-icon--personal {
-		background: color-mix(in srgb, var(--color-card-icon-gold) 42%, var(--color-white));
-		color: color-mix(in srgb, var(--color-dark-khaki) 50%, var(--color-dark-gray));
-	}
-
 	.how-we-help__grid {
 		display: grid;
 		grid-template-columns: 1fr;
@@ -400,11 +388,6 @@ const personalCards = [
 		height: 1.375rem;
 		object-fit: contain;
 		filter: brightness(0) invert(1);
-	}
-
-	.how-we-help__card-icon-img--personal {
-		filter: none;
-		opacity: 0.98;
 	}
 
 	.how-we-help__card-title {
