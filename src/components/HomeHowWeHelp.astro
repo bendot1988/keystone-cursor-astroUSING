@@ -1,0 +1,425 @@
+---
+const physicallyIntro =
+	'We listen carefully to the physical elements of what your renovation is asking of us:';
+
+const physicallyCards = [
+	{
+		title: 'Structural and Design',
+		body: 'Working with your Architect or Planner \u2013 we select the right trades and crafts to modify and create your new space.',
+		iconSrc: '/icons/how-we-help/structural.png',
+	},
+	{
+		title: 'Electrical and Plumbing',
+		body: 'Supporting the demands of modern living, we engage a team of experts to upgrade or renew any service installations your renovation requires.',
+		iconSrc: '/icons/how-we-help/electrical.png',
+	},
+	{
+		title: 'Hardware & Materials',
+		body: 'We research and source materials from trusted suppliers and artisan specialists \u2013 ensuring the quantity and quality procured fits the brief & budget.',
+		iconSrc: '/icons/how-we-help/hardware.png',
+	},
+	{
+		title: 'Fixtures and Fittings',
+		body: 'Matching your flair and style with functionality and deliverability. We procure, install and commission.',
+		iconSrc: '/icons/how-we-help/fixtures.png',
+	},
+	{
+		title: 'Décor',
+		body: 'Our team of experienced decorators are masters at breathing new life into tired and drab spaces.',
+		iconSrc: '/icons/how-we-help/wall-coverings.png',
+	},
+	{
+		title: 'Landscaping',
+		body: 'We transform outdoor spaces, making them attractive and usable extensions of your property.',
+		iconSrc: '/icons/how-we-help/landscaping.png',
+	},
+] as const;
+
+const personalIntro =
+	'We are the Keystone to your Project \u2013 the centre point from which all else depends.';
+
+const personalCards = [
+	{
+		title: 'Consideration to your Lifestyle Needs',
+		body: 'We are the Single point of contact for you. We structure our role to align with your lifestyle ensuring the project and your life, stay on track! We assess the following elements to ensure we are working for you the way you need us to.',
+		iconSrc: '/icons/how-we-help/personal/tea.png',
+	},
+	{
+		title: 'Time',
+		body: 'Everyone\u2019s time is precious and \u201cfinding time\u201d for new projects is not always possible. We give you your time back.',
+		iconSrc: '/icons/how-we-help/personal/clock.png',
+	},
+	{
+		title: 'Reliability & Trustworthiness',
+		body: 'We will turn up and deliver as promised. We will treat your property like it is our own. Our testimonies testify to this.',
+		iconSrc: '/icons/how-we-help/personal/shield.png',
+	},
+	{
+		title: 'Know-How',
+		body: 'We work with teams of experienced crafts people and trades all of whom have decades of experience. There is no such thing as a renovating problem that we can\u2019t find a solution to.',
+		iconSrc: '/icons/how-we-help/personal/bulb.png',
+	},
+	{
+		title: 'Confidentiality',
+		body: 'Respecting your Privacy and Showing Discretion at all times.',
+		iconSrc: '/icons/how-we-help/personal/eye.png',
+	},
+	{
+		title: 'Security',
+		body: 'We follow strict protocols in securing your home and privacy.',
+		iconSrc: '/icons/how-we-help/personal/padlock.png',
+	},
+] as const;
+---
+
+<section class="how-we-help" aria-labelledby="how-we-help-heading">
+	<div class="how-we-help__inner">
+		<h2 id="how-we-help-heading" class="how-we-help__title type-h2-48-700">The Way We Work</h2>
+
+		<div class="how-we-help__tabs" role="tablist" aria-label="The way we work">
+			<button
+				type="button"
+				class="how-we-help__tab is-active"
+				role="tab"
+				id="how-tab-physical"
+				aria-selected="true"
+				aria-controls="how-panel-physical"
+				data-how-tab="physical"
+			>
+				<span class="how-we-help__tab-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M10.5 14.5 4 21" />
+						<path d="M14 3l7 7-9 9-4-4 9-9z" />
+					</svg>
+				</span>
+				<span class="how-we-help__tab-label">Physically</span>
+				<span class="how-we-help__tab-sub">The structural elements</span>
+			</button>
+			<button
+				type="button"
+				class="how-we-help__tab"
+				role="tab"
+				id="how-tab-personal"
+				aria-selected="false"
+				aria-controls="how-panel-personal"
+				data-how-tab="personal"
+			>
+				<span class="how-we-help__tab-icon" aria-hidden="true">
+					<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="8" r="3.5" />
+						<path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" />
+					</svg>
+				</span>
+				<span class="how-we-help__tab-label">The Philosophy</span>
+				<span class="how-we-help__tab-sub">Project Management</span>
+			</button>
+		</div>
+
+		<div
+			id="how-panel-physical"
+			class="how-we-help__panel"
+			role="tabpanel"
+			aria-labelledby="how-tab-physical"
+			data-how-panel="physical"
+		>
+			<p class="how-we-help__intro type-large-body-18-400">{physicallyIntro}</p>
+			<div class="how-we-help__grid">
+				{
+					physicallyCards.map(({ title, body, iconSrc }) => (
+						<article class="how-we-help__card">
+							<div class="how-we-help__card-icon" aria-hidden="true">
+								<img
+									class="how-we-help__card-icon-img"
+									src={iconSrc}
+									alt=""
+									width="22"
+									height="22"
+									decoding="async"
+								/>
+							</div>
+							<h3 class="how-we-help__card-title type-h3-20-700">{title}</h3>
+							<p class="how-we-help__card-body type-large-body-18-400">{body}</p>
+						</article>
+					))
+				}
+			</div>
+		</div>
+
+		<div
+			id="how-panel-personal"
+			class="how-we-help__panel"
+			role="tabpanel"
+			aria-labelledby="how-tab-personal"
+			data-how-panel="personal"
+			hidden
+		>
+			<p class="how-we-help__intro type-large-body-18-400">{personalIntro}</p>
+			<div class="how-we-help__grid">
+				{
+					personalCards.map(({ title, body, iconSrc }) => (
+						<article class="how-we-help__card how-we-help__card--personal">
+							<div class="how-we-help__card-icon how-we-help__card-icon--personal" aria-hidden="true">
+								<img
+									class="how-we-help__card-icon-img how-we-help__card-icon-img--personal"
+									src={iconSrc}
+									alt=""
+									width="22"
+									height="22"
+									decoding="async"
+								/>
+							</div>
+							<h3 class="how-we-help__card-title type-h3-20-700">{title}</h3>
+							<p class="how-we-help__card-body type-large-body-18-400">{body}</p>
+						</article>
+					))
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+<script>
+	(() => {
+		const section = document.querySelector('.how-we-help');
+		if (!section) return;
+
+		const tabs = [...section.querySelectorAll('[data-how-tab]')];
+		const panels = [...section.querySelectorAll('[data-how-panel]')];
+		if (!tabs.length || !panels.length) return;
+
+		function activate(key) {
+			tabs.forEach((btn) => {
+				const on = btn.getAttribute('data-how-tab') === key;
+				btn.classList.toggle('is-active', on);
+				btn.setAttribute('aria-selected', on ? 'true' : 'false');
+			});
+			panels.forEach((panel) => {
+				const on = panel.getAttribute('data-how-panel') === key;
+				panel.toggleAttribute('hidden', !on);
+			});
+		}
+
+		tabs.forEach((btn) => {
+			btn.addEventListener('click', () => activate(btn.getAttribute('data-how-tab') || 'physical'));
+		});
+	})();
+</script>
+
+<style>
+	.how-we-help {
+		background: color-mix(in srgb, var(--color-white-smoke) 88%, var(--color-white));
+		padding: clamp(3rem, 8vw, 5.5rem) clamp(1.25rem, 5vw, 2.5rem);
+	}
+
+	.how-we-help__inner {
+		max-width: 72rem;
+		margin: 0 auto;
+	}
+
+	.how-we-help__title {
+		margin: 0 0 1.75rem;
+		color: var(--color-dark-gray);
+		text-transform: none;
+		letter-spacing: 0.03em;
+	}
+
+	.how-we-help__tabs {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 0.65rem;
+		margin-bottom: 1.75rem;
+	}
+
+	@media (min-width: 40rem) {
+		.how-we-help__tabs {
+			gap: 0.85rem;
+		}
+	}
+
+	.how-we-help__tab {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		padding: 1.1rem 0.75rem 1.25rem;
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 10%, var(--color-white));
+		border-radius: 8px;
+		background: var(--color-white);
+		color: var(--color-dark-gray);
+		cursor: pointer;
+		font-family: var(--font-heading);
+		text-align: center;
+		transition:
+			background 0.2s ease,
+			color 0.2s ease,
+			border-color 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+
+	.how-we-help__tab:hover:not(.is-active) {
+		border-color: color-mix(in srgb, var(--color-dark-gray) 18%, var(--color-white));
+		background: var(--color-white-smoke);
+	}
+
+	.how-we-help__tab.is-active {
+		background: color-mix(in srgb, var(--color-dark-gray) 38%, var(--color-gray));
+		color: var(--color-white);
+		border-color: transparent;
+		box-shadow:
+			0 2px 6px rgba(26, 27, 27, 0.12),
+			0 8px 22px rgba(26, 27, 27, 0.1);
+	}
+
+	.how-we-help__tab:focus-visible {
+		outline: 2px solid var(--color-card-icon-gold);
+		outline-offset: 3px;
+	}
+
+	.how-we-help__tab-icon {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0.92;
+	}
+
+	.how-we-help__tab:not(.is-active) .how-we-help__tab-icon {
+		color: color-mix(in srgb, var(--color-dark-gray) 72%, var(--color-gray));
+	}
+
+	.how-we-help__tab-label {
+		font-weight: 700;
+		font-size: 1.0625rem;
+		letter-spacing: 0.03em;
+		text-transform: none;
+	}
+
+	.how-we-help__tab-sub {
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+		opacity: 0.92;
+	}
+
+	.how-we-help__tab:not(.is-active) .how-we-help__tab-sub {
+		color: color-mix(in srgb, var(--color-dark-gray) 55%, var(--color-gray));
+	}
+
+	.how-we-help__intro {
+		margin: 0 auto 1.75rem;
+		max-width: 44rem;
+		text-align: center;
+		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+	}
+
+	.how-we-help__intro strong {
+		font-weight: 700;
+		color: var(--color-dark-gray);
+	}
+
+	.how-we-help__card--personal {
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 9%, var(--color-white));
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.04),
+			0 4px 14px rgba(26, 27, 27, 0.05);
+	}
+
+	.how-we-help__card-icon--personal {
+		background: color-mix(in srgb, var(--color-card-icon-gold) 42%, var(--color-white));
+		color: color-mix(in srgb, var(--color-dark-khaki) 50%, var(--color-dark-gray));
+	}
+
+	.how-we-help__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+	}
+
+	@media (min-width: 40rem) {
+		.how-we-help__grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (min-width: 960px) {
+		.how-we-help__grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.5rem;
+		}
+	}
+
+	.how-we-help__card {
+		background: var(--color-white);
+		border-radius: 10px;
+		padding: 1.35rem 1.25rem 1.5rem;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.05),
+			0 6px 18px rgba(26, 27, 27, 0.07);
+		text-align: left;
+		transition:
+			box-shadow 0.28s ease,
+			transform 0.28s ease;
+	}
+
+	.how-we-help__card:hover,
+	.how-we-help__card:focus-within {
+		box-shadow:
+			0 2px 4px rgba(26, 27, 27, 0.07),
+			0 10px 26px rgba(26, 27, 27, 0.11),
+			0 18px 44px rgba(26, 27, 27, 0.1);
+		transform: translateY(-3px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.how-we-help__card {
+			transition: none;
+		}
+
+		.how-we-help__card:hover,
+		.how-we-help__card:focus-within {
+			transform: none;
+		}
+	}
+
+	.how-we-help__card-icon {
+		width: 2.75rem;
+		height: 2.75rem;
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--color-card-icon-gold);
+		color: var(--color-white);
+	}
+
+	.how-we-help__card-icon-img {
+		display: block;
+		width: 1.375rem;
+		height: 1.375rem;
+		object-fit: contain;
+		filter: brightness(0) invert(1);
+	}
+
+	.how-we-help__card-icon-img--personal {
+		filter: none;
+		opacity: 0.98;
+	}
+
+	.how-we-help__card-title {
+		margin: 0 0 0.65rem;
+		text-align: left;
+		text-transform: none;
+		color: var(--color-dark-gray);
+	}
+
+	.how-we-help__card-body {
+		margin: 0;
+		text-align: left;
+		white-space: normal;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+		font-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+		line-height: 1.6;
+	}
+</style>

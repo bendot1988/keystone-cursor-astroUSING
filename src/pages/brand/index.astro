@@ -1,0 +1,267 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const colors = [
+	{ token: '--color-white', hex: '#ffffff', name: 'white' },
+	{ token: '--color-white-smoke', hex: '#faf9f6', name: 'white-smoke' },
+	{ token: '--color-gray', hex: '#a39682', name: 'gray' },
+	{ token: '--color-dark-khaki', hex: '#b09664', name: 'dark-khaki' },
+	{ token: '--color-dark-gray', hex: '#1a1a1b', name: 'dark-gray' },
+	{ token: '--color-black', hex: '#000000', name: 'black' },
+	{ token: '--color-card-icon-gold', hex: '#c0b79c', name: 'card-icon-gold' },
+] as const;
+
+const typeStyles = [
+	{ class: 'type-large-title-160-400', note: 'Font: ui-serif · 160px / 160px · 400', sample: 'Keystone' },
+	{ class: 'type-h1-72-700', note: 'Montserrat · 72px / 90px · 700 · letter-spacing 3.6px · uppercase', sample: null },
+	{ class: 'type-h2-48-700', note: 'Montserrat · 48px / 48px · 700 · letter-spacing 2.4px · uppercase · center', sample: null },
+	{ class: 'type-h2-36-700', note: 'Montserrat · 36px / 40px · 700 · letter-spacing 1.8px · uppercase · center', sample: null },
+	{ class: 'type-body-36-300', note: 'Montserrat · 36px / 58.5px · 300 · italic · center', sample: null },
+	{ class: 'type-heading-24-700', note: 'Montserrat · 24px / 32px · 700 · center', sample: null },
+	{ class: 'type-body-24-400', note: 'Montserrat · 24px / 32px · 400', sample: null },
+	{ class: 'type-body-24-300', note: 'Open Sans · 24px / 39px · 300', sample: null },
+	{ class: 'type-h3-20-700', note: 'Montserrat · 20px / 28px · 700 · letter-spacing 1px · uppercase', sample: null },
+	{ class: 'type-body-20-400', note: 'Open Sans · 20px / 28px · 400 · center · nowrap', sample: 'Sample label' },
+	{ class: 'type-link-18-700', note: 'Montserrat · 18px / 28px · 700 · right', sample: '0116 220 1662' },
+	{ class: 'type-body-18-700', note: 'Open Sans · 18px / 28px · 700 · letter-spacing 0.45px · uppercase · center', sample: null },
+	{ class: 'type-large-body-18-400', note: 'Open Sans · 18px / 28px · 400', sample: null },
+	{ class: 'type-link-16-700', note: 'Montserrat · 16px / 24px · 700 · letter-spacing 0.8px', sample: null },
+	{ class: 'type-button-16-700', note: 'Open Sans · 16px / 24px · 700 · letter-spacing 1.6px · center · nowrap', sample: 'Discuss your project' },
+	{ class: 'type-link-16-600', note: 'Open Sans · 16px / 24px · 600', sample: null },
+	{ class: 'type-body-16-500', note: 'Open Sans · 16px / 24px · 500', sample: null },
+	{ class: 'type-header-16-400', note: 'Open Sans · 16px / 24px · 400', sample: null },
+	{ class: 'type-label-14-700', note: 'Open Sans · 14px / 20px · 700 · letter-spacing 1.4px · uppercase', sample: 'Call us directly' },
+	{ class: 'type-body-14-600', note: 'Open Sans · 14px / 20px · 600 · right', sample: 'Right aligned' },
+	{ class: 'type-small-body-14-400', note: 'Open Sans · 14px / 20px · 400 · center', sample: null },
+	{ class: 'type-body-12-400', note: 'Open Sans · 12px / 16px · 400', sample: null },
+] as const;
+
+const defaultSample = 'The quick brown fox jumps over the lazy dog.';
+---
+
+<BaseLayout
+	title="Brand guidelines"
+	description="Keystone Renovations design tokens: Peek typography scale (22 styles) and official colour palette."
+	canonicalPath="/brand/"
+>
+	<main id="main-content" class="brand-doc">
+		<div class="brand-doc__wrap">
+			<header class="brand-doc__hero">
+				<p class="brand-doc__eyebrow type-label-14-700">Design system</p>
+				<h1 class="brand-doc__title type-h2-48-700">Brand guidelines</h1>
+				<p class="brand-doc__lede type-large-body-18-400">
+					Tokens below are implemented in <code class="brand-doc__code">src/styles/brand.css</code> and loaded site-wide
+					via <code class="brand-doc__code">global.css</code>. Utility classes match Peek style names (e.g.
+					<code class="brand-doc__code">.type-h1-72-700</code>).
+				</p>
+			</header>
+
+			<section class="brand-doc__section" aria-labelledby="brand-colours-heading">
+				<h2 id="brand-colours-heading" class="brand-doc__h2 type-h2-36-700">Colour palette</h2>
+				<p class="brand-doc__muted type-large-body-18-400">
+					Use CSS variables (e.g. <code class="brand-doc__code">var(--color-dark-khaki)</code>) so updates stay centralised.
+				</p>
+				<ul class="brand-doc__swatches">
+					{
+						colors.map(({ token, hex, name }) => (
+							<li class="brand-doc__swatch">
+								<div class="brand-doc__swatch-chip" style={`background:${hex}`} data-light={name === 'white' || name === 'white-smoke' ? 'true' : undefined} />
+								<div class="brand-doc__swatch-meta">
+									<span class="brand-doc__swatch-name type-body-16-500">{name}</span>
+									<span class="brand-doc__swatch-hex type-body-12-400">{hex}</span>
+									<code class="brand-doc__code type-body-12-400">{token}</code>
+								</div>
+							</li>
+						))
+					}
+				</ul>
+			</section>
+
+			<section class="brand-doc__section" aria-labelledby="brand-type-heading">
+				<h2 id="brand-type-heading" class="brand-doc__h2 type-h2-36-700">Typography (Peek)</h2>
+				<p class="brand-doc__muted type-large-body-18-400">
+					22 styles were identified in Peek; utilities are provided for the set you supplied. Pixel sizes match at large
+					breakpoints; smaller viewports use fluid <code class="brand-doc__code">clamp()</code> where noted in CSS for
+					readability.
+				</p>
+				<div class="brand-doc__type-table" role="list">
+					{
+						typeStyles.map(({ class: className, note, sample }) => (
+							<div class="brand-doc__type-row" role="listitem">
+								<div class="brand-doc__type-meta">
+									<code class="brand-doc__code">.{className}</code>
+									<p class="brand-doc__type-note type-body-12-400">{note}</p>
+								</div>
+								<div class:list={[className, 'brand-doc__type-sample']}>
+									{sample ?? defaultSample}
+								</div>
+							</div>
+						))
+					}
+				</div>
+			</section>
+
+			<footer class="brand-doc__footer type-small-body-14-400">
+				<p>
+					Type and colour tokens captured from Peek (keystone-renovations). Peek export reference: version 0.8.9.1 ·
+					<a href="https://trypeek.app" rel="noopener noreferrer">Learn more about Peek</a>.
+				</p>
+				<p><a href="/">← Back to site</a></p>
+			</footer>
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.brand-doc {
+		background: var(--color-white-smoke);
+		padding: clamp(2rem, 5vw, 3.5rem) clamp(1rem, 4vw, 2rem) 4rem;
+	}
+
+	.brand-doc__wrap {
+		max-width: 52rem;
+		margin: 0 auto;
+	}
+
+	.brand-doc__hero {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.brand-doc__eyebrow {
+		margin: 0 0 0.5rem;
+		color: var(--color-gray);
+	}
+
+	.brand-doc__title {
+		margin: 0 0 1rem;
+		color: var(--color-dark-gray);
+	}
+
+	.brand-doc__lede {
+		margin: 0 auto;
+		max-width: 40rem;
+		text-align: center;
+		color: color-mix(in srgb, var(--color-dark-gray) 85%, var(--color-gray));
+	}
+
+	.brand-doc__code {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.85em;
+		background: var(--color-white);
+		padding: 0.1em 0.35em;
+		border-radius: 3px;
+		color: var(--color-dark-gray);
+	}
+
+	.brand-doc__section {
+		margin-bottom: 3.5rem;
+	}
+
+	.brand-doc__h2 {
+		margin: 0 0 0.75rem;
+		color: var(--color-dark-gray);
+	}
+
+	.brand-doc__muted {
+		margin: 0 0 1.5rem;
+		text-align: center;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+	}
+
+	.brand-doc__swatches {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+		gap: 1rem;
+	}
+
+	.brand-doc__swatch {
+		background: var(--color-white);
+		border-radius: 6px;
+		overflow: hidden;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+	}
+
+	.brand-doc__swatch-chip {
+		height: 4.5rem;
+		border-bottom: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, transparent);
+	}
+
+	.brand-doc__swatch-chip[data-light] {
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, transparent);
+	}
+
+	.brand-doc__swatch-meta {
+		padding: 0.65rem 0.75rem 0.85rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.brand-doc__swatch-name {
+		color: var(--color-dark-gray);
+	}
+
+	.brand-doc__swatch-hex {
+		color: var(--color-gray);
+	}
+
+	.brand-doc__type-table {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.brand-doc__type-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.75rem;
+		background: var(--color-white);
+		padding: 1rem 1.25rem;
+		border-radius: 6px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	}
+
+	@media (min-width: 700px) {
+		.brand-doc__type-row {
+			grid-template-columns: minmax(12rem, 14rem) 1fr;
+			align-items: start;
+		}
+	}
+
+	.brand-doc__type-meta .brand-doc__code {
+		display: block;
+		margin-bottom: 0.35rem;
+		word-break: break-all;
+	}
+
+	.brand-doc__type-note {
+		margin: 0;
+		color: var(--color-gray);
+	}
+
+	.brand-doc__type-sample {
+		color: var(--color-dark-gray);
+		overflow-wrap: anywhere;
+		width: 100%;
+	}
+
+	.brand-doc__type-sample.type-body-20-400 {
+		white-space: normal;
+	}
+
+	.brand-doc__footer {
+		margin-top: 2rem;
+		padding-top: 2rem;
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 10%, transparent);
+		color: var(--color-gray);
+	}
+
+	.brand-doc__footer a {
+		color: var(--color-dark-khaki);
+		font-weight: 600;
+	}
+</style>

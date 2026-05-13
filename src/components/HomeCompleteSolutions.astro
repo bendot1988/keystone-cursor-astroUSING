@@ -1,0 +1,167 @@
+---
+const intro =
+	'Our focus is the same regardless of your objectives, size or type of property. Firstly, we listen to you and get to understand your renovating needs. And then, we match the right skills and materials to meet both the budget & renovation brief.';
+
+const cards = [
+	{
+		title: 'Your Home Renovation',
+		body: 'Do you dream of making your home the \u201cforever home\u201d?\n\nOr are you needing to rescue a rogue DIY project?\n\nWhatever stage and budget you are at - Keystone Renovations is all about getting the job done.',
+		iconSrc: '/icons/services/home.svg',
+	},
+	{
+		title: 'Landlord Revamps',
+		body: 'Cost-driven \u2013 yet practical and durable solutions completed on time for your next tenant.\n\nWe understand your need for expediency and commercial delivery.',
+		iconSrc: '/icons/services/calculator.svg',
+	},
+	{
+		title: 'Getting Ready to Sell',
+		body: 'Selling your home can be one of the most stressful and emotional experiences to undertake.\n\nSo our job is not only to make your property stand out, but to look after you throughout the process too.\n\nWith over 10 years\u2019 experience working with the UK\u2019s Leading Home Stagers & Nationwide Estate Agents we strive to ensure your renovating budget returns maximum impact for attracting the right potential buyers.',
+		iconSrc: '/icons/services/users-presale.svg',
+	},
+] as const;
+---
+
+<section class="complete-solutions" aria-labelledby="complete-solutions-heading">
+	<div class="complete-solutions__inner">
+		<header class="complete-solutions__header">
+			<h2 id="complete-solutions-heading" class="complete-solutions__title type-h2-48-700">
+				Complete property solutions
+			</h2>
+			<p class="complete-solutions__intro type-large-body-18-400">{intro}</p>
+		</header>
+
+		<div class="complete-solutions__grid">
+			{
+				cards.map(({ title, body, iconSrc }) => (
+					<article class="complete-solutions__card">
+						<div class="complete-solutions__icon-wrap" aria-hidden="true">
+							<img
+								class="complete-solutions__icon-svg"
+								src={iconSrc}
+								alt=""
+								width="24"
+								height="24"
+								decoding="async"
+							/>
+						</div>
+						<h3 class="complete-solutions__card-title type-h3-20-700">{title}</h3>
+						<p class="complete-solutions__card-body type-large-body-18-400">{body}</p>
+					</article>
+				))
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.complete-solutions {
+		background: var(--color-white);
+		padding: clamp(3rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 2.5rem);
+	}
+
+	.complete-solutions__inner {
+		max-width: 72rem;
+		margin: 0 auto;
+	}
+
+	.complete-solutions__header {
+		text-align: center;
+		max-width: 48rem;
+		margin: 0 auto 2.75rem;
+	}
+
+	.complete-solutions__title {
+		margin: 0 0 1rem;
+		color: var(--color-dark-gray);
+	}
+
+	.complete-solutions__intro {
+		margin: 0;
+		text-align: center;
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+	}
+
+	.complete-solutions__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+		align-items: stretch;
+	}
+
+	@media (min-width: 900px) {
+		.complete-solutions__grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.75rem;
+		}
+	}
+
+	.complete-solutions__card {
+		background: var(--color-white-smoke);
+		padding: clamp(1.5rem, 3vw, 2rem);
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		text-align: left;
+		border-radius: 10px;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.04),
+			0 4px 14px rgba(26, 27, 27, 0.06),
+			0 10px 28px rgba(26, 27, 27, 0.07);
+		transition:
+			box-shadow 0.28s ease,
+			transform 0.28s ease;
+	}
+
+	.complete-solutions__card:hover {
+		box-shadow:
+			0 2px 4px rgba(26, 27, 27, 0.06),
+			0 8px 22px rgba(26, 27, 27, 0.09),
+			0 18px 40px rgba(26, 27, 27, 0.08);
+		transform: translateY(-2px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.complete-solutions__card {
+			transition: none;
+		}
+
+		.complete-solutions__card:hover {
+			transform: none;
+		}
+	}
+
+	.complete-solutions__icon-wrap {
+		flex-shrink: 0;
+		width: 3.5rem;
+		height: 3.5rem;
+		margin-bottom: 1.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: var(--color-card-icon-gold);
+		color: var(--color-white);
+		border-radius: 50%;
+	}
+
+	.complete-solutions__icon-svg {
+		display: block;
+		width: 1.5rem;
+		height: 1.5rem;
+		object-fit: contain;
+		filter: brightness(0) invert(1);
+	}
+
+	.complete-solutions__card-title {
+		margin: 0 0 0.875rem;
+		text-align: left;
+		text-transform: none;
+		color: var(--color-dark-gray);
+	}
+
+	.complete-solutions__card-body {
+		margin: 0;
+		text-align: left;
+		white-space: pre-line;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+	}
+</style>

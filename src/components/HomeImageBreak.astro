@@ -1,0 +1,33 @@
+---
+/** Full-bleed photographic band — decorative break between homepage sections. */
+---
+
+<section class="home-image-break" aria-label="Keystone Renovations team and van on a renovation project">
+	<img
+		class="home-image-break__img"
+		src="/images/site-break.jpg"
+		alt=""
+		width="1024"
+		height="541"
+		loading="lazy"
+		decoding="async"
+	/>
+</section>
+
+<style>
+	.home-image-break {
+		width: 100%;
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		line-height: 0;
+	}
+
+	.home-image-break__img {
+		display: block;
+		width: 100%;
+		height: clamp(22rem, 55vh, 44rem);
+		object-fit: cover;
+		object-position: center 42%;
+	}
+</style>

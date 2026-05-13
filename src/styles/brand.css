@@ -1,0 +1,249 @@
+/**
+ * Keystone Renovations — design tokens (Peek) + typography utilities.
+ * Source: Peek export keystone-renovations (type + colour tokens).
+ */
+
+:root {
+	/* —— Colour palette —— */
+	--color-white: #ffffff;
+	--color-white-smoke: #faf9f6;
+	--color-gray: #a39682;
+	--color-dark-khaki: #b09664;
+	--color-dark-gray: #1a1a1b;
+	--color-black: #000000;
+	--color-black-1: #330000;
+	--color-card-icon-gold: #c0b79c;
+
+	/* Semantic aliases (used across layouts) */
+	--color-bg: var(--color-white);
+	--color-text: var(--color-dark-gray);
+	--color-muted: var(--color-gray);
+	--color-accent: var(--color-dark-khaki);
+
+	/* —— Font stacks —— */
+	--font-display: ui-serif, Georgia, 'Times New Roman', serif;
+	--font-heading: 'Montserrat', system-ui, sans-serif;
+	--font-body: 'Open Sans', system-ui, sans-serif;
+	--font-sans: var(--font-heading);
+	--font-serif: var(--font-display);
+
+	/* Layout */
+	--header-pad-x: clamp(1rem, 4vw, 2.5rem);
+	--header-pad-y: clamp(1rem, 0.75rem + 0.6vw, 1.375rem);
+}
+
+/* —— Peek typography utilities (class names match Peek style IDs) —— */
+
+.type-large-title-160-400 {
+	font-family: var(--font-display);
+	font-weight: 400;
+	font-size: clamp(3.5rem, 12vw + 2rem, 10rem);
+	line-height: 1;
+	letter-spacing: 0;
+}
+
+.type-h1-72-700 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: clamp(2.25rem, 4vw + 1rem, 4.5rem);
+	line-height: calc(90 / 72);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+@media (min-width: 75rem) {
+	.type-h1-72-700 {
+		font-size: 4.5rem;
+		line-height: 90px;
+		letter-spacing: 3.6px;
+	}
+}
+
+.type-h2-48-700 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: clamp(1.75rem, 2.5vw + 1rem, 3rem);
+	line-height: 1;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+@media (min-width: 64rem) {
+	.type-h2-48-700 {
+		font-size: 3rem;
+		line-height: 48px;
+		letter-spacing: 2.4px;
+	}
+}
+
+.type-h2-36-700 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: clamp(1.5rem, 2vw + 0.75rem, 2.25rem);
+	line-height: calc(40 / 36);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+@media (min-width: 48rem) {
+	.type-h2-36-700 {
+		font-size: 2.25rem;
+		line-height: 40px;
+		letter-spacing: 1.8px;
+	}
+}
+
+.type-body-36-300 {
+	font-family: var(--font-heading);
+	font-weight: 300;
+	font-size: clamp(1.5rem, 2.5vw + 0.5rem, 2.25rem);
+	line-height: calc(58.5 / 36);
+	font-style: italic;
+	text-align: center;
+}
+
+@media (min-width: 64rem) {
+	.type-body-36-300 {
+		font-size: 2.25rem;
+		line-height: 58.5px;
+	}
+}
+
+.type-heading-24-700 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 1.5rem;
+	line-height: calc(32 / 24);
+	text-align: center;
+}
+
+.type-body-24-400 {
+	font-family: var(--font-heading);
+	font-weight: 400;
+	font-size: 1.5rem;
+	line-height: calc(32 / 24);
+}
+
+.type-body-24-300 {
+	font-family: var(--font-body);
+	font-weight: 300;
+	font-size: 1.5rem;
+	line-height: calc(39 / 24);
+}
+
+.type-h3-20-700 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 1.25rem;
+	line-height: calc(28 / 20);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.type-body-20-400 {
+	font-family: var(--font-body);
+	font-weight: 400;
+	font-size: 1.25rem;
+	line-height: calc(28 / 20);
+	text-align: center;
+	white-space: nowrap;
+}
+
+.type-link-18-700 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 1.125rem;
+	line-height: calc(28 / 18);
+	text-align: right;
+}
+
+.type-body-18-700 {
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 1.125rem;
+	line-height: calc(28 / 18);
+	letter-spacing: 0.025em;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.type-large-body-18-400 {
+	font-family: var(--font-body);
+	font-weight: 400;
+	font-size: 1.125rem;
+	line-height: calc(28 / 18);
+}
+
+.type-link-16-700 {
+	font-family: var(--font-heading);
+	font-weight: 700;
+	font-size: 1rem;
+	line-height: calc(24 / 16);
+	letter-spacing: 0.05em;
+}
+
+.type-button-16-700 {
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 1rem;
+	line-height: calc(24 / 16);
+	letter-spacing: 0.1em;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.type-link-16-600 {
+	font-family: var(--font-body);
+	font-weight: 600;
+	font-size: 1rem;
+	line-height: calc(24 / 16);
+}
+
+.type-body-16-500 {
+	font-family: var(--font-body);
+	font-weight: 500;
+	font-size: 1rem;
+	line-height: calc(24 / 16);
+}
+
+.type-header-16-400 {
+	font-family: var(--font-body);
+	font-weight: 400;
+	font-size: 1rem;
+	line-height: calc(24 / 16);
+}
+
+.type-label-14-700 {
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 0.875rem;
+	line-height: calc(20 / 14);
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+
+.type-body-14-600 {
+	font-family: var(--font-body);
+	font-weight: 600;
+	font-size: 0.875rem;
+	line-height: calc(20 / 14);
+	text-align: right;
+}
+
+.type-small-body-14-400 {
+	font-family: var(--font-body);
+	font-weight: 400;
+	font-size: 0.875rem;
+	line-height: calc(20 / 14);
+	text-align: center;
+}
+
+.type-body-12-400 {
+	font-family: var(--font-body);
+	font-weight: 400;
+	font-size: 0.75rem;
+	line-height: calc(16 / 12);
+}

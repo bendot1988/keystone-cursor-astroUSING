@@ -1,0 +1,135 @@
+---
+import { siteConfig } from '../site.config';
+
+interface Props {
+	/** Pathname for active nav state, e.g. `Astro.url.pathname`. */
+	pathname?: string;
+}
+
+const { pathname = '/' } = Astro.props;
+
+const nav = [
+	{ href: '/', label: 'Home' },
+	{ href: '/services/', label: 'Services' },
+	{ href: '/how-we-work/', label: 'How We Work' },
+	{ href: '/contact/', label: 'Contact' },
+] as const;
+
+function normalizePath(p: string): string {
+	const t = p.replace(/\/$/, '') || '/';
+	return t;
+}
+
+function isCurrent(href: string): boolean {
+	const current = normalizePath(pathname);
+	const target = normalizePath(href);
+	if (target === '/') return current === '/';
+	return current === target || current.startsWith(`${target}/`);
+}
+
+const homeUrl = '/';
+---
+
+<header class="site-header" id="site-header">
+	<div class="site-header__inner">
+		<a class="site-logo" href={homeUrl} aria-label={`${siteConfig.name} — home`}>
+			<img
+				class="site-logo__img"
+				src="/brand/keystone-logo.png"
+				alt=""
+				width="889"
+				height="285"
+				decoding="async"
+			/>
+		</a>
+
+		<button
+			type="button"
+			class="site-header__menu-toggle"
+			id="site-header-menu-toggle"
+			aria-expanded="false"
+			aria-controls="site-header-end"
+		>
+			<span class="visually-hidden">Menu</span>
+			<svg class="site-header__menu-icon site-header__menu-icon--open" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					d="M5 7h14M5 12h14M5 17h14"
+				/>
+			</svg>
+			<svg class="site-header__menu-icon site-header__menu-icon--close" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+				<path
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					stroke-linecap="round"
+					d="M6 6l12 12M18 6L6 18"
+				/>
+			</svg>
+		</button>
+
+		<div class="site-header__end" id="site-header-end">
+			<div class="site-header__nav-wrap">
+				<nav class="site-nav" aria-label="Primary">
+					<ul>
+						{
+							nav.map(({ href, label }) => (
+								<li>
+									<a class="type-header-16-400" href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
+										{label}
+									</a>
+								</li>
+							))
+						}
+					</ul>
+				</nav>
+			</div>
+
+			<div class="site-header__cta-group">
+				<a class="site-header__cta type-button-16-700" href="/contact/#discuss">Discuss Your Project</a>
+			</div>
+		</div>
+	</div>
+</header>
+
+<script>
+	(() => {
+		const root = document.getElementById('site-header');
+		const toggle = document.getElementById('site-header-menu-toggle');
+		const panel = document.getElementById('site-header-end');
+		if (!root || !toggle || !panel) return;
+
+		const mq = window.matchMedia('(min-width: 900px)');
+
+		function setOpen(open) {
+			const on = Boolean(open);
+			root.classList.toggle('site-header--nav-open', on);
+			toggle.setAttribute('aria-expanded', on ? 'true' : 'false');
+			if (!mq.matches) {
+				document.body.style.overflow = on ? 'hidden' : '';
+			}
+		}
+
+		toggle.addEventListener('click', () => {
+			setOpen(!root.classList.contains('site-header--nav-open'));
+		});
+
+		panel.querySelectorAll('a[href]').forEach((link) => {
+			link.addEventListener('click', () => setOpen(false));
+		});
+
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') setOpen(false);
+		});
+
+		mq.addEventListener('change', (e) => {
+			if (e.matches) {
+				document.body.style.overflow = '';
+				setOpen(false);
+			}
+		});
+	})();
+</script>

@@ -1,0 +1,463 @@
+---
+import { siteConfig } from '../site.config';
+
+const legal = [
+	{ href: '/terms/', label: 'Terms' },
+	{ href: '/conditions/', label: 'Conditions' },
+	{ href: '/cookies/', label: 'Cookies' },
+] as const;
+
+const serviceChoices = [
+	{ value: 'private-renovations', label: 'Private renovations' },
+	{ value: 'landlord-refreshes', label: 'Landlord refreshes' },
+	{ value: 'pre-sale', label: 'Pre-sale preparation' },
+	{ value: 'general', label: 'General enquiry' },
+	{ value: 'other', label: 'Other' },
+] as const;
+---
+
+<footer class="site-footer">
+	<div class="site-footer__inner">
+		<div class="site-footer__grid">
+			<div class="site-footer__intro">
+				<a class="site-footer__logo" href="/" aria-label={`${siteConfig.name} — home`}>
+					<img
+						class="site-footer__logo-img"
+						src="/brand/keystone-logo.png"
+						alt=""
+						width="889"
+						height="285"
+						decoding="async"
+					/>
+				</a>
+				<p class="site-footer__kicker">The Keystone touch</p>
+				<p class="site-footer__line">Renovations done right.</p>
+				<p class="site-footer__body">{siteConfig.tagline}</p>
+				<p class="site-footer__badge">Leicestershire &amp; Midlands coverage</p>
+			</div>
+
+			<div class="site-footer__form-column">
+				<!-- Hook form submit to your API / Resend; field names: name, email, service, message, consent -->
+				<form
+					class="site-footer__form"
+					id="footer-consultation-form"
+					method="post"
+					action="#"
+					aria-label="Request a consultation"
+				>
+					<div class="site-footer__field">
+						<label class="site-footer__label" for="footer-name">Name</label>
+						<input
+							class="site-footer__input"
+							type="text"
+							id="footer-name"
+							name="name"
+							autocomplete="name"
+							required
+						/>
+					</div>
+					<div class="site-footer__field">
+						<label class="site-footer__label" for="footer-email">Email</label>
+						<input
+							class="site-footer__input"
+							type="email"
+							id="footer-email"
+							name="email"
+							autocomplete="email"
+							inputmode="email"
+							required
+						/>
+					</div>
+					<div class="site-footer__field">
+						<label class="site-footer__label" for="footer-service">Which service are you interested in?</label>
+						<select class="site-footer__select" id="footer-service" name="service" required>
+							<option value="" disabled selected>Select a service</option>
+							{
+								serviceChoices.map(({ value, label }) => (
+									<option value={value}>{label}</option>
+								))
+							}
+						</select>
+					</div>
+					<div class="site-footer__field">
+						<label class="site-footer__label" for="footer-message">Project details</label>
+						<textarea
+							class="site-footer__textarea"
+							id="footer-message"
+							name="message"
+							rows="5"
+							required
+						/>
+					</div>
+					<div class="site-footer__field site-footer__field--checkbox">
+						<input type="checkbox" id="footer-consent" name="consent" value="yes" required />
+						<label class="site-footer__check-label" for="footer-consent">
+							I understand Keystone Renovations will use these details to respond to my enquiry only. See our{' '}
+							<a href="/terms/">Terms</a> and <a href="/cookies/">Cookies</a> pages for more.
+						</label>
+					</div>
+					<div class="site-footer__actions">
+						<button type="submit" class="site-footer__submit">Request consultation</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="site-footer__bar">
+		<div class="site-footer__bar-inner">
+			<nav class="site-footer__legal" aria-label="Legal">
+				<ul>
+					{
+						legal.map(({ href, label }) => (
+							<li>
+								<a href={href}>{label}</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+			<p class="site-footer__credit">
+				<a
+					href="https://dotwall.co.uk"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="site-footer__credit-link"
+				>
+					dotwall
+				</a>
+			</p>
+		</div>
+	</div>
+</footer>
+
+<script>
+	document.getElementById('footer-consultation-form')?.addEventListener('submit', (e) => {
+		e.preventDefault();
+	});
+</script>
+
+<style>
+	.site-footer {
+		background: var(--color-white);
+		color: var(--color-dark-gray);
+	}
+
+	.site-footer__inner {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.25rem, 5vw, 2.5rem);
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.site-footer__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 2.25rem;
+		align-items: start;
+	}
+
+	@media (min-width: 960px) {
+		.site-footer__grid {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+			gap: clamp(2rem, 5vw, 3.5rem);
+		}
+	}
+
+	.site-footer__intro {
+		max-width: 34rem;
+	}
+
+	.site-footer__logo {
+		display: inline-flex;
+		margin-bottom: 1.25rem;
+		text-decoration: none;
+	}
+
+	.site-footer__logo:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 4px;
+		border-radius: 2px;
+	}
+
+	.site-footer__logo-img {
+		display: block;
+		height: clamp(2.25rem, 4vw, 2.85rem);
+		width: auto;
+		max-width: min(72vw, 260px);
+		object-fit: contain;
+	}
+
+	.site-footer__kicker {
+		margin: 0 0 0.35rem;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(0.9375rem, 0.85rem + 0.35vw, 1.125rem);
+		line-height: 1.25;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-dark-gray);
+	}
+
+	.site-footer__line {
+		margin: 0 0 1rem;
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+		line-height: 1.45;
+		color: color-mix(in srgb, var(--color-dark-gray) 55%, var(--color-gray));
+	}
+
+	.site-footer__body {
+		margin: 0 0 1.25rem;
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
+		line-height: 1.65;
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+	}
+
+	.site-footer__badge {
+		display: inline-flex;
+		align-items: center;
+		margin: 0;
+		padding: 0.45rem 0.85rem;
+		font-family: var(--font-body);
+		font-weight: 600;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+		letter-spacing: 0.02em;
+		color: color-mix(in srgb, var(--color-dark-gray) 72%, var(--color-gray));
+		background: var(--color-white-smoke);
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+		border-radius: 999px;
+	}
+
+	.site-footer__form {
+		margin: 0;
+	}
+
+	.site-footer__field {
+		margin-bottom: 1.1rem;
+	}
+
+	.site-footer__label {
+		display: block;
+		margin-bottom: 0.4rem;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.6875rem;
+		line-height: 1.35;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--color-dark-gray);
+	}
+
+	.site-footer__input,
+	.site-footer__select,
+	.site-footer__textarea {
+		width: 100%;
+		margin: 0;
+		font-family: var(--font-body);
+		font-size: 1rem;
+		line-height: 1.45;
+		color: var(--color-dark-gray);
+		background: color-mix(in srgb, var(--color-white-smoke) 72%, var(--color-white));
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, var(--color-white));
+		border-radius: 6px;
+		padding: 0.65rem 0.85rem;
+		transition:
+			border-color 0.2s ease,
+			box-shadow 0.2s ease;
+	}
+
+	.site-footer__textarea {
+		resize: vertical;
+		min-height: 7.5rem;
+	}
+
+	.site-footer__input::placeholder,
+	.site-footer__textarea::placeholder {
+		color: color-mix(in srgb, var(--color-dark-gray) 42%, var(--color-gray));
+		opacity: 1;
+	}
+
+	.site-footer__input:hover,
+	.site-footer__select:hover,
+	.site-footer__textarea:hover {
+		border-color: color-mix(in srgb, var(--color-dark-gray) 20%, var(--color-white));
+	}
+
+	.site-footer__input:focus-visible,
+	.site-footer__select:focus-visible,
+	.site-footer__textarea:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+		border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-dark-gray));
+	}
+
+	.site-footer__field--checkbox {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 0.6rem 0.75rem;
+		align-items: start;
+		margin-top: 1.15rem;
+		margin-bottom: 1.35rem;
+	}
+
+	.site-footer__field--checkbox input {
+		margin: 0.2rem 0 0;
+		width: 1.05rem;
+		height: 1.05rem;
+		accent-color: var(--color-dark-khaki);
+	}
+
+	.site-footer__check-label {
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-size: 0.8125rem;
+		line-height: 1.55;
+		color: color-mix(in srgb, var(--color-dark-gray) 68%, var(--color-gray));
+	}
+
+	.site-footer__check-label a {
+		font-weight: 600;
+		color: var(--color-dark-khaki);
+		text-decoration: underline;
+		text-underline-offset: 0.15em;
+	}
+
+	.site-footer__check-label a:hover {
+		color: var(--color-accent);
+	}
+
+	.site-footer__check-label a:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+		border-radius: 2px;
+	}
+
+	.site-footer__actions {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 0.25rem;
+	}
+
+	.site-footer__submit {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.9rem 1.85rem;
+		border: none;
+		border-radius: 999px;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.875rem;
+		line-height: 1.25;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-white);
+		background: var(--color-dark-khaki);
+		cursor: pointer;
+		transition:
+			filter 0.2s ease,
+			transform 0.2s ease;
+	}
+
+	.site-footer__submit:hover {
+		filter: brightness(1.06);
+	}
+
+	.site-footer__submit:active {
+		transform: scale(0.99);
+	}
+
+	.site-footer__submit:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.site-footer__submit {
+			transition: none;
+		}
+
+		.site-footer__submit:active {
+			transform: none;
+		}
+	}
+
+	.site-footer__bar {
+		background: color-mix(in srgb, var(--color-white-smoke) 65%, var(--color-white));
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.site-footer__bar-inner {
+		max-width: 72rem;
+		margin: 0 auto;
+		padding: 1rem clamp(1.25rem, 5vw, 2.5rem);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1.5rem;
+	}
+
+	.site-footer__legal ul {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 1.25rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.site-footer__legal a {
+		font-family: var(--font-body);
+		font-weight: 600;
+		font-size: 0.8125rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--color-dark-gray) 75%, var(--color-gray));
+		text-decoration: none;
+	}
+
+	.site-footer__legal a:hover {
+		color: var(--color-accent);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.site-footer__legal a:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	.site-footer__credit {
+		margin: 0;
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		color: color-mix(in srgb, var(--color-dark-gray) 55%, var(--color-gray));
+	}
+
+	.site-footer__credit-link {
+		font-weight: 600;
+		color: var(--color-dark-khaki);
+		text-decoration: none;
+	}
+
+	.site-footer__credit-link:hover {
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+
+	.site-footer__credit-link:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+</style>

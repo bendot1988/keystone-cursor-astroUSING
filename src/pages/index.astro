@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomeHero from '../components/HomeHero.astro';
+import HomeCompleteSolutions from '../components/HomeCompleteSolutions.astro';
+import HomeImageBreak from '../components/HomeImageBreak.astro';
+import HomeHowWeHelp from '../components/HomeHowWeHelp.astro';
+import HomeTestimonials from '../components/HomeTestimonials.astro';
+import { siteConfig } from '../site.config';
+---
+
+<BaseLayout
+	title={siteConfig.defaultTitle}
+	description="Thoughtful home renovations from Keystone Renovations — services, process, and how to start your project in Leicestershire and beyond."
+>
+	<main id="main-content">
+		<HomeHero />
+		<HomeCompleteSolutions />
+		<HomeTestimonials />
+		<HomeImageBreak />
+		<HomeHowWeHelp />
+	</main>
+</BaseLayout>
