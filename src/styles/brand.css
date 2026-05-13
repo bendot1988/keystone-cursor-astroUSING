@@ -56,7 +56,7 @@
 
 	/**
 	 * Motion — durations and easing (site-wide).
-	 * Entrance presets: `src/styles/global.css` (`.kr-motion-enter-*`, `.kr-motion-delay-*`; respect `prefers-reduced-motion`).
+	 * Entrance presets: `global.css` (initial state) + Motion One in `src/scripts/kr-motion-entrances.ts`.
 	 */
 	--motion-duration-200: 0.2s;
 	--motion-duration-250: 0.25s;

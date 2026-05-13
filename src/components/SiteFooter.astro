@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../site.config';
+import KeystoneBulletIcon from './KeystoneBulletIcon.astro';
 
 const legal = [
 	{ href: '/terms/', label: 'Terms' },
@@ -13,6 +14,16 @@ const serviceChoices = [
 	{ value: 'pre-sale', label: 'Pre-sale preparation' },
 	{ value: 'general', label: 'General enquiry' },
 	{ value: 'other', label: 'Other' },
+] as const;
+
+/** Footer “at a glance” — short labels; keep in sync with real capabilities. */
+const footerFocusAreas = [
+	'Full refurbishments',
+	'Kitchens & bathrooms',
+	'Landlord refreshes',
+	'Pre-sale preparation',
+	'Extensions & alterations',
+	'Finishing & handover care',
 ] as const;
 ---
 
@@ -33,11 +44,28 @@ const serviceChoices = [
 				<p class="site-footer__kicker">The Keystone touch</p>
 				<p class="site-footer__line">Renovations done right.</p>
 				<p class="site-footer__body">{siteConfig.tagline}</p>
+				<hr class="site-footer__divider" aria-hidden="true" />
+				<div class="site-footer__focus">
+					<h2 class="site-footer__focus-heading" id="footer-focus-heading">Our focus</h2>
+					<p class="site-footer__focus-sub">A snapshot of the work we do most often.</p>
+					<ul class="site-footer__focus-grid" aria-labelledby="footer-focus-heading">
+						{
+							footerFocusAreas.map((label) => (
+								<li class="site-footer__focus-chip">
+									<span class="site-footer__focus-icon" aria-hidden="true">
+										<KeystoneBulletIcon />
+									</span>
+									<span class="site-footer__focus-text">{label}</span>
+								</li>
+							))
+						}
+					</ul>
+				</div>
 				<p class="site-footer__badge">Leicestershire &amp; Midlands coverage</p>
 			</div>
 
 			<div class="site-footer__form-column">
-				<!-- Hook form submit to your API / Resend; field names: name, email, service, message, consent -->
+				<!-- Hook form submit to your API / Resend; field names: name, email, phone, service, message, consent -->
 				<form
 					class="site-footer__form"
 					id="footer-consultation-form"
@@ -53,6 +81,7 @@ const serviceChoices = [
 							id="footer-name"
 							name="name"
 							autocomplete="name"
+							placeholder="John Smith"
 							required
 						/>
 					</div>
@@ -65,8 +94,31 @@ const serviceChoices = [
 							name="email"
 							autocomplete="email"
 							inputmode="email"
+							placeholder="your.name@email.com"
 							required
 						/>
+					</div>
+					<div class="site-footer__field">
+						<label class="site-footer__label" for="footer-phone">Telephone</label>
+						<span id="footer-phone-desc" class="visually-hidden">
+							United Kingdom country code plus 44 is shown. Enter the rest of your number without a leading zero.
+						</span>
+						<div class="site-footer__phone-wrap">
+							<div class="site-footer__phone-affix" aria-hidden="true">
+								<abbr class="site-footer__phone-gb" title="United Kingdom">GB</abbr>
+								<span class="site-footer__phone-cc">+44</span>
+							</div>
+							<input
+								class="site-footer__input site-footer__input--phone"
+								type="tel"
+								id="footer-phone"
+								name="phone"
+								autocomplete="tel"
+								inputmode="tel"
+								placeholder="116 220 1662"
+								aria-describedby="footer-phone-desc"
+							/>
+						</div>
 					</div>
 					<div class="site-footer__field">
 						<label class="site-footer__label" for="footer-service">Which service are you interested in?</label>
@@ -86,6 +138,7 @@ const serviceChoices = [
 							id="footer-message"
 							name="message"
 							rows="5"
+							placeholder="Tell us about your project, timing, and anything we should know upfront."
 							required
 						/>
 					</div>
@@ -97,9 +150,16 @@ const serviceChoices = [
 						</label>
 					</div>
 					<div class="site-footer__actions">
-						<button type="submit" class="site-footer__submit">Request consultation</button>
+						<button type="submit" class="site-footer__submit type-button-16-700">Request consultation</button>
 					</div>
 				</form>
+				<nav class="site-footer__secondary" aria-label="Other ways to reach us">
+					<a class="site-footer__secondary-link" href={`tel:${siteConfig.phoneTel}`}>
+						Call {siteConfig.phoneDisplay}
+					</a>
+					<span class="site-footer__secondary-sep" aria-hidden="true">·</span>
+					<a class="site-footer__secondary-link" href="/services/">View services</a>
+				</nav>
 			</div>
 		</div>
 	</div>
@@ -210,11 +270,120 @@ const serviceChoices = [
 
 	.site-footer__body {
 		margin: 0 0 1.25rem;
+		max-width: min(100%, 24.5rem);
 		font-family: var(--font-body);
 		font-weight: 400;
 		font-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1.0625rem);
 		line-height: 1.65;
 		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+		text-wrap: pretty;
+	}
+
+	.site-footer__divider {
+		margin: 0 0 1.25rem;
+		max-width: min(100%, 24.5rem);
+		border: none;
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, var(--color-white));
+	}
+
+	.site-footer__focus {
+		margin: 0 0 1.35rem;
+	}
+
+	.site-footer__focus-heading {
+		margin: 0 0 0.35rem;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(0.9375rem, 0.85rem + 0.35vw, 1.0625rem);
+		line-height: 1.25;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--color-dark-gray);
+	}
+
+	.site-footer__focus-sub {
+		margin: 0 0 0.85rem;
+		font-family: var(--font-body);
+		font-weight: 500;
+		font-size: 0.8125rem;
+		line-height: 1.45;
+		color: color-mix(in srgb, var(--color-dark-gray) 58%, var(--color-gray));
+	}
+
+	.site-footer__focus-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.55rem;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	@media (min-width: 22rem) {
+		.site-footer__focus-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.site-footer__focus-chip {
+		display: flex;
+		align-items: center;
+		gap: 0.45rem;
+		margin: 0;
+		padding: 0.5rem 0.55rem;
+		min-height: 2.75rem;
+		font-family: var(--font-body);
+		font-weight: 600;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+		letter-spacing: 0.02em;
+		color: var(--color-dark-gray);
+		background: var(--color-white);
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 16%, var(--color-white));
+		border-radius: 8px;
+		box-shadow: none;
+		transition:
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard),
+			transform var(--motion-duration-280) var(--motion-ease-standard),
+			border-color var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.site-footer__focus-chip:hover {
+		transform: translateY(-3px);
+		border-color: color-mix(in srgb, var(--color-dark-khaki) 35%, var(--color-dark-gray));
+		box-shadow:
+			0 2px 6px rgba(26, 27, 27, 0.06),
+			0 10px 28px rgba(26, 27, 27, 0.12);
+	}
+
+	.site-footer__focus-icon {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.site-footer__focus-icon :global(svg) {
+		display: block;
+		width: 1.125rem;
+		height: 1.125rem;
+	}
+
+	.site-footer__focus-text {
+		flex: 1;
+		min-width: 0;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.site-footer__focus-chip {
+			transition:
+				box-shadow var(--motion-duration-200) var(--motion-ease-standard),
+				border-color var(--motion-duration-200) var(--motion-ease-standard);
+		}
+
+		.site-footer__focus-chip:hover {
+			transform: none;
+		}
 	}
 
 	.site-footer__badge {
@@ -238,10 +407,57 @@ const serviceChoices = [
 		padding: clamp(1.35rem, 3.2vw, 2rem);
 		background: color-mix(in srgb, var(--color-white-smoke) 55%, var(--color-white));
 		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, var(--color-white));
-		border-radius: 12px;
+		border-radius: 8px;
 		box-shadow:
 			0 1px 2px rgba(26, 27, 27, 0.04),
 			0 6px 20px rgba(26, 27, 27, 0.07);
+	}
+
+	.site-footer__form-column {
+		min-width: 0;
+	}
+
+	.site-footer__secondary {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem 0.45rem;
+		margin-top: 1.05rem;
+		text-align: center;
+	}
+
+	.site-footer__secondary-link {
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.8125rem;
+		line-height: 1.35;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-dark-khaki);
+		text-decoration: none;
+		border-bottom: 1px solid color-mix(in srgb, var(--color-dark-khaki) 42%, transparent);
+		padding-bottom: 0.12em;
+		transition:
+			color var(--motion-duration-200) var(--motion-ease-standard),
+			border-color var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.site-footer__secondary-link:hover {
+		color: var(--color-accent);
+		border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
+	}
+
+	.site-footer__secondary-link:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 3px;
+		border-radius: 2px;
+	}
+
+	.site-footer__secondary-sep {
+		color: color-mix(in srgb, var(--color-gray) 85%, var(--color-dark-gray));
+		font-weight: 600;
+		user-select: none;
 	}
 
 	.site-footer__field {
@@ -303,6 +519,74 @@ const serviceChoices = [
 		border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-dark-gray));
 	}
 
+	.site-footer__phone-wrap {
+		display: flex;
+		align-items: stretch;
+		width: 100%;
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, var(--color-white));
+		border-radius: 6px;
+		background: color-mix(in srgb, var(--color-white-smoke) 72%, var(--color-white));
+		transition:
+			border-color var(--motion-duration-200) var(--motion-ease-standard),
+			box-shadow var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.site-footer__phone-affix {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.12rem;
+		flex-shrink: 0;
+		padding: 0.4rem 0.55rem;
+		border-right: 1px solid color-mix(in srgb, var(--color-dark-gray) 10%, var(--color-white));
+		font-family: var(--font-heading);
+		font-weight: 700;
+		color: var(--color-dark-gray);
+		text-align: center;
+	}
+
+	.site-footer__phone-gb {
+		font-size: 0.6875rem;
+		line-height: 1.1;
+		letter-spacing: 0.14em;
+		text-decoration: none;
+		cursor: default;
+		border: none;
+	}
+
+	.site-footer__phone-cc {
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.625rem;
+		line-height: 1.2;
+		letter-spacing: 0.03em;
+		color: color-mix(in srgb, var(--color-dark-gray) 58%, var(--color-gray));
+	}
+
+	.site-footer__input--phone {
+		flex: 1 1 auto;
+		min-width: 0;
+		width: auto;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+	}
+
+	.site-footer__phone-wrap:hover {
+		border-color: color-mix(in srgb, var(--color-dark-gray) 20%, var(--color-white));
+	}
+
+	.site-footer__phone-wrap:focus-within {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+		border-color: color-mix(in srgb, var(--color-accent) 65%, var(--color-dark-gray));
+	}
+
+	.site-footer__phone-wrap .site-footer__input--phone:focus-visible {
+		outline: none;
+	}
+
 	.site-footer__field--checkbox {
 		display: grid;
 		grid-template-columns: auto 1fr;
@@ -329,13 +613,14 @@ const serviceChoices = [
 
 	.site-footer__check-label a {
 		font-weight: 600;
-		color: var(--color-dark-khaki);
+		color: color-mix(in srgb, var(--color-dark-khaki) 88%, var(--color-card-icon-gold));
 		text-decoration: underline;
-		text-underline-offset: 0.15em;
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.18em;
 	}
 
 	.site-footer__check-label a:hover {
-		color: var(--color-accent);
+		color: var(--color-dark-khaki);
 	}
 
 	.site-footer__check-label a:focus-visible {
@@ -352,21 +637,18 @@ const serviceChoices = [
 		margin-top: 0.25rem;
 	}
 
+	/* Primary CTA — same recipe as homepage hero CTA (khaki fill, Open Sans via .type-button-16-700, 3px radius). */
 	.site-footer__submit {
-		display: flex;
+		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 		width: 100%;
 		box-sizing: border-box;
-		padding: 0.9rem 1.85rem;
+		padding: 0.85rem 1.5rem;
 		border: none;
-		border-radius: 999px;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.875rem;
-		line-height: 1.25;
-		letter-spacing: 0.08em;
+		border-radius: 3px;
 		text-transform: uppercase;
+		letter-spacing: 0.1em;
 		color: var(--color-white);
 		background: var(--color-dark-khaki);
 		cursor: pointer;

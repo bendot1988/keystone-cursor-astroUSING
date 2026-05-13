@@ -69,7 +69,7 @@ const radiiAndShadows = [
 	{ label: 'Header CTA', radius: '2px', note: 'site-header__cta' },
 	{ label: 'Hero CTA', radius: '3px', note: 'home-hero__cta' },
 	{ label: 'Cards / tabs', radius: '8–10px', note: 'Complete solutions cards 10px; how-we-help tabs 8px, cards 10px' },
-	{ label: 'Pills / arrows', radius: '50% / 999px', note: 'Icon wells, testimonial arrows, footer submit' },
+	{ label: 'Pills / arrows', radius: '50% / 999px', note: 'Icon wells, testimonial arrows' },
 ] as const;
 
 const motionPresets = [
@@ -460,23 +460,16 @@ const motionPresets = [
 </BaseLayout>
 
 <script>
+	import { replayKrMotionEntrance } from '../../../scripts/kr-motion-entrances';
+
 	(() => {
 		const root = document.querySelector('[data-motion-demos]');
 		if (!root) return;
 
-		function replay(panel) {
-			const cls = [...panel.classList].find((c) => c.startsWith('kr-motion-enter'));
-			if (!cls) return;
-			panel.classList.remove(cls);
-			// reflow to restart CSS animation
-			void panel.offsetWidth;
-			panel.classList.add(cls);
-		}
-
 		root.querySelectorAll('[data-motion-replay]').forEach((btn) => {
 			btn.addEventListener('click', () => {
 				const panel = btn.closest('.style-guide__motion-item')?.querySelector('[data-motion-panel]');
-				if (panel) replay(panel);
+				replayKrMotionEntrance(panel as HTMLElement | null);
 			});
 		});
 
@@ -484,14 +477,8 @@ const motionPresets = [
 		const row = root.querySelector('[data-motion-stagger-row]');
 		if (rowBtn && row) {
 			rowBtn.addEventListener('click', () => {
-				const cards = [...row.querySelectorAll('.style-guide__stagger-card')];
-				cards.forEach((el) => {
-					el.classList.remove('kr-motion-enter-fade-up-sm', 'kr-motion-delay-1', 'kr-motion-delay-2');
-				});
-				void row.offsetWidth;
-				cards[0]?.classList.add('kr-motion-enter-fade-up-sm');
-				cards[1]?.classList.add('kr-motion-enter-fade-up-sm', 'kr-motion-delay-1');
-				cards[2]?.classList.add('kr-motion-enter-fade-up-sm', 'kr-motion-delay-2');
+				const cards = [...row.querySelectorAll('.style-guide__stagger-card')] as HTMLElement[];
+				cards.forEach((el) => replayKrMotionEntrance(el));
 			});
 		}
 	})();

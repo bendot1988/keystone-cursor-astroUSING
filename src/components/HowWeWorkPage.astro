@@ -1,8 +1,48 @@
 ---
-import { philosophyCards } from '../data/philosophyCards';
+import { philosophyCards, type PhilosophyCard } from '../data/philosophyCards';
+import KeystoneBulletIcon from './KeystoneBulletIcon.astro';
 
 /** Temporary: reuse hero art for each band until per-section photography exists. */
 const sectionPlaceholderImage = '/images/hero-interior.jpg';
+
+function splitIntroFirstSentence(pageIntro: string): { lead: string | null; rest: string } {
+	const m = pageIntro.match(/^(.+?[.!?])\s+(.*)$/s);
+	if (!m) return { lead: null, rest: pageIntro };
+	return { lead: m[1].trim(), rest: m[2].trim() };
+}
+
+function bandContentModel(card: PhilosophyCard) {
+	const listStyle = card.listStyle ?? 'bullets';
+	let introLead: string | null = null;
+	let introBody = card.pageIntro;
+	let leadBullet: string | null = null;
+	let displayBullets: readonly string[] = card.bullets;
+
+	if (listStyle === 'bullets' && card.leadEmphasis === 'firstBullet') {
+		leadBullet = card.bullets[0] ?? null;
+		displayBullets = card.bullets.slice(1);
+	} else if (listStyle === 'bullets' && card.leadEmphasis === 'introFirstSentence') {
+		const s = splitIntroFirstSentence(card.pageIntro);
+		if (s.lead) {
+			introLead = s.lead;
+			introBody = s.rest;
+		}
+	}
+
+	const listItems = listStyle === 'steps' ? card.bullets : displayBullets;
+	const needsMobileCollapse = listItems.length > 3;
+
+	return { listStyle, introLead, introBody, leadBullet, listItems, needsMobileCollapse };
+}
+
+/** Mid-page breather — split after first half of philosophy bands. */
+const breatherAfterIndex = Math.ceil(philosophyCards.length / 2);
+/** Replace with verified figures for your market. */
+const breatherStats = [
+	{ value: '15+', label: 'years in business' },
+	{ value: '500+', label: 'projects delivered' },
+	{ value: '10-year', label: 'workmanship warranty' },
+] as const;
 ---
 
 <div class="how-we-work-page">
@@ -10,54 +50,465 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 		<div class="how-we-work-hero__inner">
 			<h1 class="how-we-work-hero__title type-h2-48-700">How we work</h1>
 			<p class="how-we-work-hero__lede type-large-body-18-400">
-				We are the Keystone to your Project \u2013 the centre point from which all else depends.
+				We keep things clear, calm, and well organised—from the first conversation to completion. Honest communication,
+				sound craftsmanship, and respect for your home, your time, and your privacy run through everything we do.
 			</p>
 		</div>
 	</header>
 
 	{
-		philosophyCards.map(({ title, body, iconSrc }, i) => (
-			<section
-				class:list={['how-we-work-band', i % 2 === 1 && 'how-we-work-band--flip']}
-				aria-labelledby={`how-we-work-h-${i}`}
-			>
-				<div class="how-we-work-band__inner">
-					<div class="how-we-work-band__text">
-						<div class="how-we-work-band__icon" aria-hidden="true">
-							<img class="how-we-work-band__icon-img" src={iconSrc} alt="" width="28" height="28" decoding="async" />
+		philosophyCards.map((card, i) => {
+			const { title, iconSrc } = card;
+			const { listStyle, introLead, introBody, leadBullet, listItems, needsMobileCollapse } = bandContentModel(card);
+			const mobileExtraCount = listItems.length > 3 ? listItems.length - 3 : 0;
+			const listItemsMobileHead = listItems.slice(0, 3);
+			const listItemsMobileTail = listItems.slice(3);
+
+			return (
+				<>
+					{
+						i === breatherAfterIndex && (
+							<div class="how-we-work-breather" role="region" aria-labelledby="how-we-work-breather-heading">
+								<div class="how-we-work-breather__inner">
+									<hr class="how-we-work-breather__rule" />
+									<h2 id="how-we-work-breather-heading" class="how-we-work-breather__title type-heading-24-700">
+										What you can expect from day one
+									</h2>
+									<p class="how-we-work-breather__lede type-large-body-18-400">
+										Clear expectations, steady communication, and workmanship you can see—without the noise of a
+										typical build.
+									</p>
+									<dl class="how-we-work-breather__stats">
+										{
+											breatherStats.map(({ value, label }) => (
+												<div class="how-we-work-breather__stat">
+													<dt class="how-we-work-breather__stat-value">{value}</dt>
+													<dd class="how-we-work-breather__stat-label type-large-body-18-400">{label}</dd>
+												</div>
+											))
+										}
+									</dl>
+									<figure class="how-we-work-breather__quote">
+										<blockquote class="how-we-work-breather__quote-text type-large-body-18-400">
+											<p>
+												They made a potentially stressful renovation feel manageable. We always knew what was
+												happening next, and the finish is exactly what we hoped for.
+											</p>
+										</blockquote>
+										<figcaption class="how-we-work-breather__quote-cite">
+											— Homeowner, recent full-home renovation
+										</figcaption>
+									</figure>
+								</div>
+							</div>
+						)
+					}
+					<section
+						class:list={['how-we-work-band', i % 2 === 1 && 'how-we-work-band--flip']}
+						aria-labelledby={`how-we-work-h-${i}`}
+						style={{ '--section-i': i }}
+					>
+						<div class="how-we-work-band__inner">
+							<div class="how-we-work-band__text">
+								<div class="how-we-work-band__icon" aria-hidden="true">
+									<img class="how-we-work-band__icon-img" src={iconSrc} alt="" width="28" height="28" decoding="async" />
+								</div>
+								<h2 id={`how-we-work-h-${i}`} class="how-we-work-band__title type-h3-20-700">
+									{title}
+								</h2>
+								{introLead && <p class="how-we-work-band__lead type-body-18-700">{introLead}</p>}
+								<p class="how-we-work-band__intro type-large-body-18-400">{introBody}</p>
+								{leadBullet && <p class="how-we-work-band__lead type-body-18-700">{leadBullet}</p>}
+								{
+									listStyle === 'steps' ? (
+										needsMobileCollapse ? (
+											<>
+												<ol class="how-we-work-band__steps how-we-work-band__list-desktop">
+													{
+														listItems.map((item, bi) => (
+															<li class="how-we-work-band__step type-large-body-18-400" style={{ '--bullet-i': bi }}>
+																<span class="how-we-work-band__step-num" aria-hidden="true">
+																	{bi + 1} ·{' '}
+																</span>
+																<span class="how-we-work-band__step-text">{item}</span>
+															</li>
+														))
+													}
+												</ol>
+												<div class="how-we-work-band__list-mobile">
+													<ol class="how-we-work-band__steps">
+														{
+															listItemsMobileHead.map((item, bi) => (
+																<li class="how-we-work-band__step type-large-body-18-400" style={{ '--bullet-i': bi }}>
+																	<span class="how-we-work-band__step-num" aria-hidden="true">
+																		{bi + 1} ·{' '}
+																	</span>
+																	<span class="how-we-work-band__step-text">{item}</span>
+																</li>
+															))
+														}
+													</ol>
+													<details class="how-we-work-band__also-mobile">
+														<summary class="how-we-work-band__also-mobile-summary type-body-16-500">
+															Also includes {mobileExtraCount} more {mobileExtraCount === 1 ? 'point' : 'points'}
+														</summary>
+														<ol class="how-we-work-band__steps how-we-work-band__steps--nested">
+															{
+																listItemsMobileTail.map((item, bi) => (
+																	<li
+																		class="how-we-work-band__step type-large-body-18-400"
+																		style={{ '--bullet-i': bi + 3 }}
+																	>
+																		<span class="how-we-work-band__step-num" aria-hidden="true">
+																			{bi + 4} ·{' '}
+																		</span>
+																		<span class="how-we-work-band__step-text">{item}</span>
+																	</li>
+																))
+															}
+														</ol>
+													</details>
+												</div>
+											</>
+										) : (
+											<ol class="how-we-work-band__steps">
+												{
+													listItems.map((item, bi) => (
+														<li class="how-we-work-band__step type-large-body-18-400" style={{ '--bullet-i': bi }}>
+															<span class="how-we-work-band__step-num" aria-hidden="true">
+																{bi + 1} ·{' '}
+															</span>
+															<span class="how-we-work-band__step-text">{item}</span>
+														</li>
+													))
+												}
+											</ol>
+										)
+									) : needsMobileCollapse ? (
+										<>
+											<ul class="how-we-work-band__bullets how-we-work-band__list-desktop">
+												{
+													listItems.map((item, bi) => (
+														<li class="how-we-work-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+															<span class="how-we-work-band__bullet-mark">
+																<KeystoneBulletIcon />
+															</span>
+															<span class="how-we-work-band__bullet-text">{item}</span>
+														</li>
+													))
+												}
+											</ul>
+											<div class="how-we-work-band__list-mobile">
+												<ul class="how-we-work-band__bullets">
+													{
+														listItemsMobileHead.map((item, bi) => (
+															<li class="how-we-work-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+																<span class="how-we-work-band__bullet-mark">
+																	<KeystoneBulletIcon />
+																</span>
+																<span class="how-we-work-band__bullet-text">{item}</span>
+															</li>
+														))
+													}
+												</ul>
+												<details class="how-we-work-band__also-mobile">
+													<summary class="how-we-work-band__also-mobile-summary type-body-16-500">
+														Also includes {mobileExtraCount} more {mobileExtraCount === 1 ? 'point' : 'points'}
+													</summary>
+													<ul class="how-we-work-band__bullets how-we-work-band__bullets--nested">
+														{
+															listItemsMobileTail.map((item, bi) => (
+																<li
+																	class="how-we-work-band__bullet type-large-body-18-400"
+																	style={{ '--bullet-i': bi + 3 }}
+																>
+																	<span class="how-we-work-band__bullet-mark">
+																		<KeystoneBulletIcon />
+																	</span>
+																	<span class="how-we-work-band__bullet-text">{item}</span>
+																</li>
+															))
+														}
+													</ul>
+												</details>
+											</div>
+										</>
+									) : (
+										<ul class="how-we-work-band__bullets">
+											{
+												listItems.map((item, bi) => (
+													<li class="how-we-work-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+														<span class="how-we-work-band__bullet-mark">
+															<KeystoneBulletIcon />
+														</span>
+														<span class="how-we-work-band__bullet-text">{item}</span>
+													</li>
+												))
+											}
+										</ul>
+									)
+								}
+							</div>
+							<div class="how-we-work-band__media">
+								<img
+									class="how-we-work-band__img"
+									src={sectionPlaceholderImage}
+									alt=""
+									width="1200"
+									height="800"
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
 						</div>
-						<h2 id={`how-we-work-h-${i}`} class="how-we-work-band__title type-h3-20-700">
-							{title}
-						</h2>
-						<p class="how-we-work-band__body type-large-body-18-400">{body}</p>
-					</div>
-					<div class="how-we-work-band__media">
-						<img
-							class="how-we-work-band__img"
-							src={sectionPlaceholderImage}
-							alt=""
-							width="1200"
-							height="800"
-							loading="lazy"
-							decoding="async"
-						/>
-					</div>
-				</div>
-			</section>
-		))
+					</section>
+				</>
+			);
+		})
 	}
+
+	<aside class="how-we-work-cta" role="region" aria-labelledby="how-we-work-cta-heading">
+		<div class="how-we-work-cta__inner">
+			<h2 id="how-we-work-cta-heading" class="how-we-work-cta__title type-heading-24-700">
+				Ready to talk it through?
+			</h2>
+			<p class="how-we-work-cta__lede type-large-body-18-400">
+				Whether you are still weighing options or ready to move, we are happy to listen and advise—with no obligation.
+			</p>
+			<div class="how-we-work-cta__actions">
+				<a class="how-we-work-cta__btn how-we-work-cta__btn--primary type-button-16-700" href="/contact/#discuss">
+					Book a call
+				</a>
+				<a class="how-we-work-cta__btn how-we-work-cta__btn--ghost type-button-16-700" href="/contact/">Contact us</a>
+			</div>
+		</div>
+	</aside>
 </div>
 
 <style>
+	@keyframes hww-bullet-reveal {
+		from {
+			opacity: 0;
+			transform: translateY(0.45rem);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
 	.how-we-work-page {
 		background: var(--color-white);
 	}
 
+	.how-we-work-cta {
+		padding: clamp(2rem, 5vw, 2.85rem) var(--section-pad-x);
+		text-align: center;
+		background: linear-gradient(
+			165deg,
+			color-mix(in srgb, var(--color-dark-khaki) 24%, var(--color-dark-gray)) 0%,
+			var(--color-dark-gray) 38%,
+			var(--color-dark-gray) 100%
+		);
+		border-top: 1px solid color-mix(in srgb, var(--color-card-icon-gold) 38%, var(--color-dark-gray));
+	}
+
+	.how-we-work-cta__inner {
+		max-width: var(--layout-max-48);
+		margin: 0 auto;
+	}
+
+	.how-we-work-cta__title {
+		margin: 0 0 0.65rem;
+		color: var(--color-white);
+		text-transform: none;
+		letter-spacing: 0.02em;
+		line-height: 1.25;
+	}
+
+	.how-we-work-cta__lede {
+		margin: 0 auto 1.35rem;
+		max-width: 32rem;
+		color: rgba(255, 255, 255, 0.9);
+		text-align: center;
+		text-wrap: pretty;
+	}
+
+	.how-we-work-cta__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1rem;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.how-we-work-cta__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.75rem;
+		padding: 0.7rem 1.35rem;
+		text-decoration: none;
+		border-radius: 3px;
+		transition:
+			filter var(--motion-duration-200) var(--motion-ease-standard),
+			background-color var(--motion-duration-200) var(--motion-ease-standard),
+			border-color var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.how-we-work-cta__btn--primary {
+		color: var(--color-white);
+		background: var(--color-dark-khaki);
+		border: 1px solid transparent;
+	}
+
+	.how-we-work-cta__btn--primary:hover {
+		filter: brightness(1.08);
+	}
+
+	.how-we-work-cta__btn--ghost {
+		color: var(--color-white);
+		background: transparent;
+		border: 1px solid color-mix(in srgb, var(--color-white) 52%, transparent);
+	}
+
+	.how-we-work-cta__btn--ghost:hover {
+		background: color-mix(in srgb, var(--color-white) 9%, transparent);
+		border-color: color-mix(in srgb, var(--color-white) 68%, transparent);
+	}
+
+	.how-we-work-cta__btn:focus-visible {
+		outline: 2px solid var(--color-white);
+		outline-offset: 3px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.how-we-work-cta__btn {
+			transition: none;
+		}
+	}
+
+	.how-we-work-breather {
+		padding: clamp(2.25rem, 5vw, 3.25rem) var(--section-pad-x);
+		background: linear-gradient(
+			180deg,
+			color-mix(in srgb, var(--color-card-icon-gold) 12%, var(--color-white)) 0%,
+			var(--color-white) 100%
+		);
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+		border-bottom: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.how-we-work-breather__inner {
+		max-width: var(--layout-max-52);
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.how-we-work-breather__rule {
+		width: min(12rem, 40%);
+		margin: 0 auto 1.25rem;
+		border: none;
+		border-top: 2px solid color-mix(in srgb, var(--color-card-icon-gold) 55%, var(--color-dark-gray));
+		opacity: 0.85;
+	}
+
+	.how-we-work-breather__title {
+		margin: 0 0 0.65rem;
+		color: var(--color-dark-gray);
+		text-transform: none;
+		letter-spacing: 0.02em;
+		line-height: 1.25;
+	}
+
+	.how-we-work-breather__lede {
+		margin: 0 auto 1.75rem;
+		max-width: 36rem;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+	}
+
+	.how-we-work-breather__stats {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin: 0 0 2rem;
+		padding: 0;
+		border: none;
+	}
+
+	@media (min-width: 40rem) {
+		.how-we-work-breather__stats {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1rem 1.5rem;
+			margin-bottom: 2.25rem;
+		}
+	}
+
+	.how-we-work-breather__stat {
+		margin: 0;
+		padding: 0.65rem 0.5rem 0.85rem;
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--color-white) 72%, var(--color-white-smoke));
+		box-shadow: 0 1px 0 color-mix(in srgb, var(--color-dark-gray) 6%, transparent);
+	}
+
+	.how-we-work-breather__stat-value {
+		margin: 0 0 0.2rem;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+		line-height: 1.15;
+		letter-spacing: 0.04em;
+		color: var(--color-dark-khaki);
+	}
+
+	.how-we-work-breather__stat-label {
+		margin: 0;
+		font-size: 0.9375rem;
+		line-height: 1.45;
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+	}
+
+	.how-we-work-breather__quote {
+		margin: 0;
+		padding: 0;
+	}
+
+	.how-we-work-breather__quote-text {
+		margin: 0 auto;
+		max-width: 38rem;
+		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+		font-style: italic;
+	}
+
+	.how-we-work-breather__quote-text p {
+		margin: 0;
+	}
+
+	.how-we-work-breather__quote-text p::before {
+		content: '\201C';
+	}
+
+	.how-we-work-breather__quote-text p::after {
+		content: '\201D';
+	}
+
+	.how-we-work-breather__quote-cite {
+		margin: 0.85rem 0 0;
+		font-family: var(--font-body);
+		font-size: 0.8125rem;
+		font-weight: 400;
+		line-height: 1.45;
+		letter-spacing: 0.02em;
+		color: var(--color-gray);
+	}
+
 	.how-we-work-hero {
 		position: relative;
-		min-height: min(70vh, 40rem);
+		min-height: min(42vh, 22rem);
 		display: flex;
-		align-items: flex-end;
+		align-items: center;
+		justify-content: center;
 		background-color: var(--color-dark-gray);
 		background-image:
 			linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)),
@@ -77,13 +528,14 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 		position: relative;
 		z-index: 1;
 		width: 100%;
-		max-width: var(--layout-max-52);
+		max-width: var(--layout-max-48);
 		margin: 0 auto;
-		padding: clamp(2.5rem, 6vw, 4rem) var(--section-pad-x) clamp(2rem, 5vw, 3rem);
+		padding: clamp(1.75rem, 4vw, 2.75rem) var(--section-pad-x);
+		text-align: center;
 	}
 
 	.how-we-work-hero__title {
-		margin: 0 0 0.75rem;
+		margin: 0 0 0.85rem;
 		color: var(--color-white);
 		text-transform: none;
 		letter-spacing: 0.03em;
@@ -93,10 +545,10 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 	}
 
 	.how-we-work-hero__lede {
-		margin: 0;
-		max-width: var(--layout-max-44);
+		margin: 0 auto;
+		max-width: 40rem;
 		color: rgba(255, 255, 255, 0.95);
-		text-align: left;
+		text-align: center;
 	}
 
 	.how-we-work-band {
@@ -121,7 +573,6 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 		margin: 0 auto;
 	}
 
-	/* Mobile: always copy first, image second (readable; alternation from md up). */
 	.how-we-work-band__text {
 		order: 1;
 	}
@@ -136,7 +587,6 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 			gap: clamp(1.75rem, 4vw, 3rem);
 		}
 
-		/* Default: text left, image right */
 		.how-we-work-band:not(.how-we-work-band--flip) .how-we-work-band__text {
 			order: 1;
 		}
@@ -164,6 +614,14 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 		border-radius: 50%;
 		background: var(--color-card-icon-gold);
 		color: var(--color-white);
+		transition:
+			transform var(--motion-duration-280) var(--motion-ease-standard),
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.how-we-work-band__text:hover .how-we-work-band__icon {
+		transform: scale(1.06);
+		box-shadow: 0 6px 18px rgba(26, 27, 27, 0.12);
 	}
 
 	.how-we-work-band__icon-img {
@@ -181,10 +639,180 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 		color: var(--color-dark-gray);
 	}
 
-	.how-we-work-band__body {
-		margin: 0;
+	.how-we-work-band__intro {
+		margin: 0 0 1.15rem;
 		text-align: left;
 		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+	}
+
+	.how-we-work-band__lead {
+		margin: 0 0 0.85rem;
+		padding-left: 0.85rem;
+		border-left: 3px solid color-mix(in srgb, var(--color-card-icon-gold) 70%, var(--color-dark-khaki));
+		text-align: left;
+		color: var(--color-dark-gray);
+		line-height: 1.45;
+	}
+
+	.how-we-work-band__lead + .how-we-work-band__intro {
+		margin-top: -0.15rem;
+	}
+
+	.how-we-work-band__bullets.how-we-work-band__list-desktop,
+	.how-we-work-band__steps.how-we-work-band__list-desktop {
+		display: none;
+	}
+
+	@media (min-width: 48rem) {
+		.how-we-work-band__bullets.how-we-work-band__list-desktop,
+		.how-we-work-band__steps.how-we-work-band__list-desktop {
+			display: flex;
+		}
+
+		.how-we-work-band__list-mobile {
+			display: none !important;
+		}
+	}
+
+	.how-we-work-band__list-mobile {
+		display: block;
+	}
+
+	.how-we-work-band__also-mobile {
+		margin-top: 0.35rem;
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--color-white-smoke) 65%, var(--color-white));
+	}
+
+	.how-we-work-band__also-mobile-summary {
+		padding: 0.55rem 0.65rem;
+		cursor: pointer;
+		list-style: none;
+		color: var(--color-dark-khaki);
+		letter-spacing: 0.02em;
+	}
+
+	.how-we-work-band__also-mobile-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.how-we-work-band__also-mobile-summary::after {
+		content: '';
+		display: inline-block;
+		width: 0.35rem;
+		height: 0.35rem;
+		margin-left: 0.4rem;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: rotate(45deg) translateY(-0.1rem);
+		vertical-align: middle;
+		opacity: 0.75;
+	}
+
+	.how-we-work-band__also-mobile[open] .how-we-work-band__also-mobile-summary::after {
+		transform: rotate(225deg) translateY(0.05rem);
+	}
+
+	.how-we-work-band__bullets--nested,
+	.how-we-work-band__steps--nested {
+		margin: 0 0 0.5rem;
+		padding: 0 0.65rem 0.65rem 1.5rem;
+	}
+
+	.how-we-work-band__steps {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.how-we-work-band__step {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.35rem;
+		margin: 0;
+		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+		opacity: 0;
+		animation: hww-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
+		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
+		transition:
+			color var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.how-we-work-band__step:hover {
+		color: var(--color-dark-gray);
+		transform: translateX(2px);
+	}
+
+	.how-we-work-band__step-num {
+		flex-shrink: 0;
+		min-width: 2.25rem;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.9375rem;
+		line-height: 1.55;
+		letter-spacing: 0.04em;
+		color: var(--color-dark-khaki);
+	}
+
+	.how-we-work-band__step-text {
+		flex: 1;
+		min-width: 0;
+		line-height: 1.55;
+	}
+
+	.how-we-work-band__bullets {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.how-we-work-band__bullet {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.65rem;
+		margin: 0;
+		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+		opacity: 0;
+		animation: hww-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
+		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
+		transition:
+			color var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.how-we-work-band__bullet:hover {
+		color: var(--color-dark-gray);
+		transform: translateX(2px);
+	}
+
+	.how-we-work-band__bullet:hover :global(svg) {
+		transform: scale(1.08);
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.14));
+	}
+
+	.how-we-work-band__bullet-mark {
+		display: flex;
+		margin-top: 0.2rem;
+		flex-shrink: 0;
+	}
+
+	.how-we-work-band__bullet-mark :global(svg) {
+		display: block;
+		transition:
+			transform var(--motion-duration-200) var(--motion-ease-standard),
+			filter var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.how-we-work-band__bullet-text {
+		flex: 1;
+		min-width: 0;
 	}
 
 	.how-we-work-band__media {
@@ -193,6 +821,16 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 		box-shadow:
 			0 1px 2px rgba(26, 27, 27, 0.06),
 			0 8px 24px rgba(26, 27, 27, 0.08);
+		transition:
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard),
+			transform var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.how-we-work-band__media:hover {
+		transform: translateY(-3px);
+		box-shadow:
+			0 4px 12px rgba(26, 27, 27, 0.08),
+			0 14px 36px rgba(26, 27, 27, 0.12);
 	}
 
 	.how-we-work-band__img {
@@ -203,5 +841,38 @@ const sectionPlaceholderImage = '/images/hero-interior.jpg';
 		max-height: min(28rem, 70vh);
 		object-fit: cover;
 		object-position: center;
+		transition: transform var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.how-we-work-band__media:hover .how-we-work-band__img {
+		transform: scale(1.03);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.how-we-work-band__bullet {
+			opacity: 1;
+			animation: none !important;
+			transform: none !important;
+		}
+
+		.how-we-work-band__step {
+			opacity: 1;
+			animation: none !important;
+			transform: none !important;
+		}
+
+		.how-we-work-band__media,
+		.how-we-work-band__img,
+		.how-we-work-band__icon {
+			transition: none;
+		}
+
+		.how-we-work-band__media:hover,
+		.how-we-work-band__media:hover .how-we-work-band__img,
+		.how-we-work-band__text:hover .how-we-work-band__icon,
+		.how-we-work-band__bullet:hover,
+		.how-we-work-band__step:hover {
+			transform: none;
+		}
 	}
 </style>

@@ -482,35 +482,26 @@ body.site-body > main {
 }
 
 /**
- * One-shot entrance presets (see /brand/ → Motion). Pair with `animation-delay` utilities or inline style for stagger.
- * Prefer triggering via `.is-inview` (Intersection Observer) in JS rather than on every paint.
+ * Entrance presets (see /brand/ → Motion). Initial state only — scroll reveal runs via Motion One
+ * (`src/scripts/kr-motion-entrances.ts`: `inView` + `animate` from `@motionone/dom`).
  */
 .kr-motion-enter-fade-in {
-	animation: kr-enter-fade-in var(--motion-duration-450) var(--motion-ease-standard) both;
+	opacity: 0;
 }
 
 .kr-motion-enter-fade-up {
-	animation: kr-enter-fade-up var(--motion-duration-450) var(--motion-ease-out-expo) both;
+	opacity: 0;
+	transform: translateY(var(--motion-slide-12));
 }
 
 .kr-motion-enter-fade-up-sm {
-	animation: kr-enter-fade-up-sm var(--motion-duration-450) var(--motion-ease-standard) both;
+	opacity: 0;
+	transform: translateY(var(--motion-slide-6));
 }
 
 .kr-motion-enter-fade-down-sm {
-	animation: kr-enter-fade-down-sm var(--motion-duration-450) var(--motion-ease-standard) both;
-}
-
-.kr-motion-delay-1 {
-	animation-delay: 0.08s;
-}
-
-.kr-motion-delay-2 {
-	animation-delay: 0.16s;
-}
-
-.kr-motion-delay-3 {
-	animation-delay: 0.24s;
+	opacity: 0;
+	transform: translateY(calc(var(--motion-slide-6) * -1));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -518,7 +509,7 @@ body.site-body > main {
 	.kr-motion-enter-fade-up,
 	.kr-motion-enter-fade-up-sm,
 	.kr-motion-enter-fade-down-sm {
-		animation: none !important;
-		animation-delay: 0s !important;
+		opacity: 1 !important;
+		transform: none !important;
 	}
 }

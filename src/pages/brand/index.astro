@@ -130,6 +130,15 @@ const motionEnterClasses = [
 					<code class="brand-doc__code">global.css</code>; they no-op when{' '}
 					<code class="brand-doc__code">prefers-reduced-motion: reduce</code> is set.
 				</p>
+				<p class="brand-doc__muted type-large-body-18-400">
+					<strong>Entrance behaviour:</strong> Motion One (<code class="brand-doc__code">@motionone/dom</code>) powers
+					scroll reveals: <code class="brand-doc__code">inView</code> detects when each{' '}
+					<code class="brand-doc__code">.kr-motion-enter-*</code> node enters the viewport, then{' '}
+					<code class="brand-doc__code">animate</code> runs a short Web Animations API transition (see{' '}
+					<code class="brand-doc__code">src/scripts/kr-motion-entrances.ts</code>). Initial hidden styles are CSS-only;
+					<code class="brand-doc__code">.kr-motion-delay-*</code> maps to <code class="brand-doc__code">delay</code> in
+					seconds. If JavaScript is unavailable or reduced motion is requested, content is shown without animation.
+				</p>
 				<div class="brand-doc__motion-table" role="list">
 					{
 						motionTokens.map(({ token, note }) => (

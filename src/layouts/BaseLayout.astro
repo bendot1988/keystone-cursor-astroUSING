@@ -74,6 +74,18 @@ const ogImage =
 			rel="stylesheet"
 		/>
 
+		<noscript>
+			<style>
+				.kr-motion-enter-fade-in,
+				.kr-motion-enter-fade-up,
+				.kr-motion-enter-fade-up-sm,
+				.kr-motion-enter-fade-down-sm {
+					opacity: 1 !important;
+					transform: none !important;
+				}
+			</style>
+		</noscript>
+
 		<script
 			type="application/ld+json"
 			set:html={JSON.stringify({
@@ -92,5 +104,9 @@ const ogImage =
 		<SiteHeader pathname={Astro.url.pathname} />
 		<slot />
 		<SiteFooter />
+		<script>
+			import { initKrMotionEntrances } from '../scripts/kr-motion-entrances';
+			initKrMotionEntrances();
+		</script>
 	</body>
 </html>
