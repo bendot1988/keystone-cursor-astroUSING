@@ -4,10 +4,29 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout
 	title="Contact"
-	description="Discuss your renovation with Keystone Renovations — call 0116 220 1662 or reach out online to plan your next project."
+	description="Contact page coming soon."
+	canonicalPath="/contact/"
 >
-	<main id="main-content">
-		<h1 id="discuss">Contact</h1>
-		<p>Content coming soon.</p>
+	<main id="main-content" class="contact-page">
+		<h1 class="contact-page__title">Contact page coming soon.</h1>
 	</main>
 </BaseLayout>
+
+<style>
+	.contact-page {
+		max-width: 28rem;
+		margin: 0 auto;
+		padding: clamp(1.25rem, 4vw, 2.25rem) var(--section-pad-x) clamp(2rem, 6vw, 3.5rem);
+		text-align: center;
+	}
+
+	.contact-page__title {
+		margin: 0;
+		font-family: var(--font-body);
+		font-weight: 500;
+		font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.25rem);
+		line-height: 1.5;
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+		text-wrap: pretty;
+	}
+</style>
