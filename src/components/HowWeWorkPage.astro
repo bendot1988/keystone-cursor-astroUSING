@@ -2,7 +2,7 @@
 import { philosophyCards, type PhilosophyCard } from '../data/philosophyCards';
 import KeystoneBulletIcon from './KeystoneBulletIcon.astro';
 
-/** Temporary: reuse hero art for each band until per-section photography exists. */
+/** Fallback if a card omits `sectionImage`. */
 const sectionPlaceholderImage = '/images/hero-interior.jpg';
 
 function splitIntroFirstSentence(pageIntro: string): { lead: string | null; rest: string } {
@@ -58,7 +58,7 @@ const breatherStats = [
 
 	{
 		philosophyCards.map((card, i) => {
-			const { title, iconSrc } = card;
+			const { title, iconSrc, sectionImage } = card;
 			const { listStyle, introLead, introBody, leadBullet, listItems, needsMobileCollapse } = bandContentModel(card);
 			const mobileExtraCount = listItems.length > 3 ? listItems.length - 3 : 0;
 			const listItemsMobileHead = listItems.slice(0, 3);
@@ -252,11 +252,11 @@ const breatherStats = [
 							<div class="how-we-work-band__media">
 								<img
 									class="how-we-work-band__img"
-									src={sectionPlaceholderImage}
+									src={sectionImage ?? sectionPlaceholderImage}
 									alt=""
 									width="1200"
 									height="800"
-									loading="lazy"
+									loading={i === 0 ? 'eager' : 'lazy'}
 									decoding="async"
 								/>
 							</div>
@@ -321,7 +321,7 @@ const breatherStats = [
 	.how-we-work-cta__title {
 		margin: 0 0 0.65rem;
 		color: var(--color-white);
-		text-transform: none;
+		text-transform: uppercase;
 		letter-spacing: 0.02em;
 		line-height: 1.25;
 	}
@@ -416,7 +416,7 @@ const breatherStats = [
 	.how-we-work-breather__title {
 		margin: 0 0 0.65rem;
 		color: var(--color-dark-gray);
-		text-transform: none;
+		text-transform: uppercase;
 		letter-spacing: 0.02em;
 		line-height: 1.25;
 	}
@@ -537,7 +537,7 @@ const breatherStats = [
 	.how-we-work-hero__title {
 		margin: 0 0 0.85rem;
 		color: var(--color-white);
-		text-transform: none;
+		text-transform: uppercase;
 		letter-spacing: 0.03em;
 		text-shadow:
 			0 1px 2px rgba(0, 0, 0, 0.45),
@@ -635,14 +635,14 @@ const breatherStats = [
 	.how-we-work-band__title {
 		margin: 0 0 0.65rem;
 		text-align: left;
-		text-transform: none;
+		text-transform: uppercase;
 		color: var(--color-dark-gray);
 	}
 
 	.how-we-work-band__intro {
 		margin: 0 0 1.15rem;
 		text-align: left;
-		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+		color: color-mix(in srgb, var(--color-dark-gray) 68%, var(--color-gray));
 	}
 
 	.how-we-work-band__lead {
@@ -733,7 +733,7 @@ const breatherStats = [
 		align-items: flex-start;
 		gap: 0.35rem;
 		margin: 0;
-		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+		color: var(--color-text);
 		opacity: 0;
 		animation: hww-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
 		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
@@ -778,7 +778,7 @@ const breatherStats = [
 		align-items: flex-start;
 		gap: 0.65rem;
 		margin: 0;
-		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+		color: var(--color-text);
 		opacity: 0;
 		animation: hww-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
 		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);

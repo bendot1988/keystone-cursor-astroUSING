@@ -1,41 +1,9 @@
 ---
 import { philosophyCards } from '../data/philosophyCards';
+import { servicesPhysicalCards } from '../data/servicesPhysicalCards';
 
 const physicallyIntro =
 	'We listen carefully to the physical elements of what your renovation is asking of us:';
-
-const physicallyCards = [
-	{
-		title: 'Structural and Design',
-		body: 'Working with your Architect or Planner \u2013 we select the right trades and crafts to modify and create your new space.',
-		iconSrc: '/icons/how-we-help/structural.png',
-	},
-	{
-		title: 'Electrical and Plumbing',
-		body: 'Supporting the demands of modern living, we engage a team of experts to upgrade or renew any service installations your renovation requires.',
-		iconSrc: '/icons/how-we-help/electrical.png',
-	},
-	{
-		title: 'Hardware & Materials',
-		body: 'We research and source materials from trusted suppliers and artisan specialists \u2013 ensuring the quantity and quality procured fits the brief & budget.',
-		iconSrc: '/icons/how-we-help/hardware.png',
-	},
-	{
-		title: 'Fixtures and Fittings',
-		body: 'Matching your flair and style with functionality and deliverability. We procure, install and commission.',
-		iconSrc: '/icons/how-we-help/fixtures.png',
-	},
-	{
-		title: 'Décor',
-		body: 'Our team of experienced decorators are masters at breathing new life into tired and drab spaces.',
-		iconSrc: '/icons/how-we-help/wall-coverings.png',
-	},
-	{
-		title: 'Landscaping',
-		body: 'We transform outdoor spaces, making them attractive and usable extensions of your property.',
-		iconSrc: '/icons/how-we-help/landscaping.png',
-	},
-] as const;
 
 const personalIntro =
 	'We are the Keystone to your Project \u2013 the centre point from which all else depends.';
@@ -94,7 +62,7 @@ const personalIntro =
 			<p class="how-we-help__intro type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-2">{physicallyIntro}</p>
 			<div class="how-we-help__grid">
 				{
-					physicallyCards.map(({ title, body, iconSrc }, i) => (
+					servicesPhysicalCards.map(({ title, body, iconSrc }, i) => (
 						<article
 							class:list={[
 								'how-we-help__card',

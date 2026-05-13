@@ -1,0 +1,785 @@
+---
+import { servicesPhysicalCards } from '../data/servicesPhysicalCards';
+import KeystoneBulletIcon from './KeystoneBulletIcon.astro';
+
+const sectionPlaceholderImage = '/images/hero-interior.jpg';
+
+/** Mid-page breather — after first half of service pillars. */
+const breatherAfterIndex = Math.ceil(servicesPhysicalCards.length / 2);
+
+const breatherStats = [
+	{ value: '5', label: 'physical pillars' },
+	{ value: 'One', label: 'coordinated team' },
+	{ value: 'UK', label: 'Midlands & beyond' },
+] as const;
+---
+
+<div class="services-page">
+	<header class="services-hero">
+		<div class="services-hero__inner">
+			<h1 class="services-hero__title type-h2-48-700">Services</h1>
+			<p class="services-hero__lede type-large-body-18-400">
+				From structure to the finishing touches—and the garden beyond the back door—we hold the full picture so you do
+				not have to stitch trades together yourself. The pillars below are how we think about delivery: clear scopes,
+				honest procurement, and workmanship you can see at handover.
+			</p>
+		</div>
+	</header>
+
+	{
+		servicesPhysicalCards.map((card, i) => {
+			const { title, iconSrc, pageIntro, bullets, sectionImage } = card;
+			const listItems = bullets;
+			const needsMobileCollapse = listItems.length > 3;
+			const mobileExtraCount = listItems.length > 3 ? listItems.length - 3 : 0;
+			const listItemsMobileHead = listItems.slice(0, 3);
+			const listItemsMobileTail = listItems.slice(3);
+
+			return (
+				<>
+					{
+						i === breatherAfterIndex && (
+							<div class="services-breather" role="region" aria-labelledby="services-breather-heading">
+								<div class="services-breather__inner">
+									<hr class="services-breather__rule" />
+									<h2 id="services-breather-heading" class="services-breather__title type-heading-24-700">
+										Depth in every trade, one calm thread through the job
+									</h2>
+									<p class="services-breather__lede type-large-body-18-400">
+										Whether you are remodelling a single room or reimagining the whole property, we keep the same
+										standard: specifications that match the brief, sequencing that respects your home, and people on
+										site who care about the outcome as much as you do.
+									</p>
+									<dl class="services-breather__stats">
+										{
+											breatherStats.map(({ value, label }) => (
+												<div class="services-breather__stat">
+													<dt class="services-breather__stat-value">{value}</dt>
+													<dd class="services-breather__stat-label type-large-body-18-400">{label}</dd>
+												</div>
+											))
+										}
+									</dl>
+									<figure class="services-breather__quote">
+										<blockquote class="services-breather__quote-text type-large-body-18-400">
+											<p>
+												They joined the dots between structural work, kitchens, and the garden—we never felt we
+												were juggling separate contractors.
+											</p>
+										</blockquote>
+										<figcaption class="services-breather__quote-cite">
+											— Homeowner, renovation &amp; landscaping project
+										</figcaption>
+									</figure>
+								</div>
+							</div>
+						)
+					}
+					<section
+						class:list={['services-band', i % 2 === 1 && 'services-band--flip']}
+						aria-labelledby={`services-h-${i}`}
+						style={{ '--section-i': i }}
+					>
+						<div class="services-band__inner">
+							<div class="services-band__text">
+								<div class="services-band__icon" aria-hidden="true">
+									<img class="services-band__icon-img" src={iconSrc} alt="" width="28" height="28" decoding="async" />
+								</div>
+								<h2 id={`services-h-${i}`} class="services-band__title type-h3-20-700">
+									{title}
+								</h2>
+								<p class="services-band__intro type-large-body-18-400">{pageIntro}</p>
+								{
+									needsMobileCollapse ? (
+										<>
+											<ul class="services-band__bullets services-band__list-desktop">
+												{
+													listItems.map((item, bi) => (
+														<li class="services-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+															<span class="services-band__bullet-mark">
+																<KeystoneBulletIcon />
+															</span>
+															<span class="services-band__bullet-text">{item}</span>
+														</li>
+													))
+												}
+											</ul>
+											<div class="services-band__list-mobile">
+												<ul class="services-band__bullets">
+													{
+														listItemsMobileHead.map((item, bi) => (
+															<li class="services-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+																<span class="services-band__bullet-mark">
+																	<KeystoneBulletIcon />
+																</span>
+																<span class="services-band__bullet-text">{item}</span>
+															</li>
+														))
+													}
+												</ul>
+												<details class="services-band__also-mobile">
+													<summary class="services-band__also-mobile-summary type-body-16-500">
+														Also includes {mobileExtraCount} more {mobileExtraCount === 1 ? 'point' : 'points'}
+													</summary>
+													<ul class="services-band__bullets services-band__bullets--nested">
+														{
+															listItemsMobileTail.map((item, bi) => (
+																<li
+																	class="services-band__bullet type-large-body-18-400"
+																	style={{ '--bullet-i': bi + 3 }}
+																>
+																	<span class="services-band__bullet-mark">
+																		<KeystoneBulletIcon />
+																	</span>
+																	<span class="services-band__bullet-text">{item}</span>
+																</li>
+															))
+														}
+													</ul>
+												</details>
+											</div>
+										</>
+									) : (
+										<ul class="services-band__bullets">
+											{
+												listItems.map((item, bi) => (
+													<li class="services-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+														<span class="services-band__bullet-mark">
+															<KeystoneBulletIcon />
+														</span>
+														<span class="services-band__bullet-text">{item}</span>
+													</li>
+												))
+											}
+										</ul>
+									)
+								}
+							</div>
+							<div class="services-band__media">
+								<img
+									class="services-band__img"
+									src={sectionImage ?? sectionPlaceholderImage}
+									alt=""
+									width="1200"
+									height="800"
+									loading={i === 0 ? 'eager' : 'lazy'}
+									decoding="async"
+								/>
+							</div>
+						</div>
+					</section>
+				</>
+			);
+		})
+	}
+
+	<aside class="services-cta" role="region" aria-labelledby="services-cta-heading">
+		<div class="services-cta__inner">
+			<h2 id="services-cta-heading" class="services-cta__title type-heading-24-700">
+				Tell us what you are planning
+			</h2>
+			<p class="services-cta__lede type-large-body-18-400">
+				If one of these pillars matches where you are stuck—or you need the whole journey—we are happy to talk it
+				through with no obligation.
+			</p>
+			<div class="services-cta__actions">
+				<a class="services-cta__btn services-cta__btn--primary type-button-16-700" href="/contact/#discuss">
+					Discuss your project
+				</a>
+				<a class="services-cta__btn services-cta__btn--ghost type-button-16-700" href="/how-we-work/">How we work</a>
+			</div>
+		</div>
+	</aside>
+</div>
+
+<style>
+	@keyframes svc-bullet-reveal {
+		from {
+			opacity: 0;
+			transform: translateY(0.45rem);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	.services-page {
+		background: var(--color-white);
+	}
+
+	.services-cta {
+		padding: clamp(2rem, 5vw, 2.85rem) var(--section-pad-x);
+		text-align: center;
+		background: linear-gradient(
+			165deg,
+			color-mix(in srgb, var(--color-dark-khaki) 24%, var(--color-dark-gray)) 0%,
+			var(--color-dark-gray) 38%,
+			var(--color-dark-gray) 100%
+		);
+		border-top: 1px solid color-mix(in srgb, var(--color-card-icon-gold) 38%, var(--color-dark-gray));
+	}
+
+	.services-cta__inner {
+		max-width: var(--layout-max-48);
+		margin: 0 auto;
+	}
+
+	.services-cta__title {
+		margin: 0 0 0.65rem;
+		color: var(--color-white);
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		line-height: 1.25;
+	}
+
+	.services-cta__lede {
+		margin: 0 auto 1.35rem;
+		max-width: 32rem;
+		color: rgba(255, 255, 255, 0.9);
+		text-align: center;
+		text-wrap: pretty;
+	}
+
+	.services-cta__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem 1rem;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.services-cta__btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 2.75rem;
+		padding: 0.7rem 1.35rem;
+		text-decoration: none;
+		border-radius: 3px;
+		transition:
+			filter var(--motion-duration-200) var(--motion-ease-standard),
+			background-color var(--motion-duration-200) var(--motion-ease-standard),
+			border-color var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.services-cta__btn--primary {
+		color: var(--color-white);
+		background: var(--color-dark-khaki);
+		border: 1px solid transparent;
+	}
+
+	.services-cta__btn--primary:hover {
+		filter: brightness(1.08);
+	}
+
+	.services-cta__btn--ghost {
+		color: var(--color-white);
+		background: transparent;
+		border: 1px solid color-mix(in srgb, var(--color-white) 52%, transparent);
+	}
+
+	.services-cta__btn--ghost:hover {
+		background: color-mix(in srgb, var(--color-white) 9%, transparent);
+		border-color: color-mix(in srgb, var(--color-white) 68%, transparent);
+	}
+
+	.services-cta__btn:focus-visible {
+		outline: 2px solid var(--color-white);
+		outline-offset: 3px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.services-cta__btn {
+			transition: none;
+		}
+	}
+
+	.services-breather {
+		padding: clamp(2.25rem, 5vw, 3.25rem) var(--section-pad-x);
+		background: linear-gradient(
+			180deg,
+			color-mix(in srgb, var(--color-card-icon-gold) 12%, var(--color-white)) 0%,
+			var(--color-white) 100%
+		);
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+		border-bottom: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.services-breather__inner {
+		max-width: var(--layout-max-52);
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.services-breather__rule {
+		width: min(12rem, 40%);
+		margin: 0 auto 1.25rem;
+		border: none;
+		border-top: 2px solid color-mix(in srgb, var(--color-card-icon-gold) 55%, var(--color-dark-gray));
+		opacity: 0.85;
+	}
+
+	.services-breather__title {
+		margin: 0 0 0.65rem;
+		color: var(--color-dark-gray);
+		text-transform: uppercase;
+		letter-spacing: 0.02em;
+		line-height: 1.25;
+	}
+
+	.services-breather__lede {
+		margin: 0 auto 1.75rem;
+		max-width: 36rem;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+	}
+
+	.services-breather__stats {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin: 0 0 2rem;
+		padding: 0;
+		border: none;
+	}
+
+	@media (min-width: 40rem) {
+		.services-breather__stats {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1rem 1.5rem;
+			margin-bottom: 2.25rem;
+		}
+	}
+
+	.services-breather__stat {
+		margin: 0;
+		padding: 0.65rem 0.5rem 0.85rem;
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--color-white) 72%, var(--color-white-smoke));
+		box-shadow: 0 1px 0 color-mix(in srgb, var(--color-dark-gray) 6%, transparent);
+	}
+
+	.services-breather__stat-value {
+		margin: 0 0 0.2rem;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(1.5rem, 2.5vw, 1.85rem);
+		line-height: 1.15;
+		letter-spacing: 0.04em;
+		color: var(--color-dark-khaki);
+	}
+
+	.services-breather__stat-label {
+		margin: 0;
+		font-size: 0.9375rem;
+		line-height: 1.45;
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+	}
+
+	.services-breather__quote {
+		margin: 0;
+		padding: 0;
+	}
+
+	.services-breather__quote-text {
+		margin: 0 auto;
+		max-width: 38rem;
+		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+		font-style: italic;
+	}
+
+	.services-breather__quote-text p {
+		margin: 0;
+	}
+
+	.services-breather__quote-text p::before {
+		content: '\201C';
+	}
+
+	.services-breather__quote-text p::after {
+		content: '\201D';
+	}
+
+	.services-breather__quote-cite {
+		margin: 0.85rem 0 0;
+		font-family: var(--font-body);
+		font-size: 0.8125rem;
+		font-weight: 400;
+		line-height: 1.45;
+		letter-spacing: 0.02em;
+		color: var(--color-gray);
+	}
+
+	.services-hero {
+		position: relative;
+		min-height: min(42vh, 22rem);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--color-dark-gray);
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)),
+			linear-gradient(
+				105deg,
+				rgba(0, 0, 0, 0.38) 0%,
+				rgba(0, 0, 0, 0.22) 48%,
+				rgba(0, 0, 0, 0.52) 100%
+			),
+			url('/images/hero-interior.jpg');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.services-hero__inner {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		max-width: var(--layout-max-48);
+		margin: 0 auto;
+		padding: clamp(1.75rem, 4vw, 2.75rem) var(--section-pad-x);
+		text-align: center;
+	}
+
+	.services-hero__title {
+		margin: 0 0 0.85rem;
+		color: var(--color-white);
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		text-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.45),
+			0 4px 28px rgba(0, 0, 0, 0.35);
+	}
+
+	.services-hero__lede {
+		margin: 0 auto;
+		max-width: 40rem;
+		color: rgba(255, 255, 255, 0.95);
+		text-align: center;
+	}
+
+	.services-band {
+		padding: clamp(2.5rem, 6vw, 4rem) var(--section-pad-x);
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.services-page > section:nth-of-type(odd) {
+		background: color-mix(in srgb, var(--color-white-smoke) 55%, var(--color-white));
+	}
+
+	.services-page > section:nth-of-type(even) {
+		background: var(--color-white);
+	}
+
+	.services-band__inner {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(1.5rem, 4vw, 2.5rem);
+		align-items: center;
+		max-width: var(--layout-max-72);
+		margin: 0 auto;
+	}
+
+	.services-band__text {
+		order: 1;
+	}
+
+	.services-band__media {
+		order: 2;
+	}
+
+	@media (min-width: 48rem) {
+		.services-band__inner {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			gap: clamp(1.75rem, 4vw, 3rem);
+		}
+
+		.services-band:not(.services-band--flip) .services-band__text {
+			order: 1;
+		}
+
+		.services-band:not(.services-band--flip) .services-band__media {
+			order: 2;
+		}
+
+		.services-band--flip .services-band__media {
+			order: 1;
+		}
+
+		.services-band--flip .services-band__text {
+			order: 2;
+		}
+	}
+
+	.services-band__icon {
+		width: 2.75rem;
+		height: 2.75rem;
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--color-card-icon-gold);
+		color: var(--color-white);
+		transition:
+			transform var(--motion-duration-280) var(--motion-ease-standard),
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.services-band__text:hover .services-band__icon {
+		transform: scale(1.06);
+		box-shadow: 0 6px 18px rgba(26, 27, 27, 0.12);
+	}
+
+	.services-band__icon-img {
+		display: block;
+		width: 1.375rem;
+		height: 1.375rem;
+		object-fit: contain;
+		filter: brightness(0) invert(1);
+	}
+
+	.services-band__title {
+		margin: 0 0 0.65rem;
+		text-align: left;
+		text-transform: uppercase;
+		color: var(--color-dark-gray);
+	}
+
+	.services-band__intro {
+		margin: 0 0 1.15rem;
+		text-align: left;
+		color: color-mix(in srgb, var(--color-dark-gray) 68%, var(--color-gray));
+	}
+
+	.services-band__lead {
+		margin: 0 0 0.85rem;
+		padding-left: 0.85rem;
+		border-left: 3px solid color-mix(in srgb, var(--color-card-icon-gold) 70%, var(--color-dark-khaki));
+		text-align: left;
+		color: var(--color-dark-gray);
+		line-height: 1.45;
+	}
+
+	.services-band__lead + .services-band__intro {
+		margin-top: -0.15rem;
+	}
+
+	.services-band__bullets.services-band__list-desktop,
+	.services-band__steps.services-band__list-desktop {
+		display: none;
+	}
+
+	@media (min-width: 48rem) {
+		.services-band__bullets.services-band__list-desktop,
+		.services-band__steps.services-band__list-desktop {
+			display: flex;
+		}
+
+		.services-band__list-mobile {
+			display: none !important;
+		}
+	}
+
+	.services-band__list-mobile {
+		display: block;
+	}
+
+	.services-band__also-mobile {
+		margin-top: 0.35rem;
+		border-radius: 8px;
+		background: color-mix(in srgb, var(--color-white-smoke) 65%, var(--color-white));
+	}
+
+	.services-band__also-mobile-summary {
+		padding: 0.55rem 0.65rem;
+		cursor: pointer;
+		list-style: none;
+		color: var(--color-dark-khaki);
+		letter-spacing: 0.02em;
+	}
+
+	.services-band__also-mobile-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.services-band__also-mobile-summary::after {
+		content: '';
+		display: inline-block;
+		width: 0.35rem;
+		height: 0.35rem;
+		margin-left: 0.4rem;
+		border-right: 2px solid currentColor;
+		border-bottom: 2px solid currentColor;
+		transform: rotate(45deg) translateY(-0.1rem);
+		vertical-align: middle;
+		opacity: 0.75;
+	}
+
+	.services-band__also-mobile[open] .services-band__also-mobile-summary::after {
+		transform: rotate(225deg) translateY(0.05rem);
+	}
+
+	.services-band__bullets--nested,
+	.services-band__steps--nested {
+		margin: 0 0 0.5rem;
+		padding: 0 0.65rem 0.65rem 1.5rem;
+	}
+
+	.services-band__steps {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.services-band__step {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.35rem;
+		margin: 0;
+		color: var(--color-text);
+		opacity: 0;
+		animation: svc-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
+		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
+		transition:
+			color var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.services-band__step:hover {
+		color: var(--color-dark-gray);
+		transform: translateX(2px);
+	}
+
+	.services-band__step-num {
+		flex-shrink: 0;
+		min-width: 2.25rem;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: 0.9375rem;
+		line-height: 1.55;
+		letter-spacing: 0.04em;
+		color: var(--color-dark-khaki);
+	}
+
+	.services-band__step-text {
+		flex: 1;
+		min-width: 0;
+		line-height: 1.55;
+	}
+
+	.services-band__bullets {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.services-band__bullet {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.65rem;
+		margin: 0;
+		color: var(--color-text);
+		opacity: 0;
+		animation: svc-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
+		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
+		transition:
+			color var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.services-band__bullet:hover {
+		color: var(--color-dark-gray);
+		transform: translateX(2px);
+	}
+
+	.services-band__bullet:hover :global(svg) {
+		transform: scale(1.08);
+		filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.14));
+	}
+
+	.services-band__bullet-mark {
+		display: flex;
+		margin-top: 0.2rem;
+		flex-shrink: 0;
+	}
+
+	.services-band__bullet-mark :global(svg) {
+		display: block;
+		transition:
+			transform var(--motion-duration-200) var(--motion-ease-standard),
+			filter var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.services-band__bullet-text {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.services-band__media {
+		border-radius: 10px;
+		overflow: hidden;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.06),
+			0 8px 24px rgba(26, 27, 27, 0.08);
+		transition:
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard),
+			transform var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.services-band__media:hover {
+		transform: translateY(-3px);
+		box-shadow:
+			0 4px 12px rgba(26, 27, 27, 0.08),
+			0 14px 36px rgba(26, 27, 27, 0.12);
+	}
+
+	.services-band__img {
+		display: block;
+		width: 100%;
+		height: auto;
+		min-height: clamp(12rem, 35vw, 20rem);
+		max-height: min(28rem, 70vh);
+		object-fit: cover;
+		object-position: center;
+		transition: transform var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.services-band__media:hover .services-band__img {
+		transform: scale(1.03);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.services-band__bullet {
+			opacity: 1;
+			animation: none !important;
+			transform: none !important;
+		}
+
+		.services-band__step {
+			opacity: 1;
+			animation: none !important;
+			transform: none !important;
+		}
+
+		.services-band__media,
+		.services-band__img,
+		.services-band__icon {
+			transition: none;
+		}
+
+		.services-band__media:hover,
+		.services-band__media:hover .services-band__img,
+		.services-band__text:hover .services-band__icon,
+		.services-band__bullet:hover,
+		.services-band__step:hover {
+			transform: none;
+		}
+	}
+</style>
