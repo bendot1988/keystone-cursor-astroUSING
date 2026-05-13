@@ -104,15 +104,60 @@ body.site-body > main {
 }
 
 .site-header__end {
+	/* Mobile-first: out of flow so the bar is only the inner row (logo + toggle).
+	   Do not rely on max-width alone — if that query misses, this would sit in-flow and balloon the header. */
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 100%;
+	z-index: 1;
+	width: 100%;
+	max-width: none;
+	margin: 0;
+	flex: none;
+	display: grid;
+	grid-template-rows: 0fr;
+	align-items: stretch;
+	justify-content: stretch;
+	padding: 0;
+	overflow: hidden;
+	pointer-events: none;
+	background: transparent;
+	box-shadow: none;
+	border: none;
+	transition: grid-template-rows 0.34s var(--motion-ease-out-expo);
+}
+
+.site-header__sheet {
+	min-height: 0;
 	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: flex-end;
-	column-gap: 1.25rem;
-	row-gap: 0.75rem;
-	margin-left: auto;
-	flex: 0 1 auto;
-	min-width: 0;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: flex-start;
+	gap: 0;
+	row-gap: 0;
+	/* Closed menu: no vertical padding or solid fill — those fight `0fr` and can paint a white band over the hero. */
+	padding-inline: var(--header-pad-x);
+	padding-block: 0;
+	background: transparent;
+	border-top: none;
+	box-shadow: none;
+	overflow: hidden;
+}
+
+.site-header--nav-open .site-header__end {
+	grid-template-rows: 1fr;
+	pointer-events: auto;
+}
+
+.site-header--nav-open .site-header__sheet {
+	padding-block: 0.75rem 0.875rem;
+	background: var(--color-bg);
+	max-height: min(90vh, 26rem);
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 10%, var(--color-white));
+	box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
 .site-header__menu-toggle {
@@ -168,58 +213,6 @@ body.site-body > main {
 		order: 2;
 		margin-left: auto;
 	}
-
-	.site-header__end {
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 100%;
-		z-index: 1;
-		width: 100%;
-		max-width: none;
-		margin-left: 0;
-		margin-top: 0;
-		flex: none;
-		display: grid;
-		grid-template-rows: 0fr;
-		align-items: stretch;
-		justify-content: stretch;
-		padding: 0;
-		overflow: hidden;
-		pointer-events: none;
-		background: transparent;
-		box-shadow: none;
-		border: none;
-		transition: grid-template-rows 0.34s var(--motion-ease-out-expo);
-	}
-
-	.site-header__sheet {
-		min-height: 0;
-		display: flex;
-		flex-direction: column;
-		align-items: stretch;
-		justify-content: flex-start;
-		gap: 0;
-		row-gap: 0;
-		padding: 0.75rem var(--header-pad-x) 0.875rem;
-		background: var(--color-bg);
-		border-top: 1px solid transparent;
-		box-shadow: none;
-		overflow: hidden;
-	}
-
-	.site-header--nav-open .site-header__end {
-		grid-template-rows: 1fr;
-		pointer-events: auto;
-	}
-
-	.site-header--nav-open .site-header__sheet {
-		max-height: min(90vh, 26rem);
-		overflow-y: auto;
-		-webkit-overflow-scrolling: touch;
-		border-top-color: color-mix(in srgb, var(--color-dark-gray) 10%, var(--color-white));
-		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-	}
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -263,19 +256,24 @@ body.site-body > main {
 		width: auto !important;
 		max-width: none !important;
 		display: flex !important;
-		grid-template-rows: none !important;
-		overflow: visible !important;
-		padding: 0 !important;
-		margin-top: 0 !important;
-		margin-left: auto !important;
-		flex: 0 1 auto !important;
+		flex-wrap: wrap !important;
 		flex-direction: row !important;
 		align-items: center !important;
 		justify-content: flex-end !important;
+		column-gap: 1.25rem !important;
+		row-gap: 0.75rem !important;
+		grid-template-rows: none !important;
+		overflow: visible !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		margin-left: auto !important;
+		flex: 0 1 auto !important;
+		min-width: 0 !important;
 		background: transparent !important;
 		box-shadow: none !important;
 		border: none !important;
 		pointer-events: auto !important;
+		transition: none !important;
 	}
 
 	.site-header__sheet {
