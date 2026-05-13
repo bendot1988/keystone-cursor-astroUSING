@@ -429,3 +429,89 @@ body.site-body > main {
 	outline: 2px solid var(--color-accent);
 	outline-offset: 3px;
 }
+
+/* ——— Recommended entrance motion (site-wide; respect reduced motion) ——— */
+
+@keyframes kr-enter-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes kr-enter-fade-up {
+	from {
+		opacity: 0;
+		transform: translateY(var(--motion-slide-12));
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes kr-enter-fade-up-sm {
+	from {
+		opacity: 0;
+		transform: translateY(var(--motion-slide-6));
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes kr-enter-fade-down-sm {
+	from {
+		opacity: 0;
+		transform: translateY(calc(var(--motion-slide-6) * -1));
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/**
+ * One-shot entrance presets. Pair with `animation-delay` utilities or inline style for stagger.
+ * Prefer triggering via `.is-inview` (Intersection Observer) in JS rather than on every paint.
+ */
+.kr-motion-enter-fade-in {
+	animation: kr-enter-fade-in var(--motion-duration-450) var(--motion-ease-standard) both;
+}
+
+.kr-motion-enter-fade-up {
+	animation: kr-enter-fade-up var(--motion-duration-450) var(--motion-ease-out-expo) both;
+}
+
+.kr-motion-enter-fade-up-sm {
+	animation: kr-enter-fade-up-sm var(--motion-duration-450) var(--motion-ease-standard) both;
+}
+
+.kr-motion-enter-fade-down-sm {
+	animation: kr-enter-fade-down-sm var(--motion-duration-450) var(--motion-ease-standard) both;
+}
+
+.kr-motion-delay-1 {
+	animation-delay: 0.08s;
+}
+
+.kr-motion-delay-2 {
+	animation-delay: 0.16s;
+}
+
+.kr-motion-delay-3 {
+	animation-delay: 0.24s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.kr-motion-enter-fade-in,
+	.kr-motion-enter-fade-up,
+	.kr-motion-enter-fade-up-sm,
+	.kr-motion-enter-fade-down-sm {
+		animation: none !important;
+		animation-delay: 0s !important;
+	}
+}

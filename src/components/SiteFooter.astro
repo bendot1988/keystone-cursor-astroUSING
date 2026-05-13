@@ -144,9 +144,9 @@ const serviceChoices = [
 	}
 
 	.site-footer__inner {
-		max-width: 72rem;
+		max-width: var(--layout-max-72);
 		margin: 0 auto;
-		padding: clamp(2.5rem, 5vw, 3.5rem) clamp(1.25rem, 5vw, 2.5rem);
+		padding: var(--section-pad-y-footer) var(--section-pad-x);
 		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
 	}
 
@@ -165,7 +165,7 @@ const serviceChoices = [
 	}
 
 	.site-footer__intro {
-		max-width: 34rem;
+		max-width: var(--layout-max-34);
 	}
 
 	.site-footer__logo {
@@ -397,9 +397,9 @@ const serviceChoices = [
 	}
 
 	.site-footer__bar-inner {
-		max-width: 72rem;
+		max-width: var(--layout-max-72);
 		margin: 0 auto;
-		padding: 1rem clamp(1.25rem, 5vw, 2.5rem);
+		padding: 1rem var(--section-pad-x);
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;

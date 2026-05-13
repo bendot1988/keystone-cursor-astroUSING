@@ -156,7 +156,7 @@ const slides = [
 	.testimonials {
 		/* Sits below all-white “Complete property solutions”; soft band for separation */
 		background: var(--color-white-smoke);
-		padding: clamp(3.5rem, 10vw, 6.5rem) clamp(1.25rem, 5vw, 2.5rem);
+		padding: var(--section-pad-y-testimonials) var(--section-pad-x);
 	}
 
 	.testimonials__sr-only {
@@ -172,7 +172,7 @@ const slides = [
 	}
 
 	.testimonials__inner {
-		max-width: 52rem;
+		max-width: var(--layout-max-52);
 		margin: 0 auto;
 		text-align: center;
 	}
@@ -219,9 +219,9 @@ const slides = [
 		justify-content: center;
 		cursor: pointer;
 		transition:
-			background 0.2s ease,
-			color 0.2s ease,
-			border-color 0.2s ease;
+			background var(--motion-duration-200) var(--motion-ease-standard),
+			color var(--motion-duration-200) var(--motion-ease-standard),
+			border-color var(--motion-duration-200) var(--motion-ease-standard);
 	}
 
 	.testimonials__arrow:hover {
@@ -249,22 +249,11 @@ const slides = [
 	}
 
 	.testimonials__slide {
-		animation: testimonials-fade 0.45s ease;
+		animation: kr-enter-fade-up-sm var(--motion-duration-450) var(--motion-ease-standard);
 	}
 
 	.testimonials__slide[hidden] {
 		display: none;
-	}
-
-	@keyframes testimonials-fade {
-		from {
-			opacity: 0;
-			transform: translateY(6px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
@@ -329,8 +318,8 @@ const slides = [
 		border-radius: 999px;
 		cursor: pointer;
 		transition:
-			width 0.25s ease,
-			background 0.2s ease;
+			width var(--motion-duration-250) var(--motion-ease-standard),
+			background var(--motion-duration-200) var(--motion-ease-standard);
 	}
 
 	.testimonials__dot.is-active {

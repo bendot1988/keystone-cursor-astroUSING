@@ -56,17 +56,17 @@ const cards = [
 <style>
 	.complete-solutions {
 		background: var(--color-white);
-		padding: clamp(3rem, 7vw, 5.5rem) clamp(1.25rem, 5vw, 2.5rem);
+		padding: var(--section-pad-y-complete) var(--section-pad-x);
 	}
 
 	.complete-solutions__inner {
-		max-width: 72rem;
+		max-width: var(--layout-max-72);
 		margin: 0 auto;
 	}
 
 	.complete-solutions__header {
 		text-align: center;
-		max-width: 48rem;
+		max-width: var(--layout-max-48);
 		margin: 0 auto 2.75rem;
 	}
 
@@ -97,7 +97,7 @@ const cards = [
 
 	.complete-solutions__card {
 		background: var(--color-white-smoke);
-		padding: clamp(1.5rem, 3vw, 2rem);
+		padding: var(--card-pad-complete);
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
@@ -108,8 +108,8 @@ const cards = [
 			0 4px 14px rgba(26, 27, 27, 0.06),
 			0 10px 28px rgba(26, 27, 27, 0.07);
 		transition:
-			box-shadow 0.28s ease,
-			transform 0.28s ease;
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard),
+			transform var(--motion-duration-280) var(--motion-ease-standard);
 	}
 
 	.complete-solutions__card:hover {

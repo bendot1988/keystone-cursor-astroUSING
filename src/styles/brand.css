@@ -30,6 +30,41 @@
 	/* Layout */
 	--header-pad-x: clamp(1rem, 4vw, 2.5rem);
 	--header-pad-y: clamp(1rem, 0.75rem + 0.6vw, 1.375rem);
+
+	/* Homepage + footer widths (content max) */
+	--layout-max-72: 72rem;
+	--layout-max-52: 52rem;
+	--layout-max-48: 48rem;
+	--layout-max-44: 44rem;
+	--layout-max-34: 34rem;
+	--layout-max-28: 28rem;
+
+	/**
+	 * Section padding — shared horizontal rhythm on homepage sections, footer, and mobile nav sheet.
+	 * Vertical values mirror each homepage band (see internal style guide).
+	 */
+	--section-pad-x: clamp(1.25rem, 5vw, 2.5rem);
+	--section-pad-y-complete: clamp(3rem, 7vw, 5.5rem);
+	--section-pad-y-how-we-help: clamp(3rem, 8vw, 5.5rem);
+	--section-pad-y-testimonials: clamp(3.5rem, 10vw, 6.5rem);
+	--section-pad-y-footer: clamp(2.5rem, 5vw, 3.5rem);
+
+	--hero-inner-pad-y: clamp(2.5rem, 8vh, 5rem);
+	--hero-inner-pad-x: clamp(1.25rem, 10vw, 8rem);
+
+	--card-pad-complete: clamp(1.5rem, 3vw, 2rem);
+
+	/* Motion — durations and easing used in nav, cards, testimonials, and recommended entrances */
+	--motion-duration-200: 0.2s;
+	--motion-duration-250: 0.25s;
+	--motion-duration-280: 0.28s;
+	--motion-duration-350: 0.35s;
+	--motion-duration-380: 0.38s;
+	--motion-duration-450: 0.45s;
+	--motion-ease-standard: ease;
+	--motion-ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+	--motion-slide-6: 6px;
+	--motion-slide-12: 12px;
 }
 
 /* —— Peek typography utilities (class names match Peek style IDs) —— */

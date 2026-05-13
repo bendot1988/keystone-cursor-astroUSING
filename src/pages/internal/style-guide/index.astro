@@ -1,0 +1,817 @@
+---
+/**
+ * Internal-only design reference: mirrors homepage tokens from `brand.css` + global motion utilities.
+ * Not linked in primary navigation; `robots` is noindex. Share URL only with the team.
+ */
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { siteConfig } from '../../../site.config';
+
+const palette = [
+	{ token: '--color-white', hex: '#ffffff', usage: 'Page background, cards on dark bands' },
+	{ token: '--color-white-smoke', hex: '#faf9f6', usage: 'Soft sections, testimonial band, complete-solution cards' },
+	{ token: '--color-gray', hex: '#a39682', usage: 'Muted text, nav current page' },
+	{ token: '--color-dark-khaki', hex: '#b09664', usage: 'Accent, hero CTA, hero title accent' },
+	{ token: '--color-dark-gray', hex: '#1a1a1b', usage: 'Primary text, header CTA background' },
+	{ token: '--color-black', hex: '#000000', usage: 'Available in palette' },
+	{ token: '--color-black-1', hex: '#330000', usage: 'Reserved / brand extension' },
+	{ token: '--color-card-icon-gold', hex: '#c0b79c', usage: 'Icon wells, testimonial stars, focus outlines' },
+] as const;
+
+const semantic = [
+	{ token: '--color-bg', resolves: '--color-white' },
+	{ token: '--color-text', resolves: '--color-dark-gray' },
+	{ token: '--color-muted', resolves: '--color-gray' },
+	{ token: '--color-accent', resolves: '--color-dark-khaki' },
+] as const;
+
+const layoutTokens = [
+	{ token: '--header-pad-x', note: 'Sticky header horizontal padding' },
+	{ token: '--header-pad-y', note: 'Sticky header vertical padding' },
+	{ token: '--section-pad-x', note: 'Homepage main sections, footer grid + bar, aligns with section rhythm' },
+	{ token: '--section-pad-y-complete', note: 'Complete property solutions vertical padding' },
+	{ token: '--section-pad-y-how-we-help', note: 'The Way We Work vertical padding' },
+	{ token: '--section-pad-y-testimonials', note: 'Testimonials vertical padding' },
+	{ token: '--section-pad-y-footer', note: 'Footer main grid vertical padding' },
+	{ token: '--hero-inner-pad-y', note: 'Hero inner block vertical padding' },
+	{ token: '--hero-inner-pad-x', note: 'Hero inner block horizontal padding (wider than sections)' },
+	{ token: '--card-pad-complete', note: 'Complete solutions card interior padding' },
+	{ token: '--layout-max-72', note: 'Wide content rail (sections, footer)' },
+	{ token: '--layout-max-52', note: 'Hero copy column, testimonials' },
+	{ token: '--layout-max-48', note: 'Complete solutions intro' },
+	{ token: '--layout-max-44', note: 'How we help intro' },
+	{ token: '--layout-max-34', note: 'Footer intro column' },
+	{ token: '--layout-max-28', note: 'Hero supporting line max width' },
+] as const;
+
+const motionTokens = [
+	{ token: '--motion-duration-200', note: 'Micro-interactions (hovers, tabs, arrows)' },
+	{ token: '--motion-duration-250', note: 'Testimonial dot width' },
+	{ token: '--motion-duration-280', note: 'Card lift shadow + transform' },
+	{ token: '--motion-duration-350', note: 'Mobile nav sheet height transition' },
+	{ token: '--motion-duration-380', note: 'Nav underline (global header)' },
+	{ token: '--motion-duration-450', note: 'Testimonial slide change; default entrance length' },
+	{ token: '--motion-ease-standard', note: 'Default ease' },
+	{ token: '--motion-ease-out-expo', note: 'Expressive ease-out (nav underline, fade-up preset)' },
+	{ token: '--motion-slide-6', note: 'Subtle vertical travel (testimonials, fade-up-sm)' },
+	{ token: '--motion-slide-12', note: 'Stronger vertical travel (fade-up)' },
+] as const;
+
+const homepageType = [
+	{ class: 'type-h1-72-700', where: 'Home hero title' },
+	{ class: 'type-large-body-18-400', where: 'Hero subline, section intros, card bodies' },
+	{ class: 'type-button-16-700', where: 'Hero CTA (and header CTA uses same utility)' },
+	{ class: 'type-h2-48-700', where: 'Complete solutions, The Way We Work (title casing adjusted in CSS where needed)' },
+	{ class: 'type-h3-20-700', where: 'Card titles' },
+	{ class: 'type-header-16-400', where: 'Primary navigation labels' },
+] as const;
+
+const radiiAndShadows = [
+	{ label: 'Header CTA', radius: '2px', note: 'site-header__cta' },
+	{ label: 'Hero CTA', radius: '3px', note: 'home-hero__cta' },
+	{ label: 'Cards / tabs', radius: '8–10px', note: 'Complete solutions cards 10px; how-we-help tabs 8px, cards 10px' },
+	{ label: 'Pills / arrows', radius: '50% / 999px', note: 'Icon wells, testimonial arrows, footer submit' },
+] as const;
+
+const motionPresets = [
+	{
+		name: 'Fade in',
+		className: 'kr-motion-enter-fade-in',
+		guidance: 'Hero lines, large type reveals, low-risk when height might shift',
+	},
+	{
+		name: 'Fade up (subtle)',
+		className: 'kr-motion-enter-fade-up-sm',
+		guidance: 'Default for quotes and text blocks — matches live testimonial carousel',
+	},
+	{
+		name: 'Fade up (12px)',
+		className: 'kr-motion-enter-fade-up',
+		guidance: 'Section intros and imagery captions; slightly more presence than 6px',
+	},
+	{
+		name: 'Fade down (subtle)',
+		className: 'kr-motion-enter-fade-down-sm',
+		guidance: 'Sticky elements or items that enter from above the fold line',
+	},
+] as const;
+---
+
+<BaseLayout
+	title="Style guide (internal)"
+	description="Internal design reference for Keystone Renovations — not for public search."
+	canonicalPath="/internal/style-guide/"
+	robots="noindex, nofollow"
+>
+	<main id="main-content" class="style-guide">
+		<div class="style-guide__wrap">
+			<header class="style-guide__hero">
+				<p class="style-guide__eyebrow type-label-14-700">Internal · not indexed</p>
+				<h1 class="style-guide__title type-h2-48-700">Style guide</h1>
+				<p class="style-guide__lede type-large-body-18-400">
+					Single source of truth for colours, typography, spacing, and motion lives in{' '}
+					<code class="style-guide__code">src/styles/brand.css</code> (tokens + Peek type utilities) and{' '}
+					<code class="style-guide__code">src/styles/global.css</code> (site chrome + entrance keyframes). Homepage
+					sections consume the layout variables directly so padding and max-widths stay aligned with this page.
+				</p>
+				<p class="style-guide__note type-small-body-14-400">
+					This URL is intentionally omitted from the primary nav. Peek typography catalogue:{' '}
+					<a href="/brand/">Brand guidelines</a> · <a href="/">{siteConfig.name} home</a>
+				</p>
+			</header>
+
+			<section class="style-guide__section" aria-labelledby="sg-colours-heading">
+				<h2 id="sg-colours-heading" class="style-guide__h2 type-h2-36-700">Colour palette</h2>
+				<p class="style-guide__muted type-large-body-18-400">
+					Use CSS variables — never hard-code hex in new components unless you are capturing a token here first.
+				</p>
+				<ul class="style-guide__swatches">
+					{
+						palette.map(({ token, hex, usage }) => (
+							<li class="style-guide__swatch">
+								<div
+									class="style-guide__swatch-chip"
+									style={`background:${hex}`}
+									data-light={hex.toLowerCase() === '#ffffff' || hex.toLowerCase() === '#faf9f6' ? 'true' : undefined}
+								/>
+								<div class="style-guide__swatch-meta">
+									<code class="style-guide__code type-body-12-400">{token}</code>
+									<span class="style-guide__swatch-hex type-body-12-400">{hex}</span>
+									<span class="style-guide__swatch-use type-body-12-400">{usage}</span>
+								</div>
+							</li>
+						))
+					}
+				</ul>
+
+				<h3 class="style-guide__h3 type-h3-20-700">Semantic aliases</h3>
+				<div class="style-guide__table-wrap">
+					<table class="style-guide__table">
+						<thead>
+							<tr>
+								<th class="type-label-14-700">Token</th>
+								<th class="type-label-14-700">Resolves to</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								semantic.map(({ token, resolves }) => (
+									<tr>
+										<td>
+											<code class="style-guide__code">{token}</code>
+										</td>
+										<td>
+											<code class="style-guide__code">{resolves}</code>
+										</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+			<section class="style-guide__section" aria-labelledby="sg-type-heading">
+				<h2 id="sg-type-heading" class="style-guide__h2 type-h2-36-700">Typography &amp; fonts</h2>
+				<p class="style-guide__muted type-large-body-18-400">
+					Google Fonts are loaded in <code class="style-guide__code">BaseLayout.astro</code>: Montserrat (headings,
+					UI) and Open Sans (body). Stacks: <code class="style-guide__code">--font-heading</code>,{' '}
+					<code class="style-guide__code">--font-body</code>, <code class="style-guide__code">--font-display</code>{' '}
+					(serif / large display).
+				</p>
+
+				<h3 class="style-guide__h3 type-h3-20-700">Homepage utility classes</h3>
+				<div class="style-guide__table-wrap">
+					<table class="style-guide__table">
+						<thead>
+							<tr>
+								<th class="type-label-14-700">Class</th>
+								<th class="type-label-14-700">Where it appears</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								homepageType.map(({ class: c, where }) => (
+									<tr>
+										<td>
+											<code class="style-guide__code">.{c}</code>
+										</td>
+										<td class="type-body-16-500">{where}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<div class="style-guide__type-showcase">
+					<p class="type-h1-72-700 style-guide__sample-dark">We bring your renovation ideas to life.</p>
+					<p class="type-h2-48-700">Complete property solutions</p>
+					<p class="type-large-body-18-400">
+						By understanding your renovation needs. We make it happen. Fluid clamp sizes keep small screens readable.
+					</p>
+				</div>
+			</section>
+
+			<section class="style-guide__section" aria-labelledby="sg-layout-heading">
+				<h2 id="sg-layout-heading" class="style-guide__h2 type-h2-36-700">Layout, margin &amp; padding</h2>
+				<p class="style-guide__muted type-large-body-18-400">
+					These custom properties are defined in <code class="style-guide__code">:root</code> and referenced from homepage
+					sections and the footer so horizontal rhythm matches across the fold.
+				</p>
+
+				<h3 class="style-guide__h3 type-h3-20-700">Token reference</h3>
+				<div class="style-guide__table-wrap">
+					<table class="style-guide__table">
+						<thead>
+							<tr>
+								<th class="type-label-14-700">Token</th>
+								<th class="type-label-14-700">Role</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								layoutTokens.map(({ token, note }) => (
+									<tr>
+										<td>
+											<code class="style-guide__code">{token}</code>
+										</td>
+										<td class="type-body-16-500">{note}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="style-guide__h3 type-h3-20-700">Homepage section map</h3>
+				<div class="style-guide__table-wrap">
+					<table class="style-guide__table">
+						<thead>
+							<tr>
+								<th class="type-label-14-700">Block</th>
+								<th class="type-label-14-700">Vertical padding</th>
+								<th class="type-label-14-700">Horizontal padding</th>
+								<th class="type-label-14-700">Inner max-width</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="type-body-16-500">Hero</td>
+								<td>
+									<code class="style-guide__code">--hero-inner-pad-y</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--hero-inner-pad-x</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--layout-max-52</code> (title column)
+								</td>
+							</tr>
+							<tr>
+								<td class="type-body-16-500">Complete solutions</td>
+								<td>
+									<code class="style-guide__code">--section-pad-y-complete</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--section-pad-x</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--layout-max-72</code> grid /{' '}
+									<code class="style-guide__code">--layout-max-48</code> intro
+								</td>
+							</tr>
+							<tr>
+								<td class="type-body-16-500">Testimonials</td>
+								<td>
+									<code class="style-guide__code">--section-pad-y-testimonials</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--section-pad-x</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--layout-max-52</code>
+								</td>
+							</tr>
+							<tr>
+								<td class="type-body-16-500">Image break</td>
+								<td colspan="3" class="type-body-16-500">
+									Full bleed; no section padding. Image height{' '}
+									<code class="style-guide__code">clamp(22rem, 55vh, 44rem)</code> in{' '}
+									<code class="style-guide__code">HomeImageBreak.astro</code>.
+								</td>
+							</tr>
+							<tr>
+								<td class="type-body-16-500">The Way We Work</td>
+								<td>
+									<code class="style-guide__code">--section-pad-y-how-we-help</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--section-pad-x</code>
+								</td>
+								<td>
+									<code class="style-guide__code">--layout-max-72</code> /{' '}
+									<code class="style-guide__code">--layout-max-44</code> intro
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="style-guide__visual-rail" aria-hidden="true">
+					<span class="style-guide__chip">Section X pad</span>
+					<div class="style-guide__visual-rail-inner">
+						<span class="style-guide__chip">max 72rem</span>
+					</div>
+				</div>
+			</section>
+
+			<section class="style-guide__section" aria-labelledby="sg-surfaces-heading">
+				<h2 id="sg-surfaces-heading" class="style-guide__h2 type-h2-36-700">Surfaces, radii &amp; CTAs</h2>
+				<div class="style-guide__table-wrap">
+					<table class="style-guide__table">
+						<thead>
+							<tr>
+								<th class="type-label-14-700">Pattern</th>
+								<th class="type-label-14-700">Radius</th>
+								<th class="type-label-14-700">Notes</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								radiiAndShadows.map(({ label, radius, note }) => (
+									<tr>
+										<td class="type-body-16-500">{label}</td>
+										<td>
+											<code class="style-guide__code">{radius}</code>
+										</td>
+										<td class="type-body-16-500">{note}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<div class="style-guide__cta-row">
+					<div>
+						<p class="type-label-14-700">Header CTA pattern</p>
+						<a class="site-header__cta type-button-16-700" href="/contact/#discuss">Discuss Your Project</a>
+					</div>
+					<div>
+						<p class="type-label-14-700">Hero CTA pattern</p>
+						<a class="style-guide__fake-hero-cta type-button-16-700" href="/contact/#discuss">Discuss Your Project</a>
+					</div>
+				</div>
+			</section>
+
+			<section class="style-guide__section" aria-labelledby="sg-motion-heading">
+				<h2 id="sg-motion-heading" class="style-guide__h2 type-h2-36-700">Motion tokens</h2>
+				<div class="style-guide__table-wrap">
+					<table class="style-guide__table">
+						<thead>
+							<tr>
+								<th class="type-label-14-700">Token</th>
+								<th class="type-label-14-700">Typical use</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								motionTokens.map(({ token, note }) => (
+									<tr>
+										<td>
+											<code class="style-guide__code">{token}</code>
+										</td>
+										<td class="type-body-16-500">{note}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<h3 class="style-guide__h3 type-h3-20-700">Recommended entrance presets</h3>
+				<p class="style-guide__muted type-large-body-18-400">
+					Classes live in <code class="style-guide__code">global.css</code> alongside{' '}
+					<code class="style-guide__code">@keyframes kr-enter-*</code>. Always pair real implementations with{' '}
+					<code class="style-guide__code">prefers-reduced-motion</code> (utilities already noop there). For staggered
+					children, add <code class="style-guide__code">.kr-motion-delay-1</code> (08ms),{' '}
+					<code class="style-guide__code">-2</code> (16ms), or <code class="style-guide__code">-3</code> (24ms) on
+					successive elements — keep total delay under ~0.3s.
+				</p>
+
+				<div class="style-guide__table-wrap">
+					<table class="style-guide__table">
+						<thead>
+							<tr>
+								<th class="type-label-14-700">Preset</th>
+								<th class="type-label-14-700">Class</th>
+								<th class="type-label-14-700">When to use</th>
+							</tr>
+						</thead>
+						<tbody>
+							{
+								motionPresets.map(({ name, className, guidance }) => (
+									<tr>
+										<td class="type-body-16-500">{name}</td>
+										<td>
+											<code class="style-guide__code">.{className}</code>
+										</td>
+										<td class="type-body-16-500">{guidance}</td>
+									</tr>
+								))
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<div class="style-guide__motion-demos" data-motion-demos>
+					{
+						motionPresets.map(({ name, className }) => (
+							<div class="style-guide__motion-item">
+								<div class="style-guide__motion-chrome">
+									<p class="style-guide__motion-label type-label-14-700">{name}</p>
+									<button type="button" class="style-guide__replay type-body-14-600" data-motion-replay>
+										Replay
+									</button>
+								</div>
+								<div class:list={[className, 'style-guide__motion-panel']} data-motion-panel>
+									<p class="type-body-16-500">Sample block animating with <code class="style-guide__code">.{className}</code>.</p>
+								</div>
+							</div>
+						))
+					}
+					<div class="style-guide__motion-item style-guide__motion-item--wide">
+						<div class="style-guide__motion-chrome">
+							<p class="style-guide__motion-label type-label-14-700">Staggered row</p>
+							<button type="button" class="style-guide__replay type-body-14-600" data-motion-replay-row>
+										Replay row
+									</button>
+						</div>
+						<div class="style-guide__stagger-row" data-motion-stagger-row>
+							<div class="style-guide__stagger-card kr-motion-enter-fade-up-sm">One</div>
+							<div class="style-guide__stagger-card kr-motion-enter-fade-up-sm kr-motion-delay-1">Two</div>
+							<div class="style-guide__stagger-card kr-motion-enter-fade-up-sm kr-motion-delay-2">Three</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</main>
+</BaseLayout>
+
+<script>
+	(() => {
+		const root = document.querySelector('[data-motion-demos]');
+		if (!root) return;
+
+		function replay(panel) {
+			const cls = [...panel.classList].find((c) => c.startsWith('kr-motion-enter'));
+			if (!cls) return;
+			panel.classList.remove(cls);
+			// reflow to restart CSS animation
+			void panel.offsetWidth;
+			panel.classList.add(cls);
+		}
+
+		root.querySelectorAll('[data-motion-replay]').forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const panel = btn.closest('.style-guide__motion-item')?.querySelector('[data-motion-panel]');
+				if (panel) replay(panel);
+			});
+		});
+
+		const rowBtn = root.querySelector('[data-motion-replay-row]');
+		const row = root.querySelector('[data-motion-stagger-row]');
+		if (rowBtn && row) {
+			rowBtn.addEventListener('click', () => {
+				const cards = [...row.querySelectorAll('.style-guide__stagger-card')];
+				cards.forEach((el) => {
+					el.classList.remove('kr-motion-enter-fade-up-sm', 'kr-motion-delay-1', 'kr-motion-delay-2');
+				});
+				void row.offsetWidth;
+				cards[0]?.classList.add('kr-motion-enter-fade-up-sm');
+				cards[1]?.classList.add('kr-motion-enter-fade-up-sm', 'kr-motion-delay-1');
+				cards[2]?.classList.add('kr-motion-enter-fade-up-sm', 'kr-motion-delay-2');
+			});
+		}
+	})();
+</script>
+
+<style>
+	.style-guide {
+		background: var(--color-white-smoke);
+		padding: var(--section-pad-y-complete) var(--section-pad-x);
+	}
+
+	.style-guide__wrap {
+		max-width: var(--layout-max-72);
+		margin: 0 auto;
+	}
+
+	.style-guide__hero {
+		text-align: center;
+		margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+	}
+
+	.style-guide__eyebrow {
+		margin: 0 0 0.5rem;
+		color: var(--color-gray);
+		letter-spacing: 0.12em;
+	}
+
+	.style-guide__title {
+		margin: 0 0 1rem;
+		color: var(--color-dark-gray);
+	}
+
+	.style-guide__lede {
+		margin: 0 auto 1rem;
+		max-width: var(--layout-max-52);
+		text-align: center;
+		color: color-mix(in srgb, var(--color-dark-gray) 85%, var(--color-gray));
+	}
+
+	.style-guide__note {
+		margin: 0 auto;
+		max-width: var(--layout-max-48);
+		color: var(--color-gray);
+	}
+
+	.style-guide__note a {
+		color: var(--color-dark-khaki);
+		font-weight: 600;
+	}
+
+	.style-guide__code {
+		font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+		font-size: 0.85em;
+		background: var(--color-white);
+		padding: 0.1em 0.35em;
+		border-radius: 3px;
+		color: var(--color-dark-gray);
+	}
+
+	.style-guide__section {
+		margin-bottom: clamp(2.5rem, 5vw, 3.75rem);
+	}
+
+	.style-guide__h2 {
+		margin: 0 0 0.75rem;
+		color: var(--color-dark-gray);
+	}
+
+	.style-guide__h3 {
+		margin: 2rem 0 0.75rem;
+		color: var(--color-dark-gray);
+	}
+
+	.style-guide__muted {
+		margin: 0 0 1.5rem;
+		text-align: center;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+	}
+
+	.style-guide__swatches {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(12.5rem, 1fr));
+		gap: 1rem;
+	}
+
+	.style-guide__swatch {
+		background: var(--color-white);
+		border-radius: 10px;
+		overflow: hidden;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.04),
+			0 4px 14px rgba(26, 27, 27, 0.06);
+	}
+
+	.style-guide__swatch-chip {
+		height: 4.5rem;
+		border-bottom: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, transparent);
+	}
+
+	.style-guide__swatch-chip[data-light] {
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, transparent);
+	}
+
+	.style-guide__swatch-meta {
+		padding: 0.65rem 0.75rem 0.85rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.style-guide__swatch-use {
+		color: color-mix(in srgb, var(--color-dark-gray) 72%, var(--color-gray));
+	}
+
+	.style-guide__table-wrap {
+		overflow-x: auto;
+		border-radius: 10px;
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+		background: var(--color-white);
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	}
+
+	.style-guide__table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.9375rem;
+	}
+
+	.style-guide__table th,
+	.style-guide__table td {
+		padding: 0.75rem 1rem;
+		text-align: left;
+		vertical-align: top;
+		border-bottom: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.style-guide__table th {
+		background: var(--color-white-smoke);
+		color: var(--color-dark-gray);
+	}
+
+	.style-guide__table tr:last-child td {
+		border-bottom: none;
+	}
+
+	.style-guide__type-showcase {
+		margin-top: 1.75rem;
+		padding: var(--card-pad-complete);
+		background: var(--color-white);
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.04),
+			0 4px 14px rgba(26, 27, 27, 0.06);
+	}
+
+	.style-guide__sample-dark {
+		background: var(--color-dark-gray);
+		color: var(--color-white);
+		padding: 1rem 1.25rem;
+		border-radius: 8px;
+		margin: 0;
+	}
+
+	.style-guide__visual-rail {
+		margin-top: 1.75rem;
+		padding: var(--section-pad-y-complete) var(--section-pad-x);
+		background: repeating-linear-gradient(
+			-45deg,
+			color-mix(in srgb, var(--color-card-icon-gold) 25%, var(--color-white)),
+			color-mix(in srgb, var(--color-card-icon-gold) 25%, var(--color-white)) 8px,
+			color-mix(in srgb, var(--color-card-icon-gold) 12%, var(--color-white)) 8px,
+			color-mix(in srgb, var(--color-card-icon-gold) 12%, var(--color-white)) 16px
+		);
+		border-radius: 10px;
+		border: 1px dashed color-mix(in srgb, var(--color-dark-gray) 22%, var(--color-white));
+	}
+
+	.style-guide__visual-rail-inner {
+		max-width: var(--layout-max-72);
+		margin: 0 auto;
+		padding: 1.25rem;
+		background: var(--color-white);
+		border-radius: 8px;
+		min-height: 4rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.style-guide__chip {
+		display: inline-block;
+		margin: 0 0 0.5rem;
+		padding: 0.2rem 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		border-radius: 999px;
+		background: var(--color-dark-gray);
+		color: var(--color-white);
+	}
+
+	.style-guide__cta-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
+		margin-top: 1.5rem;
+	}
+
+	@media (min-width: 40rem) {
+		.style-guide__cta-row {
+			grid-template-columns: 1fr 1fr;
+		}
+	}
+
+	.style-guide__fake-hero-cta {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.85rem 1.5rem;
+		text-decoration: none;
+		color: var(--color-white);
+		background: var(--color-dark-khaki);
+		border-radius: 3px;
+		transition:
+			filter var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.style-guide__fake-hero-cta:hover {
+		filter: brightness(1.06);
+	}
+
+	.style-guide__motion-demos {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.25rem;
+		margin-top: 1.75rem;
+	}
+
+	@media (min-width: 52rem) {
+		.style-guide__motion-demos {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	.style-guide__motion-item {
+		background: var(--color-white);
+		border-radius: 10px;
+		padding: 1rem 1.1rem 1.15rem;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.04),
+			0 4px 14px rgba(26, 27, 27, 0.06);
+	}
+
+	.style-guide__motion-item--wide {
+		grid-column: 1 / -1;
+	}
+
+	.style-guide__motion-chrome {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		margin-bottom: 0.65rem;
+	}
+
+	.style-guide__motion-label {
+		margin: 0;
+		color: var(--color-gray);
+	}
+
+	.style-guide__replay {
+		margin: 0;
+		padding: 0.35rem 0.65rem;
+		border-radius: 999px;
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, var(--color-white));
+		background: var(--color-white-smoke);
+		color: var(--color-dark-gray);
+		cursor: pointer;
+		font-family: var(--font-body);
+	}
+
+	.style-guide__replay:hover {
+		border-color: color-mix(in srgb, var(--color-dark-gray) 22%, var(--color-white));
+	}
+
+	.style-guide__replay:focus-visible {
+		outline: 2px solid var(--color-card-icon-gold);
+		outline-offset: 2px;
+	}
+
+	.style-guide__motion-panel {
+		min-height: 5.5rem;
+		padding: 1rem 1.1rem;
+		border-radius: 8px;
+		background: var(--color-white-smoke);
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.style-guide__stagger-row {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 0.75rem;
+	}
+
+	.style-guide__stagger-card {
+		padding: 0.85rem;
+		text-align: center;
+		border-radius: 8px;
+		background: var(--color-white-smoke);
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+		font-weight: 700;
+		font-family: var(--font-heading);
+	}
+</style>
