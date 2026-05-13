@@ -7,17 +7,17 @@
 
 <section class="home-hero" aria-labelledby="hero-heading">
 	<div class="home-hero__inner">
-		<h1 id="hero-heading" class="home-hero__title type-h1-72-700">
+		<h1 id="hero-heading" class="home-hero__title type-h1-72-700 kr-motion-enter-fade-up-sm">
 			<span class="home-hero__title-line">We bring your</span>
 			<span class="home-hero__title-line">
 				<span class="home-hero__title-accent">renovation ideas</span>
 			</span>
 			<span class="home-hero__title-line">to life.</span>
 		</h1>
-		<p class="home-hero__sub type-large-body-18-400">
-			By understanding your renovation needs. We make it happen.
+		<p class="home-hero__sub type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
+			By understanding your renovation needs. We make it{'\u00A0'}happen.
 		</p>
-		<a class="home-hero__cta type-button-16-700" href="/contact/#discuss">Discuss Your Project</a>
+		<a class="home-hero__cta type-button-16-700 kr-motion-enter-fade-up-sm kr-motion-delay-2" href="/contact/#discuss">Discuss Your Project</a>
 	</div>
 </section>
 
@@ -72,9 +72,18 @@
 
 	.home-hero__sub {
 		margin: 0 0 1.75rem;
-		max-width: var(--layout-max-28);
+		max-width: none;
 		text-align: left;
 		color: rgba(255, 255, 255, 0.95);
+		font-size: clamp(0.875rem, 0.78rem + 0.45vw, 1.125rem);
+		line-height: calc(28 / 18);
+		text-wrap: pretty;
+	}
+
+	@media (min-width: 48rem) {
+		.home-hero__sub {
+			white-space: nowrap;
+		}
 	}
 
 	.home-hero__cta {
@@ -86,7 +95,9 @@
 		color: var(--color-white);
 		background: var(--color-dark-khaki);
 		border-radius: 3px;
-		transition: filter 0.2s ease, transform 0.2s ease;
+		transition:
+			filter var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
 	}
 
 	.home-hero__cta:hover {
@@ -96,5 +107,11 @@
 	.home-hero__cta:focus-visible {
 		outline: 2px solid var(--color-white);
 		outline-offset: 3px;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.home-hero__cta {
+			transition: none;
+		}
 	}
 </style>

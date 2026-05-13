@@ -1,4 +1,6 @@
 ---
+import { philosophyCards } from '../data/philosophyCards';
+
 const physicallyIntro =
 	'We listen carefully to the physical elements of what your renovation is asking of us:';
 
@@ -37,46 +39,13 @@ const physicallyCards = [
 
 const personalIntro =
 	'We are the Keystone to your Project \u2013 the centre point from which all else depends.';
-
-const personalCards = [
-	{
-		title: 'Consideration to your Lifestyle Needs',
-		body: 'We are the Single point of contact for you. We structure our role to align with your lifestyle ensuring the project and your life, stay on track! We assess the following elements to ensure we are working for you the way you need us to.',
-		iconSrc: '/icons/how-we-help/personal/tea.png',
-	},
-	{
-		title: 'Time',
-		body: 'Everyone\u2019s time is precious and \u201cfinding time\u201d for new projects is not always possible. We give you your time back.',
-		iconSrc: '/icons/how-we-help/personal/clock.png',
-	},
-	{
-		title: 'Reliability & Trustworthiness',
-		body: 'We will turn up and deliver as promised. We will treat your property like it is our own. Our testimonies testify to this.',
-		iconSrc: '/icons/how-we-help/personal/shield.png',
-	},
-	{
-		title: 'Know-How',
-		body: 'We work with teams of experienced crafts people and trades all of whom have decades of experience. There is no such thing as a renovating problem that we can\u2019t find a solution to.',
-		iconSrc: '/icons/how-we-help/personal/bulb.png',
-	},
-	{
-		title: 'Confidentiality',
-		body: 'Respecting your Privacy and Showing Discretion at all times.',
-		iconSrc: '/icons/how-we-help/personal/eye.png',
-	},
-	{
-		title: 'Security',
-		body: 'We follow strict protocols in securing your home and privacy.',
-		iconSrc: '/icons/how-we-help/personal/padlock.png',
-	},
-] as const;
 ---
 
 <section class="how-we-help" aria-labelledby="how-we-help-heading">
 	<div class="how-we-help__inner">
-		<h2 id="how-we-help-heading" class="how-we-help__title type-h2-48-700">The Way We Work</h2>
+		<h2 id="how-we-help-heading" class="how-we-help__title type-h2-48-700 kr-motion-enter-fade-up-sm">The Way We Work</h2>
 
-		<div class="how-we-help__tabs" role="tablist" aria-label="The way we work">
+		<div class="how-we-help__tabs kr-motion-enter-fade-up-sm kr-motion-delay-1" role="tablist" aria-label="The way we work">
 			<button
 				type="button"
 				class="how-we-help__tab is-active"
@@ -122,11 +91,18 @@ const personalCards = [
 			aria-labelledby="how-tab-physical"
 			data-how-panel="physical"
 		>
-			<p class="how-we-help__intro type-large-body-18-400">{physicallyIntro}</p>
+			<p class="how-we-help__intro type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-2">{physicallyIntro}</p>
 			<div class="how-we-help__grid">
 				{
-					physicallyCards.map(({ title, body, iconSrc }) => (
-						<article class="how-we-help__card">
+					physicallyCards.map(({ title, body, iconSrc }, i) => (
+						<article
+							class:list={[
+								'how-we-help__card',
+								'kr-motion-enter-fade-up-sm',
+								i % 3 === 1 ? 'kr-motion-delay-1' : undefined,
+								i % 3 === 2 ? 'kr-motion-delay-2' : undefined,
+							]}
+						>
 							<div class="how-we-help__card-icon" aria-hidden="true">
 								<img
 									class="how-we-help__card-icon-img"
@@ -153,11 +129,18 @@ const personalCards = [
 			data-how-panel="personal"
 			hidden
 		>
-			<p class="how-we-help__intro type-large-body-18-400">{personalIntro}</p>
+			<p class="how-we-help__intro type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-2">{personalIntro}</p>
 			<div class="how-we-help__grid">
 				{
-					personalCards.map(({ title, body, iconSrc }) => (
-						<article class="how-we-help__card">
+					philosophyCards.map(({ title, body, iconSrc }, i) => (
+						<article
+							class:list={[
+								'how-we-help__card',
+								'kr-motion-enter-fade-up-sm',
+								i % 3 === 1 ? 'kr-motion-delay-1' : undefined,
+								i % 3 === 2 ? 'kr-motion-delay-2' : undefined,
+							]}
+						>
 							<div class="how-we-help__card-icon" aria-hidden="true">
 								<img
 									class="how-we-help__card-icon-img"

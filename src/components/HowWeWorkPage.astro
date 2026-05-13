@@ -1,0 +1,207 @@
+---
+import { philosophyCards } from '../data/philosophyCards';
+
+/** Temporary: reuse hero art for each band until per-section photography exists. */
+const sectionPlaceholderImage = '/images/hero-interior.jpg';
+---
+
+<div class="how-we-work-page">
+	<header class="how-we-work-hero">
+		<div class="how-we-work-hero__inner">
+			<h1 class="how-we-work-hero__title type-h2-48-700">How we work</h1>
+			<p class="how-we-work-hero__lede type-large-body-18-400">
+				We are the Keystone to your Project \u2013 the centre point from which all else depends.
+			</p>
+		</div>
+	</header>
+
+	{
+		philosophyCards.map(({ title, body, iconSrc }, i) => (
+			<section
+				class:list={['how-we-work-band', i % 2 === 1 && 'how-we-work-band--flip']}
+				aria-labelledby={`how-we-work-h-${i}`}
+			>
+				<div class="how-we-work-band__inner">
+					<div class="how-we-work-band__text">
+						<div class="how-we-work-band__icon" aria-hidden="true">
+							<img class="how-we-work-band__icon-img" src={iconSrc} alt="" width="28" height="28" decoding="async" />
+						</div>
+						<h2 id={`how-we-work-h-${i}`} class="how-we-work-band__title type-h3-20-700">
+							{title}
+						</h2>
+						<p class="how-we-work-band__body type-large-body-18-400">{body}</p>
+					</div>
+					<div class="how-we-work-band__media">
+						<img
+							class="how-we-work-band__img"
+							src={sectionPlaceholderImage}
+							alt=""
+							width="1200"
+							height="800"
+							loading="lazy"
+							decoding="async"
+						/>
+					</div>
+				</div>
+			</section>
+		))
+	}
+</div>
+
+<style>
+	.how-we-work-page {
+		background: var(--color-white);
+	}
+
+	.how-we-work-hero {
+		position: relative;
+		min-height: min(70vh, 40rem);
+		display: flex;
+		align-items: flex-end;
+		background-color: var(--color-dark-gray);
+		background-image:
+			linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.42)),
+			linear-gradient(
+				105deg,
+				rgba(0, 0, 0, 0.38) 0%,
+				rgba(0, 0, 0, 0.22) 48%,
+				rgba(0, 0, 0, 0.52) 100%
+			),
+			url('/images/hero-interior.jpg');
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+
+	.how-we-work-hero__inner {
+		position: relative;
+		z-index: 1;
+		width: 100%;
+		max-width: var(--layout-max-52);
+		margin: 0 auto;
+		padding: clamp(2.5rem, 6vw, 4rem) var(--section-pad-x) clamp(2rem, 5vw, 3rem);
+	}
+
+	.how-we-work-hero__title {
+		margin: 0 0 0.75rem;
+		color: var(--color-white);
+		text-transform: none;
+		letter-spacing: 0.03em;
+		text-shadow:
+			0 1px 2px rgba(0, 0, 0, 0.45),
+			0 4px 28px rgba(0, 0, 0, 0.35);
+	}
+
+	.how-we-work-hero__lede {
+		margin: 0;
+		max-width: var(--layout-max-44);
+		color: rgba(255, 255, 255, 0.95);
+		text-align: left;
+	}
+
+	.how-we-work-band {
+		padding: clamp(2.5rem, 6vw, 4rem) var(--section-pad-x);
+		border-top: 1px solid color-mix(in srgb, var(--color-dark-gray) 8%, var(--color-white));
+	}
+
+	.how-we-work-page > section:nth-of-type(odd) {
+		background: color-mix(in srgb, var(--color-white-smoke) 55%, var(--color-white));
+	}
+
+	.how-we-work-page > section:nth-of-type(even) {
+		background: var(--color-white);
+	}
+
+	.how-we-work-band__inner {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(1.5rem, 4vw, 2.5rem);
+		align-items: center;
+		max-width: var(--layout-max-72);
+		margin: 0 auto;
+	}
+
+	/* Mobile: always copy first, image second (readable; alternation from md up). */
+	.how-we-work-band__text {
+		order: 1;
+	}
+
+	.how-we-work-band__media {
+		order: 2;
+	}
+
+	@media (min-width: 48rem) {
+		.how-we-work-band__inner {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			gap: clamp(1.75rem, 4vw, 3rem);
+		}
+
+		/* Default: text left, image right */
+		.how-we-work-band:not(.how-we-work-band--flip) .how-we-work-band__text {
+			order: 1;
+		}
+
+		.how-we-work-band:not(.how-we-work-band--flip) .how-we-work-band__media {
+			order: 2;
+		}
+
+		.how-we-work-band--flip .how-we-work-band__media {
+			order: 1;
+		}
+
+		.how-we-work-band--flip .how-we-work-band__text {
+			order: 2;
+		}
+	}
+
+	.how-we-work-band__icon {
+		width: 2.75rem;
+		height: 2.75rem;
+		margin-bottom: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 50%;
+		background: var(--color-card-icon-gold);
+		color: var(--color-white);
+	}
+
+	.how-we-work-band__icon-img {
+		display: block;
+		width: 1.375rem;
+		height: 1.375rem;
+		object-fit: contain;
+		filter: brightness(0) invert(1);
+	}
+
+	.how-we-work-band__title {
+		margin: 0 0 0.65rem;
+		text-align: left;
+		text-transform: none;
+		color: var(--color-dark-gray);
+	}
+
+	.how-we-work-band__body {
+		margin: 0;
+		text-align: left;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
+	}
+
+	.how-we-work-band__media {
+		border-radius: 10px;
+		overflow: hidden;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.06),
+			0 8px 24px rgba(26, 27, 27, 0.08);
+	}
+
+	.how-we-work-band__img {
+		display: block;
+		width: 100%;
+		height: auto;
+		min-height: clamp(12rem, 35vw, 20rem);
+		max-height: min(28rem, 70vh);
+		object-fit: cover;
+		object-position: center;
+	}
+</style>

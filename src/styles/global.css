@@ -119,7 +119,7 @@ body.site-body > main {
 	color: var(--color-dark-gray);
 	cursor: pointer;
 	flex-shrink: 0;
-	transition: background 0.2s ease;
+	transition: background var(--motion-duration-200) var(--motion-ease-standard);
 }
 
 .site-header__menu-toggle:hover {
@@ -191,13 +191,13 @@ body.site-body > main {
 		padding-right: var(--header-pad-x);
 		border-top: 1px solid transparent;
 		transition:
-			max-height 0.35s ease,
-			opacity 0.2s ease,
-			visibility 0.2s linear,
-			padding-top 0.25s ease,
-			padding-bottom 0.25s ease,
-			border-color 0.2s ease,
-			box-shadow 0.2s ease;
+			max-height var(--motion-duration-350) var(--motion-ease-standard),
+			opacity var(--motion-duration-200) var(--motion-ease-standard),
+			visibility var(--motion-duration-200) linear,
+			padding-top var(--motion-duration-250) var(--motion-ease-standard),
+			padding-bottom var(--motion-duration-250) var(--motion-ease-standard),
+			border-color var(--motion-duration-200) var(--motion-ease-standard),
+			box-shadow var(--motion-duration-200) var(--motion-ease-standard);
 	}
 
 	.site-header--nav-open .site-header__end {
@@ -212,7 +212,8 @@ body.site-body > main {
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.site-header__end {
+	.site-header__end,
+	.site-header__menu-toggle {
 		transition: none;
 	}
 }
@@ -376,7 +377,7 @@ body.site-body > main {
 	background: var(--color-accent);
 	transform: scaleX(0);
 	transform-origin: center;
-	transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: transform var(--motion-duration-380) var(--motion-ease-out-expo);
 }
 
 .site-nav a:hover::after,
@@ -402,6 +403,12 @@ body.site-body > main {
 	outline: 2px solid var(--color-accent);
 	outline-offset: 4px;
 	border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.site-nav a::after {
+		transition: none;
+	}
 }
 
 /* CTA + telephone icon */
@@ -475,7 +482,7 @@ body.site-body > main {
 }
 
 /**
- * One-shot entrance presets. Pair with `animation-delay` utilities or inline style for stagger.
+ * One-shot entrance presets (see /brand/ → Motion). Pair with `animation-delay` utilities or inline style for stagger.
  * Prefer triggering via `.is-inview` (Intersection Observer) in JS rather than on every paint.
  */
 .kr-motion-enter-fade-in {

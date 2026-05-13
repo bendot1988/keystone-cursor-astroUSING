@@ -24,16 +24,23 @@ const cards = [
 <section class="complete-solutions" aria-labelledby="complete-solutions-heading">
 	<div class="complete-solutions__inner">
 		<header class="complete-solutions__header">
-			<h2 id="complete-solutions-heading" class="complete-solutions__title type-h2-48-700">
+			<h2 id="complete-solutions-heading" class="complete-solutions__title type-h2-48-700 kr-motion-enter-fade-up-sm">
 				Complete property solutions
 			</h2>
-			<p class="complete-solutions__intro type-large-body-18-400">{intro}</p>
+			<p class="complete-solutions__intro type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">{intro}</p>
 		</header>
 
 		<div class="complete-solutions__grid">
 			{
-				cards.map(({ title, body, iconSrc }) => (
-					<article class="complete-solutions__card">
+				cards.map(({ title, body, iconSrc }, i) => (
+					<article
+						class:list={[
+							'complete-solutions__card',
+							'kr-motion-enter-fade-up-sm',
+							i % 3 === 1 ? 'kr-motion-delay-1' : undefined,
+							i % 3 === 2 ? 'kr-motion-delay-2' : undefined,
+						]}
+					>
 						<div class="complete-solutions__icon-wrap" aria-hidden="true">
 							<img
 								class="complete-solutions__icon-svg"

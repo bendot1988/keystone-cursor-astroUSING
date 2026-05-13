@@ -37,6 +37,26 @@ const typeStyles = [
 ] as const;
 
 const defaultSample = 'The quick brown fox jumps over the lazy dog.';
+
+const motionTokens = [
+	{ token: '--motion-duration-200', note: 'Micro-interactions (hovers, header toggle, form fields, tabs)' },
+	{ token: '--motion-duration-250', note: 'Padding / sheet timing (e.g. mobile nav padding steps)' },
+	{ token: '--motion-duration-280', note: 'Card lift (shadow + transform)' },
+	{ token: '--motion-duration-350', note: 'Mobile nav panel max-height' },
+	{ token: '--motion-duration-380', note: 'Primary nav link underline' },
+	{ token: '--motion-duration-450', note: 'Testimonial slide change; default entrance length' },
+	{ token: '--motion-ease-standard', note: 'Default easing (ease)' },
+	{ token: '--motion-ease-out-expo', note: 'Expressive ease-out (underline, fade-up entrance)' },
+	{ token: '--motion-slide-6', note: 'Subtle vertical travel (6px)' },
+	{ token: '--motion-slide-12', note: 'Stronger vertical travel (12px)' },
+] as const;
+
+const motionEnterClasses = [
+	{ class: 'kr-motion-enter-fade-in', note: 'Fade in only' },
+	{ class: 'kr-motion-enter-fade-up', note: 'Fade + rise 12px (out-expo)' },
+	{ class: 'kr-motion-enter-fade-up-sm', note: 'Fade + rise 6px — homepage hero, cards, how-we-help' },
+	{ class: 'kr-motion-enter-fade-down-sm', note: 'Fade + drop 6px' },
+] as const;
 ---
 
 <BaseLayout
@@ -52,7 +72,8 @@ const defaultSample = 'The quick brown fox jumps over the lazy dog.';
 				<p class="brand-doc__lede type-large-body-18-400">
 					Tokens below are implemented in <code class="brand-doc__code">src/styles/brand.css</code> and loaded site-wide
 					via <code class="brand-doc__code">global.css</code>. Utility classes match Peek style names (e.g.
-					<code class="brand-doc__code">.type-h1-72-700</code>).
+					<code class="brand-doc__code">.type-h1-72-700</code>). Motion variables and entrance presets keep the homepage
+					aligned with the same timings as the header, footer, and cards.
 				</p>
 			</header>
 
@@ -99,6 +120,46 @@ const defaultSample = 'The quick brown fox jumps over the lazy dog.';
 						))
 					}
 				</div>
+			</section>
+
+			<section class="brand-doc__section" aria-labelledby="brand-motion-heading">
+				<h2 id="brand-motion-heading" class="brand-doc__h2 type-h2-36-700">Motion</h2>
+				<p class="brand-doc__muted type-large-body-18-400">
+					Use the duration and easing variables for any <code class="brand-doc__code">transition</code> or{' '}
+					<code class="brand-doc__code">animation</code> so behaviour stays consistent. Entrance utilities live in{' '}
+					<code class="brand-doc__code">global.css</code>; they no-op when{' '}
+					<code class="brand-doc__code">prefers-reduced-motion: reduce</code> is set.
+				</p>
+				<div class="brand-doc__motion-table" role="list">
+					{
+						motionTokens.map(({ token, note }) => (
+							<div class="brand-doc__motion-row" role="listitem">
+								<code class="brand-doc__code">{token}</code>
+								<p class="brand-doc__motion-note type-body-12-400">{note}</p>
+							</div>
+						))
+					}
+				</div>
+				<h3 class="brand-doc__h3 type-heading-24-700">Entrance classes</h3>
+				<p class="brand-doc__muted type-large-body-18-400">
+					Apply alongside layout classes (e.g. on headings or cards). Homepage examples: hero lines, complete-solutions
+					cards, how-we-help headings and grids, testimonials inner, image break.
+				</p>
+				<div class="brand-doc__motion-table" role="list">
+					{
+						motionEnterClasses.map(({ class: className, note }) => (
+							<div class="brand-doc__motion-row" role="listitem">
+								<code class="brand-doc__code">.{className}</code>
+								<p class="brand-doc__motion-note type-body-12-400">{note}</p>
+							</div>
+						))
+					}
+				</div>
+				<p class="brand-doc__stagger-note type-body-12-400">
+					Stagger: <code class="brand-doc__code">.kr-motion-delay-1</code> (+80ms),{' '}
+					<code class="brand-doc__code">.kr-motion-delay-2</code> (+160ms),{' '}
+					<code class="brand-doc__code">.kr-motion-delay-3</code> (+240ms).
+				</p>
 			</section>
 
 			<footer class="brand-doc__footer type-small-body-14-400">
@@ -161,6 +222,12 @@ const defaultSample = 'The quick brown fox jumps over the lazy dog.';
 	.brand-doc__h2 {
 		margin: 0 0 0.75rem;
 		color: var(--color-dark-gray);
+	}
+
+	.brand-doc__h3 {
+		margin: 2rem 0 0.65rem;
+		color: var(--color-dark-gray);
+		text-align: center;
 	}
 
 	.brand-doc__muted {
@@ -251,6 +318,46 @@ const defaultSample = 'The quick brown fox jumps over the lazy dog.';
 
 	.brand-doc__type-sample.type-body-20-400 {
 		white-space: normal;
+	}
+
+	.brand-doc__motion-table {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.brand-doc__motion-row {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.35rem;
+		background: var(--color-white);
+		padding: 0.75rem 1rem;
+		border-radius: 6px;
+		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+	}
+
+	@media (min-width: 640px) {
+		.brand-doc__motion-row {
+			grid-template-columns: minmax(14rem, 18rem) 1fr;
+			align-items: center;
+			gap: 1rem;
+		}
+	}
+
+	.brand-doc__motion-row .brand-doc__code {
+		word-break: break-all;
+	}
+
+	.brand-doc__motion-note {
+		margin: 0;
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+	}
+
+	.brand-doc__stagger-note {
+		margin: 0.75rem 0 0;
+		text-align: center;
+		color: color-mix(in srgb, var(--color-dark-gray) 72%, var(--color-gray));
 	}
 
 	.brand-doc__footer {
