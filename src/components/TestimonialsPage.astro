@@ -4,11 +4,11 @@ import { testimonials } from '../data/testimonials';
 
 <div class="testimonials-page">
 	<header class="testimonials-page__hero">
-		<h1 class="testimonials-page__title type-h2-48-700">Testimonials</h1>
-		<p class="testimonials-page__lede type-large-body-18-400">
+		<h1 class="testimonials-page__title type-h2-48-700 kr-motion-enter-fade-up-sm">Testimonials</h1>
+		<p class="testimonials-page__lede type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
 			We are grateful for every note clients send. Below is a growing collection of feedback from homeowners, landlords, and partners we have worked with.
 		</p>
-		<div class="testimonials-page__stars" aria-hidden="true">
+		<div class="testimonials-page__stars kr-motion-enter-fade-in" aria-hidden="true">
 			{
 				Array.from({ length: 5 }).map(() => (
 					<svg class="testimonials-page__star" viewBox="0 0 24 24" width="22" height="22" focusable="false">
@@ -24,9 +24,16 @@ import { testimonials } from '../data/testimonials';
 
 	<ul class="testimonials-page__grid">
 		{
-			testimonials.map((t) => (
+			testimonials.map((t, ti) => (
 				<li class="testimonials-page__cell">
-					<article class="testimonials-page__card">
+					<article
+						class:list={[
+							'testimonials-page__card',
+							'kr-motion-enter-fade-up-sm',
+							ti % 3 === 1 ? 'kr-motion-delay-1' : undefined,
+							ti % 3 === 2 ? 'kr-motion-delay-2' : undefined,
+						]}
+					>
 						<blockquote class="testimonials-page__blockquote">
 							<p class="testimonials-page__highlight">{t.highlight}</p>
 							<p class="testimonials-page__quote">{t.quote}</p>

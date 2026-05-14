@@ -18,8 +18,8 @@ const breatherStats = [
 <div class="services-page">
 	<header class="services-hero">
 		<div class="services-hero__inner">
-			<h1 class="services-hero__title type-h2-48-700">Services</h1>
-			<p class="services-hero__lede type-large-body-18-400">
+			<h1 class="services-hero__title type-h2-48-700 kr-motion-enter-fade-up-sm">Services</h1>
+			<p class="services-hero__lede type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
 				From structure to the finishing touches and the garden beyond the back door, we hold the full picture so you do
 				not have to stitch trades together yourself. The pillars below are how we think about delivery: clear scopes,
 				honest procurement, and workmanship you can see at handover.
@@ -43,25 +43,32 @@ const breatherStats = [
 							<div class="services-breather" role="region" aria-labelledby="services-breather-heading">
 								<div class="services-breather__inner">
 									<hr class="services-breather__rule" />
-									<h2 id="services-breather-heading" class="services-breather__title type-heading-24-700">
+									<h2 id="services-breather-heading" class="services-breather__title type-heading-24-700 kr-motion-enter-fade-up-sm">
 										Depth in every trade, one calm thread through the job
 									</h2>
-									<p class="services-breather__lede type-large-body-18-400">
+									<p class="services-breather__lede type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
 										Whether you are remodelling a single room or reimagining the whole property, we keep the same
 										standard: specifications that match the brief, sequencing that respects your home, and people on
 										site who care about the outcome as much as you do.
 									</p>
 									<dl class="services-breather__stats">
 										{
-											breatherStats.map(({ value, label }) => (
-												<div class="services-breather__stat">
+											breatherStats.map(({ value, label }, si) => (
+												<div
+													class:list={[
+														'services-breather__stat',
+														'kr-motion-enter-fade-up-sm',
+														si === 1 ? 'kr-motion-delay-1' : undefined,
+														si === 2 ? 'kr-motion-delay-2' : undefined,
+													]}
+												>
 													<dt class="services-breather__stat-value">{value}</dt>
 													<dd class="services-breather__stat-label type-large-body-18-400">{label}</dd>
 												</div>
 											))
 										}
 									</dl>
-									<figure class="services-breather__quote">
+									<figure class="services-breather__quote kr-motion-enter-fade-in">
 										<blockquote class="services-breather__quote-text type-large-body-18-400">
 											<p>{servicesBreatherPullQuote.text}</p>
 										</blockquote>
@@ -73,12 +80,15 @@ const breatherStats = [
 							</div>
 						)
 					}
-					<section
-						class:list={['services-band', i % 2 === 1 && 'services-band--flip']}
-						aria-labelledby={`services-h-${i}`}
-						style={{ '--section-i': i }}
-					>
-						<div class="services-band__inner">
+					<section class:list={['services-band', i % 2 === 1 && 'services-band--flip']} aria-labelledby={`services-h-${i}`}>
+						<div
+							class:list={[
+								'services-band__inner',
+								'kr-motion-enter-fade-up-sm',
+								i % 3 === 1 ? 'kr-motion-delay-1' : undefined,
+								i % 3 === 2 ? 'kr-motion-delay-2' : undefined,
+							]}
+						>
 							<div class="services-band__text">
 								<div class="services-band__icon" aria-hidden="true">
 									<img class="services-band__icon-img" src={iconSrc} alt="" width="28" height="28" decoding="async" />
@@ -93,7 +103,7 @@ const breatherStats = [
 											<ul class="services-band__bullets services-band__list-desktop">
 												{
 													listItems.map((item, bi) => (
-														<li class="services-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+														<li class="services-band__bullet type-large-body-18-400">
 															<span class="services-band__bullet-mark">
 																<KeystoneBulletIcon />
 															</span>
@@ -106,7 +116,7 @@ const breatherStats = [
 												<ul class="services-band__bullets">
 													{
 														listItemsMobileHead.map((item, bi) => (
-															<li class="services-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+															<li class="services-band__bullet type-large-body-18-400">
 																<span class="services-band__bullet-mark">
 																	<KeystoneBulletIcon />
 																</span>
@@ -122,10 +132,7 @@ const breatherStats = [
 													<ul class="services-band__bullets services-band__bullets--nested">
 														{
 															listItemsMobileTail.map((item, bi) => (
-																<li
-																	class="services-band__bullet type-large-body-18-400"
-																	style={{ '--bullet-i': bi + 3 }}
-																>
+																<li class="services-band__bullet type-large-body-18-400">
 																	<span class="services-band__bullet-mark">
 																		<KeystoneBulletIcon />
 																	</span>
@@ -141,7 +148,7 @@ const breatherStats = [
 										<ul class="services-band__bullets">
 											{
 												listItems.map((item, bi) => (
-													<li class="services-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+													<li class="services-band__bullet type-large-body-18-400">
 														<span class="services-band__bullet-mark">
 															<KeystoneBulletIcon />
 														</span>
@@ -173,14 +180,14 @@ const breatherStats = [
 
 	<aside class="services-cta" role="region" aria-labelledby="services-cta-heading">
 		<div class="services-cta__inner">
-			<h2 id="services-cta-heading" class="services-cta__title type-heading-24-700">
+			<h2 id="services-cta-heading" class="services-cta__title type-heading-24-700 kr-motion-enter-fade-up-sm">
 				Tell us what you are planning
 			</h2>
-			<p class="services-cta__lede type-large-body-18-400">
+			<p class="services-cta__lede type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
 				If one of these pillars matches where you are stuck, or you need the whole journey, we are happy to talk it
 				through with no obligation.
 			</p>
-			<div class="services-cta__actions">
+			<div class="services-cta__actions kr-motion-enter-fade-up-sm kr-motion-delay-2">
 				<a class="services-cta__btn services-cta__btn--primary type-button-16-700" href="/contact/#discuss">
 					Discuss your project
 				</a>
@@ -191,17 +198,6 @@ const breatherStats = [
 </div>
 
 <style>
-	@keyframes svc-bullet-reveal {
-		from {
-			opacity: 0;
-			transform: translateY(0.45rem);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	.services-page {
 		background: var(--color-white);
 	}
@@ -568,14 +564,12 @@ const breatherStats = [
 		margin-top: -0.15rem;
 	}
 
-	.services-band__bullets.services-band__list-desktop,
-	.services-band__steps.services-band__list-desktop {
+	.services-band__bullets.services-band__list-desktop {
 		display: none;
 	}
 
 	@media (min-width: 48rem) {
-		.services-band__bullets.services-band__list-desktop,
-		.services-band__steps.services-band__list-desktop {
+		.services-band__bullets.services-band__list-desktop {
 			display: flex;
 		}
 
@@ -623,55 +617,9 @@ const breatherStats = [
 		transform: rotate(225deg) translateY(0.05rem);
 	}
 
-	.services-band__bullets--nested,
-	.services-band__steps--nested {
+	.services-band__bullets--nested {
 		margin: 0 0 0.5rem;
 		padding: 0 0.65rem 0.65rem 1.5rem;
-	}
-
-	.services-band__steps {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.services-band__step {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.35rem;
-		margin: 0;
-		color: var(--color-text);
-		opacity: 0;
-		animation: svc-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
-		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
-		transition:
-			color var(--motion-duration-200) var(--motion-ease-standard),
-			transform var(--motion-duration-200) var(--motion-ease-standard);
-	}
-
-	.services-band__step:hover {
-		color: var(--color-dark-gray);
-		transform: translateX(2px);
-	}
-
-	.services-band__step-num {
-		flex-shrink: 0;
-		min-width: 2.25rem;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.9375rem;
-		line-height: 1.55;
-		letter-spacing: 0.04em;
-		color: var(--color-dark-khaki);
-	}
-
-	.services-band__step-text {
-		flex: 1;
-		min-width: 0;
-		line-height: 1.55;
 	}
 
 	.services-band__bullets {
@@ -689,9 +637,6 @@ const breatherStats = [
 		gap: 0.65rem;
 		margin: 0;
 		color: var(--color-text);
-		opacity: 0;
-		animation: svc-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
-		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
 		transition:
 			color var(--motion-duration-200) var(--motion-ease-standard),
 			transform var(--motion-duration-200) var(--motion-ease-standard);
@@ -759,18 +704,6 @@ const breatherStats = [
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.services-band__bullet {
-			opacity: 1;
-			animation: none !important;
-			transform: none !important;
-		}
-
-		.services-band__step {
-			opacity: 1;
-			animation: none !important;
-			transform: none !important;
-		}
-
 		.services-band__media,
 		.services-band__img,
 		.services-band__icon {
@@ -780,8 +713,7 @@ const breatherStats = [
 		.services-band__media:hover,
 		.services-band__media:hover .services-band__img,
 		.services-band__text:hover .services-band__icon,
-		.services-band__bullet:hover,
-		.services-band__step:hover {
+		.services-band__bullet:hover {
 			transform: none;
 		}
 	}

@@ -48,8 +48,8 @@ const breatherStats = [
 <div class="how-we-work-page">
 	<header class="how-we-work-hero">
 		<div class="how-we-work-hero__inner">
-			<h1 class="how-we-work-hero__title type-h2-48-700">How we work</h1>
-			<p class="how-we-work-hero__lede type-large-body-18-400">
+			<h1 class="how-we-work-hero__title type-h2-48-700 kr-motion-enter-fade-up-sm">How we work</h1>
+			<p class="how-we-work-hero__lede type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
 				We keep things clear, calm, and well organised, from the first conversation to completion. Honest communication,
 				sound craftsmanship, and respect for your home, your time, and your privacy run through everything we do.
 			</p>
@@ -71,24 +71,31 @@ const breatherStats = [
 							<div class="how-we-work-breather" role="region" aria-labelledby="how-we-work-breather-heading">
 								<div class="how-we-work-breather__inner">
 									<hr class="how-we-work-breather__rule" />
-									<h2 id="how-we-work-breather-heading" class="how-we-work-breather__title type-heading-24-700">
+									<h2 id="how-we-work-breather-heading" class="how-we-work-breather__title type-heading-24-700 kr-motion-enter-fade-up-sm">
 										What you can expect from day one
 									</h2>
-									<p class="how-we-work-breather__lede type-large-body-18-400">
+									<p class="how-we-work-breather__lede type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
 										Clear expectations, steady communication, and workmanship you can see, without the noise of a
 										typical build.
 									</p>
 									<dl class="how-we-work-breather__stats">
 										{
-											breatherStats.map(({ value, label }) => (
-												<div class="how-we-work-breather__stat">
+											breatherStats.map(({ value, label }, si) => (
+												<div
+													class:list={[
+														'how-we-work-breather__stat',
+														'kr-motion-enter-fade-up-sm',
+														si === 1 ? 'kr-motion-delay-1' : undefined,
+														si === 2 ? 'kr-motion-delay-2' : undefined,
+													]}
+												>
 													<dt class="how-we-work-breather__stat-value">{value}</dt>
 													<dd class="how-we-work-breather__stat-label type-large-body-18-400">{label}</dd>
 												</div>
 											))
 										}
 									</dl>
-									<figure class="how-we-work-breather__quote">
+									<figure class="how-we-work-breather__quote kr-motion-enter-fade-in">
 										<blockquote class="how-we-work-breather__quote-text type-large-body-18-400">
 											<p>{howWeWorkBreatherPullQuote.text}</p>
 										</blockquote>
@@ -100,12 +107,15 @@ const breatherStats = [
 							</div>
 						)
 					}
-					<section
-						class:list={['how-we-work-band', i % 2 === 1 && 'how-we-work-band--flip']}
-						aria-labelledby={`how-we-work-h-${i}`}
-						style={{ '--section-i': i }}
-					>
-						<div class="how-we-work-band__inner">
+					<section class:list={['how-we-work-band', i % 2 === 1 && 'how-we-work-band--flip']} aria-labelledby={`how-we-work-h-${i}`}>
+						<div
+							class:list={[
+								'how-we-work-band__inner',
+								'kr-motion-enter-fade-up-sm',
+								i % 3 === 1 ? 'kr-motion-delay-1' : undefined,
+								i % 3 === 2 ? 'kr-motion-delay-2' : undefined,
+							]}
+						>
 							<div class="how-we-work-band__text">
 								<div class="how-we-work-band__icon" aria-hidden="true">
 									<img class="how-we-work-band__icon-img" src={iconSrc} alt="" width="28" height="28" decoding="async" />
@@ -122,7 +132,7 @@ const breatherStats = [
 											<ul class="how-we-work-band__bullets how-we-work-band__list-desktop">
 												{
 													listItems.map((item, bi) => (
-														<li class="how-we-work-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+														<li class="how-we-work-band__bullet type-large-body-18-400">
 															<span class="how-we-work-band__bullet-mark">
 																<KeystoneBulletIcon />
 															</span>
@@ -135,7 +145,7 @@ const breatherStats = [
 												<ul class="how-we-work-band__bullets">
 													{
 														listItemsMobileHead.map((item, bi) => (
-															<li class="how-we-work-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+															<li class="how-we-work-band__bullet type-large-body-18-400">
 																<span class="how-we-work-band__bullet-mark">
 																	<KeystoneBulletIcon />
 																</span>
@@ -151,10 +161,7 @@ const breatherStats = [
 													<ul class="how-we-work-band__bullets how-we-work-band__bullets--nested">
 														{
 															listItemsMobileTail.map((item, bi) => (
-																<li
-																	class="how-we-work-band__bullet type-large-body-18-400"
-																	style={{ '--bullet-i': bi + 3 }}
-																>
+																<li class="how-we-work-band__bullet type-large-body-18-400">
 																	<span class="how-we-work-band__bullet-mark">
 																		<KeystoneBulletIcon />
 																	</span>
@@ -170,7 +177,7 @@ const breatherStats = [
 										<ul class="how-we-work-band__bullets">
 											{
 												listItems.map((item, bi) => (
-													<li class="how-we-work-band__bullet type-large-body-18-400" style={{ '--bullet-i': bi }}>
+													<li class="how-we-work-band__bullet type-large-body-18-400">
 														<span class="how-we-work-band__bullet-mark">
 															<KeystoneBulletIcon />
 														</span>
@@ -202,13 +209,13 @@ const breatherStats = [
 
 	<aside class="how-we-work-cta" role="region" aria-labelledby="how-we-work-cta-heading">
 		<div class="how-we-work-cta__inner">
-			<h2 id="how-we-work-cta-heading" class="how-we-work-cta__title type-heading-24-700">
+			<h2 id="how-we-work-cta-heading" class="how-we-work-cta__title type-heading-24-700 kr-motion-enter-fade-up-sm">
 				Ready to talk it through?
 			</h2>
-			<p class="how-we-work-cta__lede type-large-body-18-400">
+			<p class="how-we-work-cta__lede type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
 				Whether you are still weighing options or ready to move, we are happy to listen and advise, with no obligation.
 			</p>
-			<div class="how-we-work-cta__actions">
+			<div class="how-we-work-cta__actions kr-motion-enter-fade-up-sm kr-motion-delay-2">
 				<a class="how-we-work-cta__btn how-we-work-cta__btn--primary type-button-16-700" href="/contact/#discuss">
 					Book a call
 				</a>
@@ -219,17 +226,6 @@ const breatherStats = [
 </div>
 
 <style>
-	@keyframes hww-bullet-reveal {
-		from {
-			opacity: 0;
-			transform: translateY(0.45rem);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	.how-we-work-page {
 		background: var(--color-white);
 	}
@@ -669,9 +665,6 @@ const breatherStats = [
 		gap: 0.65rem;
 		margin: 0;
 		color: var(--color-text);
-		opacity: 0;
-		animation: hww-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
-		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
 		transition:
 			color var(--motion-duration-200) var(--motion-ease-standard),
 			transform var(--motion-duration-200) var(--motion-ease-standard);
@@ -739,12 +732,6 @@ const breatherStats = [
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.how-we-work-band__bullet {
-			opacity: 1;
-			animation: none !important;
-			transform: none !important;
-		}
-
 		.how-we-work-band__media,
 		.how-we-work-band__img,
 		.how-we-work-band__icon {
