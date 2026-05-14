@@ -1,5 +1,6 @@
 ---
 import { philosophyCards, type PhilosophyCard } from '../data/philosophyCards';
+import { howWeWorkBreatherPullQuote } from '../data/testimonials';
 import KeystoneBulletIcon from './KeystoneBulletIcon.astro';
 
 /** Fallback if a card omits `sectionImage`. */
@@ -12,16 +13,15 @@ function splitIntroFirstSentence(pageIntro: string): { lead: string | null; rest
 }
 
 function bandContentModel(card: PhilosophyCard) {
-	const listStyle = card.listStyle ?? 'bullets';
 	let introLead: string | null = null;
 	let introBody = card.pageIntro;
 	let leadBullet: string | null = null;
 	let displayBullets: readonly string[] = card.bullets;
 
-	if (listStyle === 'bullets' && card.leadEmphasis === 'firstBullet') {
+	if (card.leadEmphasis === 'firstBullet') {
 		leadBullet = card.bullets[0] ?? null;
 		displayBullets = card.bullets.slice(1);
-	} else if (listStyle === 'bullets' && card.leadEmphasis === 'introFirstSentence') {
+	} else if (card.leadEmphasis === 'introFirstSentence') {
 		const s = splitIntroFirstSentence(card.pageIntro);
 		if (s.lead) {
 			introLead = s.lead;
@@ -29,13 +29,13 @@ function bandContentModel(card: PhilosophyCard) {
 		}
 	}
 
-	const listItems = listStyle === 'steps' ? card.bullets : displayBullets;
+	const listItems = displayBullets;
 	const needsMobileCollapse = listItems.length > 3;
 
-	return { listStyle, introLead, introBody, leadBullet, listItems, needsMobileCollapse };
+	return { introLead, introBody, leadBullet, listItems, needsMobileCollapse };
 }
 
-/** Mid-page breather — split after first half of philosophy bands. */
+/** Mid-page breather split after first half of philosophy bands. */
 const breatherAfterIndex = Math.ceil(philosophyCards.length / 2);
 /** Replace with verified figures for your market. */
 const breatherStats = [
@@ -50,7 +50,7 @@ const breatherStats = [
 		<div class="how-we-work-hero__inner">
 			<h1 class="how-we-work-hero__title type-h2-48-700">How we work</h1>
 			<p class="how-we-work-hero__lede type-large-body-18-400">
-				We keep things clear, calm, and well organised—from the first conversation to completion. Honest communication,
+				We keep things clear, calm, and well organised, from the first conversation to completion. Honest communication,
 				sound craftsmanship, and respect for your home, your time, and your privacy run through everything we do.
 			</p>
 		</div>
@@ -59,7 +59,7 @@ const breatherStats = [
 	{
 		philosophyCards.map((card, i) => {
 			const { title, iconSrc, sectionImage } = card;
-			const { listStyle, introLead, introBody, leadBullet, listItems, needsMobileCollapse } = bandContentModel(card);
+			const { introLead, introBody, leadBullet, listItems, needsMobileCollapse } = bandContentModel(card);
 			const mobileExtraCount = listItems.length > 3 ? listItems.length - 3 : 0;
 			const listItemsMobileHead = listItems.slice(0, 3);
 			const listItemsMobileTail = listItems.slice(3);
@@ -75,7 +75,7 @@ const breatherStats = [
 										What you can expect from day one
 									</h2>
 									<p class="how-we-work-breather__lede type-large-body-18-400">
-										Clear expectations, steady communication, and workmanship you can see—without the noise of a
+										Clear expectations, steady communication, and workmanship you can see, without the noise of a
 										typical build.
 									</p>
 									<dl class="how-we-work-breather__stats">
@@ -90,13 +90,10 @@ const breatherStats = [
 									</dl>
 									<figure class="how-we-work-breather__quote">
 										<blockquote class="how-we-work-breather__quote-text type-large-body-18-400">
-											<p>
-												They made a potentially stressful renovation feel manageable. We always knew what was
-												happening next, and the finish is exactly what we hoped for.
-											</p>
+											<p>{howWeWorkBreatherPullQuote.text}</p>
 										</blockquote>
 										<figcaption class="how-we-work-breather__quote-cite">
-											— Homeowner, recent full-home renovation
+											{howWeWorkBreatherPullQuote.name}, {howWeWorkBreatherPullQuote.role}
 										</figcaption>
 									</figure>
 								</div>
@@ -120,71 +117,7 @@ const breatherStats = [
 								<p class="how-we-work-band__intro type-large-body-18-400">{introBody}</p>
 								{leadBullet && <p class="how-we-work-band__lead type-body-18-700">{leadBullet}</p>}
 								{
-									listStyle === 'steps' ? (
-										needsMobileCollapse ? (
-											<>
-												<ol class="how-we-work-band__steps how-we-work-band__list-desktop">
-													{
-														listItems.map((item, bi) => (
-															<li class="how-we-work-band__step type-large-body-18-400" style={{ '--bullet-i': bi }}>
-																<span class="how-we-work-band__step-num" aria-hidden="true">
-																	{bi + 1} ·{' '}
-																</span>
-																<span class="how-we-work-band__step-text">{item}</span>
-															</li>
-														))
-													}
-												</ol>
-												<div class="how-we-work-band__list-mobile">
-													<ol class="how-we-work-band__steps">
-														{
-															listItemsMobileHead.map((item, bi) => (
-																<li class="how-we-work-band__step type-large-body-18-400" style={{ '--bullet-i': bi }}>
-																	<span class="how-we-work-band__step-num" aria-hidden="true">
-																		{bi + 1} ·{' '}
-																	</span>
-																	<span class="how-we-work-band__step-text">{item}</span>
-																</li>
-															))
-														}
-													</ol>
-													<details class="how-we-work-band__also-mobile">
-														<summary class="how-we-work-band__also-mobile-summary type-body-16-500">
-															Also includes {mobileExtraCount} more {mobileExtraCount === 1 ? 'point' : 'points'}
-														</summary>
-														<ol class="how-we-work-band__steps how-we-work-band__steps--nested">
-															{
-																listItemsMobileTail.map((item, bi) => (
-																	<li
-																		class="how-we-work-band__step type-large-body-18-400"
-																		style={{ '--bullet-i': bi + 3 }}
-																	>
-																		<span class="how-we-work-band__step-num" aria-hidden="true">
-																			{bi + 4} ·{' '}
-																		</span>
-																		<span class="how-we-work-band__step-text">{item}</span>
-																	</li>
-																))
-															}
-														</ol>
-													</details>
-												</div>
-											</>
-										) : (
-											<ol class="how-we-work-band__steps">
-												{
-													listItems.map((item, bi) => (
-														<li class="how-we-work-band__step type-large-body-18-400" style={{ '--bullet-i': bi }}>
-															<span class="how-we-work-band__step-num" aria-hidden="true">
-																{bi + 1} ·{' '}
-															</span>
-															<span class="how-we-work-band__step-text">{item}</span>
-														</li>
-													))
-												}
-											</ol>
-										)
-									) : needsMobileCollapse ? (
+									needsMobileCollapse ? (
 										<>
 											<ul class="how-we-work-band__bullets how-we-work-band__list-desktop">
 												{
@@ -273,7 +206,7 @@ const breatherStats = [
 				Ready to talk it through?
 			</h2>
 			<p class="how-we-work-cta__lede type-large-body-18-400">
-				Whether you are still weighing options or ready to move, we are happy to listen and advise—with no obligation.
+				Whether you are still weighing options or ready to move, we are happy to listen and advise, with no obligation.
 			</p>
 			<div class="how-we-work-cta__actions">
 				<a class="how-we-work-cta__btn how-we-work-cta__btn--primary type-button-16-700" href="/contact/#discuss">
@@ -414,11 +347,13 @@ const breatherStats = [
 	}
 
 	.how-we-work-breather__title {
-		margin: 0 0 0.65rem;
+		margin: 0 auto 0.65rem;
+		max-width: min(100%, 24rem);
 		color: var(--color-dark-gray);
 		text-transform: uppercase;
 		letter-spacing: 0.02em;
 		line-height: 1.25;
+		text-wrap: balance;
 	}
 
 	.how-we-work-breather__lede {
@@ -446,10 +381,13 @@ const breatherStats = [
 
 	.how-we-work-breather__stat {
 		margin: 0;
-		padding: 0.65rem 0.5rem 0.85rem;
+		padding: 0.85rem 0.65rem 1rem;
 		border-radius: 8px;
-		background: color-mix(in srgb, var(--color-white) 72%, var(--color-white-smoke));
-		box-shadow: 0 1px 0 color-mix(in srgb, var(--color-dark-gray) 6%, transparent);
+		background: var(--color-dark-khaki);
+		border: 1px solid color-mix(in srgb, var(--color-white) 18%, var(--color-dark-khaki));
+		box-shadow:
+			0 1px 0 color-mix(in srgb, var(--color-black) 12%, transparent),
+			0 6px 18px rgba(26, 27, 27, 0.12);
 	}
 
 	.how-we-work-breather__stat-value {
@@ -459,14 +397,14 @@ const breatherStats = [
 		font-size: clamp(1.5rem, 2.5vw, 1.85rem);
 		line-height: 1.15;
 		letter-spacing: 0.04em;
-		color: var(--color-dark-khaki);
+		color: var(--color-white);
 	}
 
 	.how-we-work-breather__stat-label {
 		margin: 0;
 		font-size: 0.9375rem;
 		line-height: 1.45;
-		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+		color: color-mix(in srgb, var(--color-white) 88%, var(--color-white-smoke));
 	}
 
 	.how-we-work-breather__quote {
@@ -658,14 +596,12 @@ const breatherStats = [
 		margin-top: -0.15rem;
 	}
 
-	.how-we-work-band__bullets.how-we-work-band__list-desktop,
-	.how-we-work-band__steps.how-we-work-band__list-desktop {
+	.how-we-work-band__bullets.how-we-work-band__list-desktop {
 		display: none;
 	}
 
 	@media (min-width: 48rem) {
-		.how-we-work-band__bullets.how-we-work-band__list-desktop,
-		.how-we-work-band__steps.how-we-work-band__list-desktop {
+		.how-we-work-band__bullets.how-we-work-band__list-desktop {
 			display: flex;
 		}
 
@@ -713,55 +649,9 @@ const breatherStats = [
 		transform: rotate(225deg) translateY(0.05rem);
 	}
 
-	.how-we-work-band__bullets--nested,
-	.how-we-work-band__steps--nested {
+	.how-we-work-band__bullets--nested {
 		margin: 0 0 0.5rem;
 		padding: 0 0.65rem 0.65rem 1.5rem;
-	}
-
-	.how-we-work-band__steps {
-		margin: 0;
-		padding: 0;
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.how-we-work-band__step {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.35rem;
-		margin: 0;
-		color: var(--color-text);
-		opacity: 0;
-		animation: hww-bullet-reveal var(--motion-duration-450) var(--motion-ease-out-expo) forwards;
-		animation-delay: calc(var(--section-i, 0) * 0.28s + var(--bullet-i, 0) * 0.11s + 0.12s);
-		transition:
-			color var(--motion-duration-200) var(--motion-ease-standard),
-			transform var(--motion-duration-200) var(--motion-ease-standard);
-	}
-
-	.how-we-work-band__step:hover {
-		color: var(--color-dark-gray);
-		transform: translateX(2px);
-	}
-
-	.how-we-work-band__step-num {
-		flex-shrink: 0;
-		min-width: 2.25rem;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.9375rem;
-		line-height: 1.55;
-		letter-spacing: 0.04em;
-		color: var(--color-dark-khaki);
-	}
-
-	.how-we-work-band__step-text {
-		flex: 1;
-		min-width: 0;
-		line-height: 1.55;
 	}
 
 	.how-we-work-band__bullets {
@@ -855,12 +745,6 @@ const breatherStats = [
 			transform: none !important;
 		}
 
-		.how-we-work-band__step {
-			opacity: 1;
-			animation: none !important;
-			transform: none !important;
-		}
-
 		.how-we-work-band__media,
 		.how-we-work-band__img,
 		.how-we-work-band__icon {
@@ -870,8 +754,7 @@ const breatherStats = [
 		.how-we-work-band__media:hover,
 		.how-we-work-band__media:hover .how-we-work-band__img,
 		.how-we-work-band__text:hover .how-we-work-band__icon,
-		.how-we-work-band__bullet:hover,
-		.how-we-work-band__step:hover {
+		.how-we-work-band__bullet:hover {
 			transform: none;
 		}
 	}

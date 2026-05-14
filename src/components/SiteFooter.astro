@@ -42,7 +42,9 @@ const footerFocusAreas = [
 					/>
 				</a>
 				<p class="site-footer__kicker">The Keystone touch</p>
-				<p class="site-footer__line">Renovations done right.</p>
+				<p class="site-footer__line">
+					We are the Keystone to your Project{'\u2013'}the centre point from which all else depends
+				</p>
 				<p class="site-footer__body">{siteConfig.tagline}</p>
 				<hr class="site-footer__divider" aria-hidden="true" />
 				<div class="site-footer__focus">
@@ -78,9 +80,54 @@ const footerFocusAreas = [
 							{siteConfig.phoneDisplay}
 						</a>
 					</div>
-					<a class="site-footer__contact-email" href={`mailto:${siteConfig.enquiryEmail}`}>
-						{siteConfig.enquiryEmail}
-					</a>
+					<div class="site-footer__contact-card-row">
+						<span class="site-footer__contact-icon" aria-hidden="true">
+							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+								<rect
+									x="3"
+									y="5"
+									width="18"
+									height="14"
+									rx="2"
+									stroke="currentColor"
+									stroke-width="1.75"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+								<path
+									d="m3 7 7.89 5.26a2 2 0 0 0 2.22 0L21 7"
+									stroke="currentColor"
+									stroke-width="1.75"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								/>
+							</svg>
+						</span>
+						<div
+							class="site-footer__contact-email-block"
+							data-enquiry-email={siteConfig.enquiryEmail}
+						>
+							<a
+								class="site-footer__contact-email-trigger"
+								href={`mailto:${siteConfig.enquiryEmail}`}
+								aria-label={`Send email to ${siteConfig.enquiryEmail}`}
+								title={siteConfig.enquiryEmail}
+							>
+								Email us
+							</a>
+							<div class="site-footer__contact-email-popover">
+								<p class="site-footer__contact-email-popover-label">Address</p>
+								<p class="site-footer__contact-email-address">{siteConfig.enquiryEmail}</p>
+								<button
+									type="button"
+									class="site-footer__contact-email-copy type-button-16-700"
+									aria-label={`Copy ${siteConfig.enquiryEmail} to clipboard`}
+								>
+									Copy
+								</button>
+							</div>
+						</div>
+					</div>
 				</div>
 				<p class="site-footer__badge">Leicestershire &amp; Midlands coverage</p>
 			</div>
@@ -189,12 +236,6 @@ const footerFocusAreas = [
 						<button type="submit" class="site-footer__submit type-button-16-700">Request consultation</button>
 					</div>
 				</form>
-				<nav class="site-footer__secondary" aria-label="Other ways to reach us">
-					<a class="site-footer__secondary-link" href={`tel:${siteConfig.phoneTel}`}>
-						Call {siteConfig.phoneDisplay}
-					</a>
-					<a class="site-footer__secondary-services type-button-16-700" href="/services/">View our services</a>
-				</nav>
 			</div>
 		</div>
 	</div>
@@ -230,6 +271,27 @@ const footerFocusAreas = [
 	document.getElementById('footer-consultation-form')?.addEventListener('submit', (e) => {
 		e.preventDefault();
 	});
+
+	(() => {
+		const block = document.querySelector('.site-footer__contact-email-block');
+		const copyBtn = block?.querySelector('.site-footer__contact-email-copy');
+		const email = block?.dataset.enquiryEmail;
+		if (!block || !copyBtn || !email) return;
+
+		copyBtn.addEventListener('click', async (e) => {
+			e.preventDefault();
+			try {
+				await navigator.clipboard.writeText(email);
+				copyBtn.textContent = 'Copied';
+			} catch {
+				copyBtn.textContent = 'Copy failed';
+			}
+		});
+
+		block.addEventListener('pointerleave', () => {
+			copyBtn.textContent = 'Copy';
+		});
+	})();
 </script>
 
 <style>
@@ -261,6 +323,8 @@ const footerFocusAreas = [
 
 	.site-footer__intro {
 		max-width: var(--layout-max-34);
+		position: relative;
+		z-index: 1;
 	}
 
 	.site-footer__logo {
@@ -295,12 +359,16 @@ const footerFocusAreas = [
 	}
 
 	.site-footer__line {
-		margin: 0 0 1rem;
-		font-family: var(--font-body);
-		font-weight: 400;
-		font-size: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
-		line-height: 1.45;
-		color: color-mix(in srgb, var(--color-dark-gray) 55%, var(--color-gray));
+		margin: 0 0 1.1rem;
+		max-width: min(100%, 28rem);
+		font-family: var(--font-heading);
+		font-weight: 500;
+		font-style: italic;
+		font-size: clamp(1rem, 0.92rem + 0.35vw, 1.1875rem);
+		line-height: 1.55;
+		letter-spacing: 0.02em;
+		color: color-mix(in srgb, var(--color-dark-khaki) 35%, var(--color-dark-gray));
+		text-wrap: pretty;
 	}
 
 	.site-footer__body {
@@ -328,28 +396,31 @@ const footerFocusAreas = [
 	.site-footer__contact-card {
 		display: flex;
 		flex-direction: column;
-		gap: 0.65rem;
-		max-width: min(100%, 24.5rem);
+		row-gap: 0.875rem;
+		width: 100%;
+		box-sizing: border-box;
 		margin: 0 0 1.35rem;
-		padding: 1rem 1.1rem;
+		padding: clamp(1rem, 2.2vw, 1.2rem) clamp(1.15rem, 3vw, 1.4rem);
 		background: color-mix(in srgb, var(--color-white-smoke) 72%, var(--color-white));
 		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, var(--color-white));
-		border-radius: 10px;
+		border-radius: 8px;
 		box-shadow:
 			0 1px 2px rgba(26, 27, 27, 0.04),
-			0 8px 22px rgba(26, 27, 27, 0.08);
+			0 6px 18px rgba(26, 27, 27, 0.07);
+		position: relative;
+		z-index: 0;
 	}
 
 	.site-footer__contact-card-row {
 		display: flex;
 		align-items: center;
-		gap: 0.65rem;
+		gap: 0.75rem;
 		min-width: 0;
 	}
 
 	.site-footer__contact-icon {
 		display: flex;
-		flex-shrink: 0;
+		flex: 0 0 auto;
 		align-items: center;
 		justify-content: center;
 		width: 2.5rem;
@@ -364,55 +435,137 @@ const footerFocusAreas = [
 		display: block;
 	}
 
-	.site-footer__contact-phone {
+	.site-footer__contact-phone,
+	.site-footer__contact-email-trigger {
+		flex: 0 1 auto;
+		min-width: 0;
 		font-family: var(--font-heading);
 		font-weight: 700;
-		font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
-		line-height: 1.25;
-		letter-spacing: 0.04em;
 		color: var(--color-dark-gray);
 		text-decoration: none;
 		transition: color var(--motion-duration-200) var(--motion-ease-standard);
+		font-size: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+		line-height: 1.28;
+		letter-spacing: 0.035em;
 	}
 
-	.site-footer__contact-phone:hover {
-		color: var(--color-dark-khaki);
+	.site-footer__contact-email-block {
+		position: relative;
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		align-items: center;
 	}
 
-	.site-footer__contact-phone:focus-visible {
-		outline: 2px solid var(--color-accent);
-		outline-offset: 3px;
-		border-radius: 2px;
+	/* Keeps hover/focus path continuous from the trigger to the popover */
+	.site-footer__contact-email-block::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		width: 100%;
+		top: 100%;
+		height: 0.5rem;
+		z-index: 19;
 	}
 
-	.site-footer__contact-email {
-		padding-left: calc(2.5rem + 0.65rem);
+	.site-footer__contact-email-popover {
+		position: absolute;
+		left: 0;
+		top: calc(100% + 0.45rem);
+		z-index: 20;
+		min-width: min(100%, 18rem);
+		max-width: min(calc(100vw - 2rem), 22rem);
+		padding: 0.75rem 0.85rem;
+		background: var(--color-white);
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 14%, var(--color-white));
+		border-radius: 8px;
+		box-shadow:
+			0 2px 6px rgba(26, 27, 27, 0.08),
+			0 14px 36px rgba(26, 27, 27, 0.14);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-4px);
+		pointer-events: none;
+		transition:
+			opacity var(--motion-duration-200) var(--motion-ease-standard),
+			visibility var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
+	}
+
+	.site-footer__contact-email-block:hover .site-footer__contact-email-popover,
+	.site-footer__contact-email-block:focus-within .site-footer__contact-email-popover {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+		pointer-events: auto;
+	}
+
+	.site-footer__contact-email-popover-label {
+		margin: 0 0 0.25rem;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 0.625rem;
+		line-height: 1.3;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: color-mix(in srgb, var(--color-dark-gray) 55%, var(--color-gray));
+	}
+
+	.site-footer__contact-email-address {
+		margin: 0 0 0.65rem;
 		font-family: var(--font-body);
 		font-weight: 600;
-		font-size: clamp(0.8125rem, 0.78rem + 0.12vw, 0.9375rem);
+		font-size: 0.8125rem;
 		line-height: 1.45;
-		color: var(--color-dark-khaki);
-		text-decoration: underline;
-		text-decoration-thickness: 1px;
-		text-underline-offset: 0.18em;
+		color: var(--color-dark-gray);
 		overflow-wrap: anywhere;
 		word-break: break-word;
-		transition: color var(--motion-duration-200) var(--motion-ease-standard);
 	}
 
-	.site-footer__contact-email:hover {
-		color: var(--color-accent);
+	.site-footer__contact-email-copy {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		box-sizing: border-box;
+		padding: 0.55rem 0.85rem;
+		border: none;
+		border-radius: 3px;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--color-white);
+		background: var(--color-dark-khaki);
+		cursor: pointer;
+		font-size: 0.75rem;
+		transition:
+			filter var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-200) var(--motion-ease-standard);
 	}
 
-	.site-footer__contact-email:focus-visible {
+	.site-footer__contact-email-copy:hover {
+		filter: brightness(1.06);
+	}
+
+	.site-footer__contact-email-copy:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
+	.site-footer__contact-phone:hover,
+	.site-footer__contact-email-trigger:hover {
+		color: var(--color-dark-khaki);
+	}
+
+	.site-footer__contact-phone:focus-visible,
+	.site-footer__contact-email-trigger:focus-visible {
 		outline: 2px solid var(--color-accent);
 		outline-offset: 3px;
 		border-radius: 2px;
 	}
 
-	@media (max-width: 21.5rem) {
-		.site-footer__contact-email {
-			padding-left: 0;
+	@media (prefers-reduced-motion: reduce) {
+		.site-footer__contact-email-popover {
+			transition: none;
 		}
 	}
 
@@ -552,91 +705,6 @@ const footerFocusAreas = [
 		letter-spacing: 0.04em;
 		text-transform: uppercase;
 		color: var(--color-dark-gray);
-	}
-
-	.site-footer__secondary {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.85rem;
-		margin-top: 1.15rem;
-		text-align: center;
-	}
-
-	.site-footer__secondary-link {
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: 0.8125rem;
-		line-height: 1.35;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-dark-khaki);
-		text-decoration: none;
-		border-bottom: 1px solid color-mix(in srgb, var(--color-dark-khaki) 42%, transparent);
-		padding-bottom: 0.12em;
-		transition:
-			color var(--motion-duration-200) var(--motion-ease-standard),
-			border-color var(--motion-duration-200) var(--motion-ease-standard);
-	}
-
-	.site-footer__secondary-link:hover {
-		color: var(--color-accent);
-		border-color: color-mix(in srgb, var(--color-accent) 55%, transparent);
-	}
-
-	.site-footer__secondary-link:focus-visible {
-		outline: 2px solid var(--color-accent);
-		outline-offset: 3px;
-		border-radius: 2px;
-	}
-
-	.site-footer__secondary-services {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		box-sizing: border-box;
-		width: 100%;
-		max-width: 20rem;
-		padding: 0.8rem 1.35rem;
-		text-transform: uppercase;
-		text-decoration: none;
-		color: var(--color-white);
-		background: var(--color-dark-khaki);
-		border: 2px solid var(--color-dark-khaki);
-		border-radius: 3px;
-		box-shadow:
-			0 1px 2px rgba(26, 27, 27, 0.06),
-			0 6px 18px rgba(26, 27, 27, 0.12);
-		transition:
-			filter var(--motion-duration-200) var(--motion-ease-standard),
-			transform var(--motion-duration-200) var(--motion-ease-standard),
-			box-shadow var(--motion-duration-200) var(--motion-ease-standard);
-	}
-
-	.site-footer__secondary-services:hover {
-		filter: brightness(1.07);
-		box-shadow:
-			0 2px 4px rgba(26, 27, 27, 0.08),
-			0 10px 26px rgba(26, 27, 27, 0.16);
-	}
-
-	.site-footer__secondary-services:active {
-		transform: scale(0.99);
-	}
-
-	.site-footer__secondary-services:focus-visible {
-		outline: 2px solid var(--color-accent);
-		outline-offset: 3px;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.site-footer__secondary-services {
-			transition: none;
-		}
-
-		.site-footer__secondary-services:active {
-			transform: none;
-		}
 	}
 
 	.site-footer__field {

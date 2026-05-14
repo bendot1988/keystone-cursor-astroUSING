@@ -1,0 +1,202 @@
+---
+import { testimonials } from '../data/testimonials';
+---
+
+<div class="testimonials-page">
+	<header class="testimonials-page__hero">
+		<h1 class="testimonials-page__title type-h2-48-700">Testimonials</h1>
+		<p class="testimonials-page__lede type-large-body-18-400">
+			We are grateful for every note clients send. Below is a growing collection of feedback from homeowners, landlords, and partners we have worked with.
+		</p>
+		<div class="testimonials-page__stars" aria-hidden="true">
+			{
+				Array.from({ length: 5 }).map(() => (
+					<svg class="testimonials-page__star" viewBox="0 0 24 24" width="22" height="22" focusable="false">
+						<path
+							fill="currentColor"
+							d="M12 2.5 14.6 9.2h7.1l-5.7 4.1 2.2 6.9L12 16.1 5.8 20.2l2.2-6.9L2.3 9.2h7.1L12 2.5z"
+						/>
+					</svg>
+				))
+			}
+		</div>
+	</header>
+
+	<ul class="testimonials-page__grid">
+		{
+			testimonials.map((t) => (
+				<li class="testimonials-page__cell">
+					<article class="testimonials-page__card">
+						<blockquote class="testimonials-page__blockquote">
+							<p class="testimonials-page__highlight">{t.highlight}</p>
+							<p class="testimonials-page__quote">{t.quote}</p>
+							<footer class="testimonials-page__cite">
+								<strong class="testimonials-page__name">{t.name}</strong>
+								<span class="testimonials-page__role">{t.role}</span>
+							</footer>
+						</blockquote>
+					</article>
+				</li>
+			))
+		}
+	</ul>
+</div>
+
+<style>
+	.testimonials-page {
+		background: var(--color-white-smoke);
+		padding: clamp(2.25rem, 5vw, 3.5rem) var(--section-pad-x) var(--section-pad-y-footer);
+	}
+
+	.testimonials-page__hero {
+		max-width: var(--layout-max-52);
+		margin: 0 auto clamp(2rem, 5vw, 3rem);
+		text-align: center;
+	}
+
+	.testimonials-page__title {
+		margin: 0 0 0.85rem;
+		color: var(--color-dark-gray);
+		text-transform: none;
+		letter-spacing: 0.03em;
+	}
+
+	.testimonials-page__lede {
+		margin: 0 auto 1.25rem;
+		max-width: 40rem;
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+		text-wrap: pretty;
+	}
+
+	.testimonials-page__stars {
+		display: flex;
+		justify-content: center;
+		gap: 0.35rem;
+		color: var(--color-card-icon-gold);
+	}
+
+	.testimonials-page__star {
+		display: block;
+		flex-shrink: 0;
+	}
+
+	.testimonials-page__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: clamp(1.1rem, 2.5vw, 1.5rem);
+		max-width: var(--layout-max-72);
+		margin: 0 auto;
+		padding: 0;
+		list-style: none;
+	}
+
+	@media (min-width: 40rem) {
+		.testimonials-page__grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
+
+	@media (min-width: 64rem) {
+		.testimonials-page__grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	.testimonials-page__cell {
+		margin: 0;
+		min-width: 0;
+	}
+
+	.testimonials-page__card {
+		height: 100%;
+		box-sizing: border-box;
+		padding: clamp(1.25rem, 3vw, 1.65rem);
+		background: var(--color-white);
+		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 10%, var(--color-white));
+		border-radius: 8px;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.04),
+			0 8px 24px rgba(26, 27, 27, 0.06);
+		transition:
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard),
+			border-color var(--motion-duration-200) var(--motion-ease-standard),
+			transform var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.testimonials-page__card:hover {
+		border-color: color-mix(in srgb, var(--color-dark-khaki) 22%, var(--color-dark-gray));
+		box-shadow:
+			0 2px 6px rgba(26, 27, 27, 0.06),
+			0 14px 36px rgba(26, 27, 27, 0.1);
+		transform: translateY(-2px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.testimonials-page__card {
+			transition:
+				box-shadow var(--motion-duration-200) var(--motion-ease-standard),
+				border-color var(--motion-duration-200) var(--motion-ease-standard);
+		}
+
+		.testimonials-page__card:hover {
+			transform: none;
+		}
+	}
+
+	.testimonials-page__blockquote {
+		margin: 0;
+		padding: 0;
+		border: none;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.testimonials-page__highlight {
+		margin: 0 0 0.85rem;
+		flex: 0 0 auto;
+		font-family: var(--font-heading);
+		font-weight: 700;
+		font-size: clamp(1.0625rem, 0.95rem + 0.45vw, 1.25rem);
+		line-height: 1.35;
+		letter-spacing: 0.02em;
+		color: var(--color-dark-gray);
+		text-align: left;
+		text-wrap: pretty;
+	}
+
+	.testimonials-page__quote {
+		margin: 0 0 1.25rem;
+		flex: 1 1 auto;
+		font-family: var(--font-body);
+		font-weight: 400;
+		font-style: italic;
+		font-size: clamp(0.875rem, 0.82rem + 0.2vw, 0.9375rem);
+		line-height: 1.58;
+		color: color-mix(in srgb, var(--color-dark-gray) 88%, var(--color-gray));
+		text-align: left;
+		text-wrap: pretty;
+	}
+
+	.testimonials-page__cite {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		font-family: var(--font-heading);
+		font-size: 0.8125rem;
+		line-height: 1.35;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-dark-gray);
+	}
+
+	.testimonials-page__name {
+		font-weight: 700;
+	}
+
+	.testimonials-page__role {
+		font-weight: 600;
+		letter-spacing: 0.06em;
+		color: color-mix(in srgb, var(--color-dark-gray) 72%, var(--color-gray));
+	}
+</style>

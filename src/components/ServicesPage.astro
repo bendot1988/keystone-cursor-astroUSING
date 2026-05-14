@@ -1,10 +1,11 @@
 ---
 import { servicesPhysicalCards } from '../data/servicesPhysicalCards';
+import { servicesBreatherPullQuote } from '../data/testimonials';
 import KeystoneBulletIcon from './KeystoneBulletIcon.astro';
 
 const sectionPlaceholderImage = '/images/hero-interior.jpg';
 
-/** Mid-page breather — after first half of service pillars. */
+/** Mid-page breather after first half of service pillars. */
 const breatherAfterIndex = Math.ceil(servicesPhysicalCards.length / 2);
 
 const breatherStats = [
@@ -19,7 +20,7 @@ const breatherStats = [
 		<div class="services-hero__inner">
 			<h1 class="services-hero__title type-h2-48-700">Services</h1>
 			<p class="services-hero__lede type-large-body-18-400">
-				From structure to the finishing touches—and the garden beyond the back door—we hold the full picture so you do
+				From structure to the finishing touches and the garden beyond the back door, we hold the full picture so you do
 				not have to stitch trades together yourself. The pillars below are how we think about delivery: clear scopes,
 				honest procurement, and workmanship you can see at handover.
 			</p>
@@ -62,13 +63,10 @@ const breatherStats = [
 									</dl>
 									<figure class="services-breather__quote">
 										<blockquote class="services-breather__quote-text type-large-body-18-400">
-											<p>
-												They joined the dots between structural work, kitchens, and the garden—we never felt we
-												were juggling separate contractors.
-											</p>
+											<p>{servicesBreatherPullQuote.text}</p>
 										</blockquote>
 										<figcaption class="services-breather__quote-cite">
-											— Homeowner, renovation &amp; landscaping project
+											{servicesBreatherPullQuote.name}, {servicesBreatherPullQuote.role}
 										</figcaption>
 									</figure>
 								</div>
@@ -179,7 +177,7 @@ const breatherStats = [
 				Tell us what you are planning
 			</h2>
 			<p class="services-cta__lede type-large-body-18-400">
-				If one of these pillars matches where you are stuck—or you need the whole journey—we are happy to talk it
+				If one of these pillars matches where you are stuck, or you need the whole journey, we are happy to talk it
 				through with no obligation.
 			</p>
 			<div class="services-cta__actions">
@@ -321,11 +319,13 @@ const breatherStats = [
 	}
 
 	.services-breather__title {
-		margin: 0 0 0.65rem;
+		margin: 0 auto 0.65rem;
+		max-width: min(100%, 24rem);
 		color: var(--color-dark-gray);
 		text-transform: uppercase;
 		letter-spacing: 0.02em;
 		line-height: 1.25;
+		text-wrap: balance;
 	}
 
 	.services-breather__lede {
@@ -353,10 +353,13 @@ const breatherStats = [
 
 	.services-breather__stat {
 		margin: 0;
-		padding: 0.65rem 0.5rem 0.85rem;
+		padding: 0.85rem 0.65rem 1rem;
 		border-radius: 8px;
-		background: color-mix(in srgb, var(--color-white) 72%, var(--color-white-smoke));
-		box-shadow: 0 1px 0 color-mix(in srgb, var(--color-dark-gray) 6%, transparent);
+		background: var(--color-dark-khaki);
+		border: 1px solid color-mix(in srgb, var(--color-white) 18%, var(--color-dark-khaki));
+		box-shadow:
+			0 1px 0 color-mix(in srgb, var(--color-black) 12%, transparent),
+			0 6px 18px rgba(26, 27, 27, 0.12);
 	}
 
 	.services-breather__stat-value {
@@ -366,14 +369,14 @@ const breatherStats = [
 		font-size: clamp(1.5rem, 2.5vw, 1.85rem);
 		line-height: 1.15;
 		letter-spacing: 0.04em;
-		color: var(--color-dark-khaki);
+		color: var(--color-white);
 	}
 
 	.services-breather__stat-label {
 		margin: 0;
 		font-size: 0.9375rem;
 		line-height: 1.45;
-		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+		color: color-mix(in srgb, var(--color-white) 88%, var(--color-white-smoke));
 	}
 
 	.services-breather__quote {
