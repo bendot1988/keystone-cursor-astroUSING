@@ -1,10 +1,23 @@
 ---
-const items = [
-	'Dream Home Ideas',
-	'Make Overs',
-	'DIY Rescues',
-	'Getting Ready to Sell',
-	'Tenancy Changeovers',
+const intro =
+	'Our focus is the same regardless of your objectives, size or type of property. Firstly, we listen to you and get to understand your renovating needs. And then, we match the right skills and materials to meet both the budget & renovation brief.';
+
+const cards = [
+	{
+		title: 'Your Home Renovation',
+		body: 'Do you dream of making your home the \u201cforever home\u201d?\n\nOr are you needing to rescue a rogue DIY project?\n\nWhatever stage and budget you are at - Keystone Renovations is all about getting the job done.',
+		iconSrc: '/icons/services/home.svg',
+	},
+	{
+		title: 'Landlord Revamps',
+		body: 'Cost-driven \u2013 yet practical and durable solutions completed on time for your next tenant.\n\nWe understand your need for expediency and commercial delivery.',
+		iconSrc: '/icons/services/calculator.svg',
+	},
+	{
+		title: 'Getting Ready to Sell',
+		body: 'Selling your home can be one of the most stressful and emotional experiences to undertake.\n\nSo our job is not only to make your property stand out, but to look after you throughout the process too.\n\nWith over 10 years\u2019 experience working with the UK\u2019s Leading Home Stagers & Nationwide Estate Agents we strive to ensure your renovating budget returns maximum impact for attracting the right potential buyers.',
+		iconSrc: '/icons/services/users-presale.svg',
+	},
 ] as const;
 ---
 
@@ -14,65 +27,43 @@ const items = [
 			<h2 id="complete-solutions-heading" class="complete-solutions__title type-h2-48-700 kr-motion-enter-fade-up-sm">
 				Complete property solutions
 			</h2>
-			<p class="complete-solutions__subtitle type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
-				For any style of renovation need
-			</p>
+			<p class="complete-solutions__intro type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">{intro}</p>
 		</header>
 
-		<ul class="complete-solutions__list" aria-labelledby="complete-solutions-heading">
+		<div class="complete-solutions__grid">
 			{
-				items.map((label, i) => (
-					<li
+				cards.map(({ title, body, iconSrc }, i) => (
+					<article
 						class:list={[
-							'complete-solutions__item',
+							'complete-solutions__card',
 							'kr-motion-enter-fade-up-sm',
 							i % 3 === 1 ? 'kr-motion-delay-1' : undefined,
 							i % 3 === 2 ? 'kr-motion-delay-2' : undefined,
 						]}
 					>
-						<span class="complete-solutions__item-text">{label}</span>
-					</li>
+						<div class="complete-solutions__icon-wrap" aria-hidden="true">
+							<img
+								class="complete-solutions__icon-svg"
+								src={iconSrc}
+								alt=""
+								width="24"
+								height="24"
+								decoding="async"
+							/>
+						</div>
+						<h3 class="complete-solutions__card-title type-h3-20-700">{title}</h3>
+						<p class="complete-solutions__card-body type-large-body-18-400">{body}</p>
+					</article>
 				))
 			}
-		</ul>
+		</div>
 	</div>
 </section>
 
 <style>
 	.complete-solutions {
-		position: relative;
 		background: var(--color-white);
 		padding: var(--section-pad-y-complete) var(--section-pad-x);
-		isolation: isolate;
-		overflow: hidden;
-	}
-
-	/* Subtle blueprint-style backdrop — placeholder until a real building-plans image is supplied. */
-	.complete-solutions::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background-image:
-			linear-gradient(to right, rgba(28, 50, 71, 0.06) 1px, transparent 1px),
-			linear-gradient(to bottom, rgba(28, 50, 71, 0.06) 1px, transparent 1px);
-		background-size: 56px 56px, 56px 56px;
-		opacity: 0.85;
-		pointer-events: none;
-	}
-
-	.complete-solutions::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		z-index: -1;
-		background: radial-gradient(
-			ellipse at 50% 40%,
-			rgba(255, 255, 255, 0) 0%,
-			rgba(255, 255, 255, 0.7) 60%,
-			var(--color-white) 100%
-		);
-		pointer-events: none;
 	}
 
 	.complete-solutions__inner {
@@ -91,43 +82,93 @@ const items = [
 		color: var(--color-dark-gray);
 	}
 
-	.complete-solutions__subtitle {
+	.complete-solutions__intro {
 		margin: 0;
 		text-align: center;
-		font-style: italic;
-		color: color-mix(in srgb, var(--color-dark-gray) 70%, var(--color-gray));
+		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
 	}
 
-	.complete-solutions__list {
-		list-style: none;
-		margin: 0 auto;
-		padding: 0;
-		max-width: var(--layout-max-48);
-		display: flex;
-		flex-direction: column;
-		gap: 0.6rem;
+	.complete-solutions__grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1.5rem;
 		align-items: stretch;
 	}
 
-	.complete-solutions__item {
+	@media (min-width: 900px) {
+		.complete-solutions__grid {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 1.75rem;
+		}
+	}
+
+	.complete-solutions__card {
+		background: var(--color-white-smoke);
+		padding: var(--card-pad-complete);
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		text-align: left;
+		border-radius: 10px;
+		box-shadow:
+			0 1px 2px rgba(26, 27, 27, 0.04),
+			0 4px 14px rgba(26, 27, 27, 0.06),
+			0 10px 28px rgba(26, 27, 27, 0.07);
+		transition:
+			box-shadow var(--motion-duration-280) var(--motion-ease-standard),
+			transform var(--motion-duration-280) var(--motion-ease-standard);
+	}
+
+	.complete-solutions__card:hover {
+		box-shadow:
+			0 2px 4px rgba(26, 27, 27, 0.06),
+			0 8px 22px rgba(26, 27, 27, 0.09),
+			0 18px 40px rgba(26, 27, 27, 0.08);
+		transform: translateY(-2px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.complete-solutions__card {
+			transition: none;
+		}
+
+		.complete-solutions__card:hover {
+			transform: none;
+		}
+	}
+
+	.complete-solutions__icon-wrap {
+		flex-shrink: 0;
+		width: 3.5rem;
+		height: 3.5rem;
+		margin-bottom: 1.25rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding: 1rem 1.25rem;
-		text-align: center;
-		font-family: var(--font-heading);
-		font-weight: 700;
-		font-size: clamp(1rem, 0.9rem + 0.5vw, 1.25rem);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-dark-gray);
-		background: color-mix(in srgb, var(--color-white) 86%, transparent);
-		border: 1px solid color-mix(in srgb, var(--color-dark-gray) 12%, var(--color-white));
-		border-radius: 6px;
-		box-shadow: 0 1px 2px rgba(26, 27, 27, 0.04);
+		background: var(--color-card-icon-gold);
+		color: var(--color-white);
+		border-radius: 50%;
 	}
 
-	.complete-solutions__item-text {
-		display: inline-block;
+	.complete-solutions__icon-svg {
+		display: block;
+		width: 1.5rem;
+		height: 1.5rem;
+		object-fit: contain;
+		filter: brightness(0) invert(1);
+	}
+
+	.complete-solutions__card-title {
+		margin: 0 0 0.875rem;
+		text-align: left;
+		text-transform: uppercase;
+		color: var(--color-dark-gray);
+	}
+
+	.complete-solutions__card-body {
+		margin: 0;
+		text-align: left;
+		white-space: pre-line;
+		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
 	}
 </style>
