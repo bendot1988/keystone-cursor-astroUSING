@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import VersionSwitcher from '../components/VersionSwitcher.astro';
 import { siteConfig } from '../site.config';
 
 interface Props {
@@ -104,6 +105,7 @@ const ogImage =
 		<SiteHeader pathname={Astro.url.pathname} />
 		<slot />
 		<SiteFooter />
+		<VersionSwitcher />
 		<script>
 			import { initKrMotionEntrances } from '../scripts/kr-motion-entrances';
 			initKrMotionEntrances();
