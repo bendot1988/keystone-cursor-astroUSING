@@ -3,20 +3,20 @@ const cards = [
 	{
 		href: '/services/',
 		imageSrc: '/images/services/structural-design.png',
-		imageAlt: 'Placeholder — renovation services',
+		imageAlt: 'Placeholder: renovation services',
 		title: 'Our Services',
 		description:
-			'From structure and electrics to fixtures, finishes and landscaping — explore every pillar of our renovation delivery, scoped and coordinated by one team.',
-		buttonLabel: 'See all our services',
+			'Structure, electrics, fixtures, finishes, and landscaping: every pillar scoped and coordinated by one team.',
+		buttonLabel: 'View services',
 	},
 	{
 		href: '/how-we-work/',
 		imageSrc: '/images/how-we-work/know-how.png',
-		imageAlt: 'Placeholder — how we work',
+		imageAlt: 'Placeholder: how we work',
 		title: 'How We Work',
 		description:
-			'We are the keystone to your project — listening carefully, managing trades, and keeping your renovation on track from first conversation through to handover.',
-		buttonLabel: 'See more about how we work',
+			'Listening carefully, managing trades, and keeping your renovation on track from first conversation to handover.',
+		buttonLabel: 'How we work',
 	},
 ] as const;
 ---
@@ -27,9 +27,6 @@ const cards = [
 			<h2 id="how-we-help-heading" class="how-we-help__section-title type-h2-48-700 kr-motion-enter-fade-up-sm">
 				Explore Keystone
 			</h2>
-			<p class="how-we-help__intro type-large-body-18-400 kr-motion-enter-fade-up-sm kr-motion-delay-1">
-				Two ways to learn more about what we deliver and how we run your project.
-			</p>
 		</header>
 
 		<div class="how-we-help__grid">
@@ -81,30 +78,24 @@ const cards = [
 	.how-we-help__header {
 		text-align: center;
 		max-width: var(--layout-max-48);
-		margin: 0 auto 2.75rem;
+		margin: 0 auto 1.75rem;
 	}
 
 	.how-we-help__section-title {
-		margin: 0 0 1rem;
-		color: var(--color-dark-gray);
-	}
-
-	.how-we-help__intro {
 		margin: 0;
-		text-align: center;
-		color: color-mix(in srgb, var(--color-dark-gray) 78%, var(--color-gray));
+		color: var(--color-dark-gray);
 	}
 
 	.how-we-help__grid {
 		display: grid;
 		grid-template-columns: 1fr;
-		gap: 1.5rem;
+		gap: 1.15rem;
 	}
 
 	@media (min-width: 52rem) {
 		.how-we-help__grid {
 			grid-template-columns: repeat(2, 1fr);
-			gap: 1.75rem;
+			gap: 1.25rem;
 		}
 	}
 
@@ -177,17 +168,17 @@ const cards = [
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		padding: clamp(1.25rem, 2.5vw, 1.75rem);
+		padding: clamp(1rem, 2vw, 1.35rem);
 	}
 
 	.how-we-help__card-title {
-		margin: 0 0 0.75rem;
+		margin: 0 0 0.5rem;
 		text-transform: uppercase;
 		color: var(--color-dark-gray);
 	}
 
 	.how-we-help__description {
-		margin: 0 0 1.5rem;
+		margin: 0 0 1.15rem;
 		flex: 1;
 		color: color-mix(in srgb, var(--color-dark-gray) 82%, var(--color-gray));
 		text-wrap: pretty;

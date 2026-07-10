@@ -268,6 +268,11 @@ body.site-body > main {
 
 	.site-header__end {
 		display: contents !important;
+		/* Mobile closed state sets pointer-events: none — must reset for desktop nav. */
+		pointer-events: auto;
+		position: static;
+		overflow: visible;
+		grid-template-rows: none;
 	}
 
 	.site-header__sheet {
@@ -279,6 +284,7 @@ body.site-body > main {
 		box-shadow: none !important;
 		max-height: none !important;
 		overflow: visible !important;
+		pointer-events: auto;
 	}
 
 	.site-header__nav-wrap {
@@ -290,6 +296,9 @@ body.site-body > main {
 		min-height: 3.5rem;
 		display: flex;
 		align-items: center;
+		position: relative;
+		z-index: 3;
+		pointer-events: auto;
 	}
 
 	.site-header__cta-group {
@@ -301,6 +310,9 @@ body.site-body > main {
 		min-height: 3.5rem;
 		display: flex;
 		align-items: center;
+		position: relative;
+		z-index: 3;
+		pointer-events: auto;
 	}
 }
 
@@ -331,7 +343,8 @@ body.site-body > main {
 
 .site-logo--keystone {
 	position: relative;
-	z-index: 2;
+	/* Below nav/CTA so a wide logo badge cannot intercept menu clicks. */
+	z-index: 1;
 	margin-top: calc(-1 * var(--header-pad-y));
 }
 

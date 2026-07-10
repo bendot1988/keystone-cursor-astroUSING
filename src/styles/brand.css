@@ -44,12 +44,12 @@
 	 * Vertical values mirror each homepage band (see internal style guide).
 	 */
 	--section-pad-x: clamp(1.25rem, 5vw, 2.5rem);
-	--section-pad-y-complete: clamp(3rem, 7vw, 5.5rem);
-	--section-pad-y-how-we-help: clamp(3rem, 8vw, 5.5rem);
-	--section-pad-y-testimonials: clamp(3.5rem, 10vw, 6.5rem);
-	--section-pad-y-footer: clamp(2.5rem, 5vw, 3.5rem);
+	--section-pad-y-complete: clamp(2.25rem, 5vw, 3.75rem);
+	--section-pad-y-how-we-help: clamp(2.25rem, 5.5vw, 3.75rem);
+	--section-pad-y-testimonials: clamp(2.5rem, 7vw, 4.5rem);
+	--section-pad-y-footer: clamp(2rem, 4vw, 3rem);
 
-	--hero-inner-pad-y: clamp(2.5rem, 8vh, 5rem);
+	--hero-inner-pad-y: clamp(2rem, 6vh, 3.75rem);
 	/* Horizontal inset matches homepage sections + header rhythm (see HomeHero rail). */
 	--hero-inner-pad-x: var(--section-pad-x);
 

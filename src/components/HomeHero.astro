@@ -1,6 +1,6 @@
 ---
 /**
- * Homepage hero — full-bleed imagery, overlay, primary H1, CTA.
+ * Homepage hero, full-bleed imagery, overlay, primary H1, CTA.
  * Background asset: /public/images/hero-interior.jpg
  */
 ---
@@ -23,7 +23,7 @@
 	.home-hero {
 		position: relative;
 		/* Shorter band on small viewports; tall immersive hero from md up */
-		min-height: min(64vh, 30rem);
+		min-height: min(56vh, 26rem);
 		display: flex;
 		align-items: center;
 		padding-left: max(var(--section-pad-x), env(safe-area-inset-left, 0px));
@@ -46,7 +46,7 @@
 
 	@media (min-width: 48rem) {
 		.home-hero {
-			min-height: min(88vh, 52rem);
+			min-height: min(72vh, 42rem);
 			padding-left: var(--section-pad-x);
 			padding-right: var(--section-pad-x);
 		}
@@ -99,7 +99,7 @@
 	}
 
 	.home-hero__title {
-		margin: 0 0 1.125rem;
+		margin: 0 0 0.85rem;
 		color: var(--color-white);
 		text-shadow:
 			0 1px 2px rgba(0, 0, 0, 0.45),
@@ -115,7 +115,7 @@
 	}
 
 	.home-hero__sub {
-		margin: 0 0 1.75rem;
+		margin: 0 0 1.35rem;
 		max-width: none;
 		text-align: left;
 		font-style: italic;

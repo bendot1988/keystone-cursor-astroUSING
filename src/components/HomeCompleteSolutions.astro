@@ -1,37 +1,36 @@
 ---
-const intro =
-	'Our focus is the same regardless of your objectives, size or type of property.';
+const intro = 'One standard, whatever the property, brief, or budget.';
 
 const cards = [
 	{
 		title: 'Dream Home Ideas',
-		body: 'Planning the home you want to grow into? We help shape your forever-home vision into a clear brief, sensible phases, and workmanship you will love living with.',
+		body: 'Shape your forever-home vision into a clear brief, sensible phases, and workmanship built to live with.',
 		imageSrc: '/images/hero-interior.jpg',
-		imageAlt: 'Placeholder — dream home renovation',
+		imageAlt: 'Placeholder: dream home renovation',
 	},
 	{
 		title: 'Make Overs',
-		body: 'Room-by-room refreshes or a full property update — we match the right trades, materials and finish to your budget so the transformation feels intentional, not piecemeal.',
+		body: 'Room-by-room or full-property updates with the right trades, materials, and finish matched to your budget.',
 		imageSrc: '/images/services/fixtures-fittings.png',
-		imageAlt: 'Placeholder — property make over',
+		imageAlt: 'Placeholder: property make over',
 	},
 	{
 		title: 'DIY Rescues',
-		body: 'Inherited a well-meant DIY job that needs professional finish? We step in calmly, assess what is salvageable, and put the structure, services and surfaces right.',
+		body: 'We assess what is salvageable and put structure, services, and surfaces right, calmly and professionally.',
 		imageSrc: '/images/services/structural-design.png',
-		imageAlt: 'Placeholder — DIY rescue project',
+		imageAlt: 'Placeholder: DIY rescue project',
 	},
 	{
 		title: 'Getting Ready to Sell',
-		body: 'Selling can be stressful. We help your property stand out for the right buyers — with over ten years working alongside stagers and estate agents across the UK.',
+		body: 'Help your property stand out for the right buyers, with over ten years alongside stagers and estate agents across the UK.',
 		imageSrc: '/images/services/decor-landscaping.png',
-		imageAlt: 'Placeholder — preparing a home to sell',
+		imageAlt: 'Placeholder: preparing a home to sell',
 	},
 	{
 		title: 'Tenancy Changeovers',
-		body: 'Practical, durable landlord revamps delivered on schedule. We understand commercial timelines and deliver cost-conscious work that is ready for your next tenant.',
+		body: 'Durable landlord revamps on commercial timelines. Cost-conscious work, ready for the next tenant.',
 		imageSrc: '/images/services/electrical-plumbing.png',
-		imageAlt: 'Placeholder — tenancy changeover revamp',
+		imageAlt: 'Placeholder: tenancy changeover revamp',
 	},
 ] as const;
 ---
@@ -93,11 +92,11 @@ const cards = [
 	.complete-solutions__header {
 		text-align: center;
 		max-width: var(--layout-max-48);
-		margin: 0 auto 2.75rem;
+		margin: 0 auto 1.75rem;
 	}
 
 	.complete-solutions__title {
-		margin: 0 0 1rem;
+		margin: 0 0 0.65rem;
 		color: var(--color-dark-gray);
 	}
 
@@ -110,7 +109,7 @@ const cards = [
 	.complete-solutions__grid {
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		gap: 1.5rem;
+		gap: 1.15rem;
 		align-items: stretch;
 	}
 
@@ -120,11 +119,11 @@ const cards = [
 		}
 	}
 
-	/* 3×2 — top row of three, bottom row of two centred */
+	/* 3×2, top row of three, bottom row of two centred */
 	@media (min-width: 52rem) {
 		.complete-solutions__grid {
 			grid-template-columns: repeat(6, minmax(0, 1fr));
-			gap: 1.75rem;
+			gap: 1.25rem;
 		}
 
 		.complete-solutions__card {
@@ -183,7 +182,7 @@ const cards = [
 	.complete-solutions__image {
 		display: block;
 		width: 100%;
-		height: clamp(6rem, 13vw, 9rem);
+		height: clamp(5rem, 11vw, 7.5rem);
 		object-fit: cover;
 		object-position: center;
 		transition: transform var(--motion-duration-380) var(--motion-ease-out-expo);
@@ -207,11 +206,11 @@ const cards = [
 		display: flex;
 		flex-direction: column;
 		flex: 1;
-		padding: clamp(1.15rem, 2.5vw, 1.5rem);
+		padding: clamp(0.95rem, 2vw, 1.25rem);
 	}
 
 	.complete-solutions__card-title {
-		margin: 0 0 0.75rem;
+		margin: 0 0 0.5rem;
 		text-align: left;
 		text-transform: uppercase;
 		color: var(--color-dark-gray);

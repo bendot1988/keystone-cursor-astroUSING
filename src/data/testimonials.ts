@@ -50,13 +50,13 @@ export const testimonials: readonly Testimonial[] = [
 
 /** Single centred pull-quote under breather stats: real client wording, shortened for this band only. */
 export const servicesBreatherPullQuote = {
-	text: 'Keystone have organised everything from a full rental flat renovation to emergency roof work. They are always available and very proactive, even visiting a new tenant within 2 hours of a boiler problem. A complete godsend; I would 100% recommend them for anything property related.',
+	text: 'From a full rental flat renovation to emergency roof work: always available, very proactive. A complete godsend; I would 100% recommend them for anything property related.',
 	name: 'Lisa Hosking',
 	role: 'Landlord, Derbyshire',
 } as const;
 
 export const howWeWorkBreatherPullQuote = {
-	text: 'I would highly recommend Keystone Renovations. They were amazing with a wealth of knowledge to help and advise, and all the works were completed promptly and to a high standard.',
+	text: 'Amazing with a wealth of knowledge to help and advise. Works completed promptly and to a high standard.',
 	name: 'Sharon Brown',
 	role: 'Home owner, Nottinghamshire',
 } as const;
